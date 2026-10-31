@@ -1,0 +1,1 @@
+{"name":"jet-engine-lab","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"bun src/server.js","build":"bun src/build.js","preview":"bun src/server.js --dist","test":"bun test","deploy":"bash scripts/deploy-pages.sh","record":"bun scripts/record-website.mjs"}}
