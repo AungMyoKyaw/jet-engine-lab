@@ -1,93 +1,81 @@
 # Jet Engine Lab
 
-**Explore how turbojets and turbofans work—from rotating assemblies to the thermodynamic cycle.**
+**See how a jet engine works. Don't just read about it.**
 
-[**Launch the interactive lab**](https://aungmyokyaw.github.io/jet-engine-lab/) · [Engineering model](docs/ENGINEERING.md) · [Contributing](CONTRIBUTING.md)
+[**Explore the interactive engine**](https://aungmyokyaw.github.io/jet-engine-lab/) · [How the model works](docs/ENGINEERING.md) · [Project development](CONTRIBUTING.md)
 
-Jet Engine Lab is a free, browser-based engineering learning project. Inspect two distinct jet-engine architectures in 3D, adjust operating conditions, explore station pressure and temperature, and study the mechanics of thrust. Built with **React 19, TypeScript, Three.js, React Three Fiber and Bun**.
+Jet Engine Lab is a free, browser-based, interactive aerospace learning experience. A single, large **3D turbofan or turbojet** sits at the heart of the app. Select engine stages, explore their parts, follow the airflow, and change operating conditions without leaving the scene.
 
-> **Scientific status: educational preview.** The current solver is a preliminary steady-state approximation—not a calibrated off-design engine-performance model. Absolute shaft RPM (N1/N2) is deliberately unavailable. Results must not be used to design, operate or certify real engines. The live website is published, but scientific acceptance is still incomplete.
+> **Engineering preview:** The 3D model, illustrative airflow and rotor motion teach concepts rather than represent an OEM-validated engine. The numerical cycle solver is preliminary. Calibrated physical N1/N2 RPM and fully coupled off-design nozzle matching are not yet implemented. Do not use its outputs for real engine design or operation.
 
-## Screenshots
+## See the engine
 
-**Turbofan — desktop engineering workspace**
+![Jet Engine Lab visual-first 3D turbofan exploration on desktop](docs/visual-first-release/desktop.png)
 
-![Turbofan workbench with interactive engine, part inspector controls and compact telemetry](docs/visual-audit/after/turbofan-1920.png)
-
-| Turbojet — desktop | Turbofan — mobile |
+| Understand the engine | Experiment with the inputs |
 |:---:|:---:|
-| ![Turbojet engine in the responsive CAD workbench](docs/visual-audit/after/turbojet-1440.png) | ![Turbofan mobile workspace with engine and quick throttle](docs/visual-audit/after/turbofan-mobile-390.png) |
+| ![Guided visual sequence highlighting the compression stage](docs/visual-first-release/understand.png) | ![Compact engine experiment controls above the 3D stage](docs/visual-first-release/experiment.png) |
 
-[See the full before-and-after visual audit](docs/visual-audit/REVIEW.md), including the mobile component inspector, light theme and fully exploded assemblies.
+**Mobile experience**
 
-## Explore the lab
+![Jet Engine Lab full-window mobile visual experience](docs/visual-first-release/mobile.png)
 
-- **Engines:** Separate single-spool turbojet and two-spool, separate-flow turbofan models. Orbit, zoom, inspect assemblies, toggle the casing, explode parts and select camera presets. The workspace uses adaptive framing, a contextual component inspector, compact telemetry and a quick throttle.
-- **Operating conditions:** Change throttle, altitude, Mach number, compressor design pressure ratio and effective nozzle area. The turbofan also exposes bypass-ratio and independent bypass-nozzle controls. Invalid input is rejected; the previous accepted result remains visible.
-- **Analysis:** Review approximate station temperatures and pressures, thrust, fuel flow, flow split and fuel consumption. Export station data as CSV and inspect both engine types side by side. **The baseline engines have different design assumptions; this is not a calibrated, matched-condition performance comparison.**
-- **Courses:** Fifteen introductory learning topics with explanations, experiment prompts and self-check questions. Reviewed-state progress stays in your browser. These are **outlines**, not yet the complete validated engineering course.
-- **Reference:** Equations, assumptions, source links and a map explorer with five source-pinned [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) compressor/turbine reference datasets. These maps are inspectable but **not yet coupled to the engine solver**.
-- **Accessibility and mobile:** Responsive layouts, keyboard-operated controls, reduced-motion support and a labeled 2D schematic when WebGL is unavailable. Full accessibility acceptance remains outstanding.
+## Three ways to explore
 
-The optional, independently credited [Innerscene CC0 turbofan cutaway](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203) is a **visual reference**, not the mechanically complete solver geometry.
+- **Explore** — Rotate and zoom the engine, tap any component, switch between turbofan and turbojet, inspect its structure, hide the casing and toggle exploded view. Only the engine uses interactive 3D; the stage strip and controls use lightweight accessible web UI.
+- **Understand** — Follow a five-stage visual journey: **Intake → Compression → Combustion → Turbines → Exhaust**. Each stage highlights a component, with short explanatory captions rather than text-heavy lessons.
+- **Experiment** — Change throttle, altitude, Mach and nozzle areas while the preliminary physics worker calculates corresponding outputs. The engine stays visible. On mobile, the Power control comes first and other parameters expand on demand.
 
-## Run locally
+The interactive environment offers light/dark themes, one-click camera reset, compact net-thrust and fuel-flow readouts, keyboard-operated stage navigation and a visual-only airflow cue that is labeled **illustrative**. Technical reference material and source maps remain available separately when needed.
 
-Requires [Bun](https://bun.sh/) and a modern browser. Install Playwright browser binaries if you want to run the browser checks.
+## Local development
+
+Use [Bun](https://bun.sh/) and a modern browser:
 
 ```bash
 bun install --frozen-lockfile
 bun run dev
-# Open http://127.0.0.1:4173/#/engines/turbofan
+# http://127.0.0.1:4173/#/engines/turbofan
 ```
 
-### Verify a change
+### Verify
 
 ```bash
-bun run docs:check       # Markdown links and accidental tool-output metadata
+bun run docs:check
 bun run typecheck
 bun run test
 bun run build
-bun run smoke             # Chromium routes and interactions
-bun run smoke:visual      # Six responsive viewport checks
-bun run smoke:production  # GitHub Pages-style build and offline check
+bun run smoke             # Playwright: visual stage flow, input changes, desktop/mobile
+bun run smoke:production  # GitHub Pages preview, 3D loader, Reference, offline shell
 ```
 
-`bun run build` generates `dist/` with a `/jet-engine-lab/` base path and a versioned offline shell. `bun run preview` serves the production build. Hash routing makes the static site compatible with GitHub Pages.
+The visual tests capture six viewport sizes and critical state changes. Production builds use the `/jet-engine-lab/` base path, hash routing and a versioned offline shell. An optional standalone PWA manifest is included.
 
-**Publishing:** `master` is the source branch. The site is served from `gh-pages` using `bun run deploy`, which rebuilds, tests and pushes the static distribution. Build, test and preview commands do not deploy. See [Contributing](CONTRIBUTING.md) before changing the release process.
+## Scientific accuracy and limitations
 
-## Implementation map
+The current `src/app/physics/cycle.ts` performs a simplified, bounded 0D cycle calculation. Visual rotor movement and flow are demonstrations, **not** measured motion or computational fluid dynamics. Component geometry is schematic. Physical RPM remains unavailable because the source-pinned map datasets have not yet been calibrated and coupled to a verified off-design solver.
 
-| Path | What it owns |
+The five [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) maps can be inspected in Reference but do not yet drive the live solver. Nozzle effective-area inputs affect the preliminary calculation and visual throat, but full multi-spool/nozzle closure is still unvalidated.
+
+For precise scope and assumptions, consult [Engineering Notes](docs/ENGINEERING.md), [Off-Design Maps and Nozzles](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md), and [Implementation Status](docs/IMPLEMENTATION_STATUS.md). Prior CAD workbench experiments are archived in the repository; this release deliberately uses **one primary interactive 3D engine** and a minimal visual interface.
+
+## Repository
+
+| Location | Purpose |
 |---|---|
-| `src/app/ui/` | React application, navigation, workspace and styles |
-| `src/app/engine/` | Three.js / React Three Fiber engine scenes and optional reference cutaway |
-| `src/app/physics/cycle.ts` | Preliminary station-cycle calculations and input validation |
-| `src/app/physics/maps.ts` | Bounded reference-map interpolation; **not** a coupled off-design solver |
-| `src/app/physics/worker.ts` | Versioned calculations off the main UI thread |
-| `src/app/data/` | Component registry, course outlines and source-pinned map tables |
-| `src/app/components/MapExplorer.tsx` | Technical reference-map viewer |
-| `scripts/import-pycycle-maps.py` | Reproducible, pinned map-table extraction |
-| `scripts/smoke-*.mjs`, `scripts/verify-visual-workspace.mjs` | Browser, responsive and production checks |
-| `src/physics.js`, `src/scene.js` | Preserved **legacy** turbojet implementation; not the current React application |
+| `src/app/visual/` | Immersive three-mode learning interface and design |
+| `src/app/engine/` | Procedural Three.js/React Three Fiber engine scene |
+| `src/app/physics/` | Numerical preview model, reference-map interpolation and worker |
+| `src/app/data/` | Engine component hierarchy, station maps and lesson content |
+| `src/app/studio/project.ts` | Versioned local experiment file import/export and recovery |
+| `scripts/smoke-visual-first.mjs` | Browser interaction and screenshot regression checks |
+| `scripts/smoke-production.mjs` | Production/Pages and offline browser checks |
+| `public/manifest.webmanifest` | Optional standalone PWA metadata |
 
-## What is not yet validated
-
-1. **D01 — Actual off-design RPM:** calibrated compressor/turbine maps, coupled compressor/flow/spool matching and independently verified physical N1/N2 RPM. Numerical RPM remains unavailable instead of being fabricated.
-2. **D02 — Fully coupled variable-area nozzles:** the preview demonstrates effective-area controls and corresponding geometry, but does not yet solve the complete map/nozzle/shaft operating point.
-3. **Mechanical fidelity:** detailed verified dimensions, bearings, shaft clearances, sectioning, high-detail LODs and complete explosion/geometry acceptance.
-4. **Teaching and release:** full-length assessed chapters, complete screen-reader and multi-browser verification, measured performance, and an independently reviewed numerical reference suite.
-
-Track the precise state in [Implementation Status](docs/IMPLEMENTATION_STATUS.md). The approved long-term requirements live in [PRODUCT.md](PRODUCT.md) and [DESIGN.md](DESIGN.md); they are **targets**, not declarations that every feature is complete. The scientific acceptance gates are in [Physics Spec](docs/PHYSICS_SPEC.md), [Off-Design Maps & Nozzles](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md) and [Verification & Release](docs/VERIFICATION_RELEASE.md).
+The project remains a **static web application**, not a desktop wrapper. `master` contains the source and the `gh-pages` branch contains the built public site. `bun run deploy` publishes only after an explicit release decision.
 
 ## Credits and licensing
 
-Jet Engine Lab's original source is released under the [MIT License](LICENSE). Third-party material retains its own terms:
+Original source code is [MIT licensed](LICENSE). Third-party resources retain their respective licenses: the [Innerscene](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203) CC0 reference cutaway, [Poly Haven Studio Small 08](https://polyhaven.com/a/studio_small_08) CC0 lighting, [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) Apache-2.0 map data, and IBM Plex Sans/Mono fonts under the SIL Open Font License. See [Asset Provenance](docs/ASSET_PROVENANCE.md) and the [Credits page](https://aungmyokyaw.github.io/jet-engine-lab/#/credits).
 
-- **Studio Small 08 HDRI** — Sergej Majboroda / [Poly Haven](https://polyhaven.com/a/studio_small_08), CC0.
-- **Optional turbofan cutaway** — [Innerscene](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203), CC0; illustrative only.
-- **Reference component maps** — [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle), Apache-2.0; source commit and hashes recorded with the datasets.
-- **IBM Plex Sans / IBM Plex Mono** — SIL Open Font License; self-hosted using Fontsource.
-
-See the [asset provenance register](docs/ASSET_PROVENANCE.md) and [public Credits page](https://aungmyokyaw.github.io/jet-engine-lab/#/credits). The included datasets and visual references do not imply endorsement by any manufacturer or validation of real-engine performance.
+The optional CC0 cutaway is a separate **visual reference** and is not the engine solver mesh. No engine-manufacturer certification or endorsement is implied.

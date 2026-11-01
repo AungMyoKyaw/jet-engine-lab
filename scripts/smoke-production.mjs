@@ -21,14 +21,15 @@ try{
    const page=await context.newPage(),errors=[];
    page.on('pageerror',error=>errors.push(error.message));
    await page.goto(base+'#/engines/turbojet',{waitUntil:'domcontentloaded'});
-   await page.getByRole('heading',{name:'Inside the turbojet.'}).waitFor({timeout:10000});
+   await page.getByRole('heading',{name:'An engine to explore.'}).waitFor({timeout:10000});
+   await page.locator('.visual-engine-scene canvas').waitFor({state:'visible',timeout:12000});
    await page.waitForTimeout(600);
    const threeD=await page.locator('canvas').count(),fallback=await page.locator('.webgl-fallback').count();
    if(!threeD&&!fallback)throw Error('Neither 3D nor accessible fallback rendered');
    await page.goto(base+'#/reference',{waitUntil:'domcontentloaded'});
    await page.getByText('Component map explorer').waitFor({timeout:12000});
    await page.getByRole('button',{name:'HPC',exact:true}).click();
-   await page.screenshot({path:'docs/redesign-'+name+'-production.png',fullPage:true});
+   await page.screenshot({path:'docs/visual-first-release/production-'+name+'.png',fullPage:true});
    if(errors.length)throw Error('Page errors: '+errors.join(' | '));
    console.log(name.toUpperCase(),'PASS','engine=',threeD?'3D':'2D fallback','reference map=loaded');
    if(name==='chromium'){

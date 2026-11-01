@@ -73,3 +73,25 @@ Actual CFD, full compressor/turbine maps without data, transient controls/start 
 
 ## Authority and release condition
 Q01–Q200 are accepted requirements, not proof of implementation feasibility. Engineering proposals/tolerances and unselected third-party assets are **not verified or approved data**. Implementation authorization was granted on 2026-11-01. A reviewable feature-branch implementation may proceed, but neither `master` merge nor public deployment is authorized while scientific, legal and G1–G14 release evidence remains incomplete.
+
+## Additional approved direction — native-feeling browser workspace (2026-11-01)
+
+**Foundation choices Q201–Q248=A have been approved.** Preserve the original Q01–Q200 and D01=B/D02=B commitments. Keep Jet Engine Lab a **browser-based, static-hosted engineering studio**, with one primary interactive WebGL canvas, semantic React/DOM controls and chart/diagram rendering chosen according to accessibility and performance. A desktop-style full-height studio, resizable predefined docks, command palette, responsive touch/mobile inspector, PWA option and versioned local project files are accepted product goals. They are **not yet completed or approved implementation specifications**: dependent decisions begin at Q249 and are open. See [the full new grilling record](docs/NATIVE_WEB_WORKSPACE_GRILL.md) before implementing.
+
+The existing physics model truthfulness and independently validated off-design RPM/nozzle gates remain mandatory. **Requirements planning only; do not implement, commit, push or deploy until a separate explicit authorization.**
+
+### Native workspace grilling: Round 2 accepted (2026-11-01)
+
+All Q249–Q320=A are now approved workspace requirements (app shell, structured panel docking, commands, presentation system, responsive behavior, assistive access and versioned local layout preferences). Q201–Q248=A remains approved. These requirements are still **planning inputs**, not proof of completed implementation. The next detailed CAD/3D interaction frontier is Round 3; see [full grill](docs/NATIVE_WEB_WORKSPACE_GRILL.md). Original Q01–Q200 and D01=B/D02=B remain untouched.
+
+### Continued independent question frontiers (2026-11-01)
+
+The exhaustive individual-question record now includes **unanswered Q321–Q572**: Round 3 (CAD scene interactions), Round 4 (simulation and analysis), Round 5 (project files and PWA), Round 6 (learning and accessibility), and Round 7 (performance, provenance and release). Questions are prepared with separate A/B/C choices; **none is an approved implementation decision** until the user selects it. Q201–Q320=A and the original Q01–Q200/D01=B/D02=B remain locked. Additional dependent rounds will be generated after these selections, followed by a conflict/architecture-readiness review. No implementation, Git commit/push/merge or deployment.
+
+## Native web CAD implementation approval — 2026-11-01
+
+The user approved the remaining **Q321–Q572=A** defaults and explicitly authorized implementation. Previously approved Q201–Q320=A, Q01–Q200, D01=B and D02=B remain fixed. Requirements are targets, not evidence of completed functionality; unvalidated RPM and full off-design nozzle closure remain release blockers. All 252 individual choices are in [the grilling record](docs/NATIVE_WEB_WORKSPACE_GRILL.md).
+
+## Superseding visual-first product direction — 2026-11-01
+
+The user authorized a release-oriented pivot: **one dominant interactive 3D jet engine**, a five-stage visual learning journey, short captions and Explore/Understand/Experiment modes. Permanent CAD sidebars and text-heavy workspaces are deferred. Q201–Q572 remains an archive of long-term design goals, not a claim that each ships in this release. Existing D01=B/D02=B scientific gates remain mandatory. See [Visual-First Release](docs/VISUAL_FIRST_RELEASE.md).

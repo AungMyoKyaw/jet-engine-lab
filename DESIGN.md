@@ -100,3 +100,23 @@ Wordmark **Jet Engine Lab**, restrained machine/section symbol; new favicon and 
 **Interaction states:** map unavailable, source unverified, map outside domain, map-converged-but-geometry-pending, geometry rejected, source-speed uncalibrated, area constraint exceeded; all must have keyboard and screen-reader announcements. Visual regression includes baseline/min/mid/max nozzle area, choke boundary, TF independent nozzle adjustment and both shaft-speed displays in dark/light and reduced-motion states. Nozzle actuator deformation must not intersect fixed turbine exhaust structures.
 
 See `docs/OFF_DESIGN_MAPS_AND_NOZZLES.md`. Earlier design references to purely illustrative/normalized RPM are superseded by the explicit requirement for computed, calibrated model speeds; an animated rotor may still be visually slowed for readability.
+
+## Native web engineering-workspace extension (2026-11-01)
+
+The user approved Q201–Q248=A as the new *direction*: a **browser-native CAD-style studio** with a dominant Three.js scene, compact semantic HTML/React chrome, adaptable instrument panels, technical labels and accessible alternatives. Retain the existing palette/provenance and scientific honesty as baseline; any different final design tokens, dock sizes, camera-tool behavior, panel layouts or breakpoint specifics depend on the ongoing [full grill](docs/NATIVE_WEB_WORKSPACE_GRILL.md), currently Q249–Q320 pending. No assumptions from future rounds are locked. The original Q01–Q200 and D01=B / D02=B remain unchanged. The accepted direction is not evidence of implementation or release approval.
+
+### Workspace shell approval — Round 2 (2026-11-01)
+
+Q249–Q320=A are locked for the target native-feeling web design: compact 44–52px top chrome, scene-dominant viewport, contextual resizable panels, accessible menus/commands, semantic and mobile-first alternatives, light/dark precision themes and versioned layout persistence. Actual dependent CAD picking, gizmo, section and measurement choices are awaiting Round 3. Previous Q01–Q248 and D01=B/D02=B retain their approvals. See [decision record](docs/NATIVE_WEB_WORKSPACE_GRILL.md). No implementation/deployment authorization follows from this design approval.
+
+### Continued independent question frontiers (2026-11-01)
+
+The exhaustive individual-question record now includes **unanswered Q321–Q572**: Round 3 (CAD scene interactions), Round 4 (simulation and analysis), Round 5 (project files and PWA), Round 6 (learning and accessibility), and Round 7 (performance, provenance and release). Questions are prepared with separate A/B/C choices; **none is an approved implementation decision** until the user selects it. Q201–Q320=A and the original Q01–Q200/D01=B/D02=B remain locked. Additional dependent rounds will be generated after these selections, followed by a conflict/architecture-readiness review. No implementation, Git commit/push/merge or deployment.
+
+## Native web CAD implementation approval — 2026-11-01
+
+The user approved the remaining **Q321–Q572=A** defaults and explicitly authorized implementation. Previously approved Q201–Q320=A, Q01–Q200, D01=B and D02=B remain fixed. Requirements are targets, not evidence of completed functionality; unvalidated RPM and full off-design nozzle closure remain release blockers. All 252 individual choices are in [the grilling record](docs/NATIVE_WEB_WORKSPACE_GRILL.md).
+
+## Visual-first experience supersedes the CAD dashboard — 2026-11-01
+
+The engine route now uses a full-window single 3D engine with restrained overlays, five stage pictograms and Explore/Understand/Experiment modes. No permanent panel-heavy CAD layout. Controls remain accessible DOM and SVG; only the engine itself uses interactive WebGL. Previously approved docked-workbench defaults are deferred to optional advanced tools. See [Visual-First Release](docs/VISUAL_FIRST_RELEASE.md).

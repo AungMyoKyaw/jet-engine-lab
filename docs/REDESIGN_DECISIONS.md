@@ -262,3 +262,21 @@ D01/D02 are locked **in addition to** Q01–Q200. These selections supersede pre
 - Q27 and Q34 require a React app compatible with static GitHub Pages deployment.
 - Q35 prohibits application implementation and deployment until specifications are finalized and approved.
 - All 200 decisions and final D01/D02 choices are closed; independent performance-map validation, asset legal evidence and final implementation authorization remain pending.
+
+## Native-feeling web workspace extension — approved foundation (2026-11-01)
+
+The original **Q01–Q200** and **D01=B / D02=B** remain unchanged and authoritative. The user additionally **approved Q201–Q248=A, all 48 choices, without overrides** for a browser-only, native-feeling CAD/engineering workspace. These choices do **not** assert that the related UI has been implemented, nor do they close D01/D02 scientific release criteria. The full individual choice record and pending **Round 2 Q249–Q320** appear in [Native Web Workspace Grill](NATIVE_WEB_WORKSPACE_GRILL.md). This new range is a separately numbered, incremental decision series; do not fold Q201+ into the original Q01–Q200 count.
+
+No application implementation, git commit/push/merge or production deployment was authorized by this requirements approval.
+
+## Native web workspace Round 2 approval — 2026-11-01
+
+All **Q249–Q320=A (72 decisions)** were explicitly approved without overrides. Each ID and decision description is preserved in [Native Web Workspace Grill](NATIVE_WEB_WORKSPACE_GRILL.md). Q201–Q248=A, original Q01–Q200, D01=B and D02=B remain unchanged. The user requires all subsequent frontier questions to be asked **individually with their own A/B/C choices**, not approved as a batch. The next frontier is Round 3, whose answers are not yet approved. No application implementation, Git commit, push or deployment is authorized in this planning phase.
+
+## Native web CAD implementation approval — 2026-11-01
+
+The user approved the remaining **Q321–Q572=A** defaults and explicitly authorized implementation. Previously approved Q201–Q320=A, Q01–Q200, D01=B and D02=B remain fixed. Requirements are targets, not evidence of completed functionality; unvalidated RPM and full off-design nozzle closure remain release blockers. All 252 individual choices are in [the grilling record](NATIVE_WEB_WORKSPACE_GRILL.md).
+
+## Final design pivot — visual-first engine experience (2026-11-01)
+
+The user explicitly requested a release centered on one large interactive 3D engine, pictographic stage navigation, minimal explanatory text and contextual controls. This supersedes the prior permanent CAD-window interface as the default UX. The original Q201–Q572 decisions remain as historical and potential advanced-mode goals, not claims of completion. D01=B and D02=B scientific requirements are unchanged. See [Visual-First Release](VISUAL_FIRST_RELEASE.md).

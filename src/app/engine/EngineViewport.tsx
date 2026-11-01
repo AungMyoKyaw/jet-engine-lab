@@ -2,6 +2,7 @@ import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Grid, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
+import type {ToolMode} from '../studio/project';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import type { EngineId, Result } from '../physics/cycle';
 
@@ -63,14 +64,14 @@ function BladeRow({radius,count=22,shaft='TJ',thermal=false,active=false}:{radiu
   <Ring radius={radius*.43} tube={.025}/>
  </group>;
 }
-function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,engine}:{part:Part;selected:boolean;onSelect:(id:string)=>void;explode:number;showShell:boolean;coreArea:number;bypassArea:number;engine:EngineId}){
+function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,engine,toolMode,onMeasurePoint}:{part:Part;selected:boolean;onSelect:(id:string)=>void;explode:number;showShell:boolean;coreArea:number;bypassArea:number;engine:EngineId;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void}){
  const open=part.kind==='inlet'||part.kind==='bypass';
  const thermal=part.kind==='turbine'||part.kind==='burner';
  const displacement=explode*(part.x<0?-1:1)*(1.2+Math.abs(part.x)*.1);
  const nozzleArea=part.kind==='bypass'?bypassArea:coreArea;
  const throatRadius=Math.sqrt(Math.max(.04,nozzleArea)/Math.PI);
  const color=selected?SELECT:thermal?BRONZE:SILVER;
- const pick=(e:ThreeEvent<MouseEvent>)=>{e.stopPropagation();onSelect(part.id);};
+ const pick=(e:ThreeEvent<MouseEvent>)=>{e.stopPropagation();if(toolMode==='measure')onMeasurePoint([e.point.x,e.point.y,e.point.z]);else onSelect(part.id);};
  return <group position={[part.x+displacement,0,0]} onClick={pick}>
   {part.kind==='nozzle'?<>
     <mesh position={[.25,0,0]} rotation={[0,0,-Math.PI/2]}>
@@ -102,11 +103,17 @@ function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,e
   </>}
  </group>;
 }
-function World({engine,selected,onSelect,explode,showShell,result,referenceMode,preset,viewReset}:{engine:EngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;referenceMode:boolean;preset:ViewPreset;viewReset:number}){
+function MeasurementSegment({points}:{points:[number,number,number][]}){
+ const line=useMemo(()=>new THREE.Line(new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p))),new THREE.LineBasicMaterial({color:'#f8cd78',depthTest:false})),[points]);
+ useEffect(()=>()=>{line.geometry.dispose();(line.material as THREE.Material).dispose()},[line]);
+ return <primitive object={line}/>;
+}
+function World({engine,selected,onSelect,explode,showShell,result,referenceMode,preset,viewReset,toolMode,onMeasurePoint,measurePoints,sectionEnabled,sectionOffset,theme}:{engine:EngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;referenceMode:boolean;preset:ViewPreset;viewReset:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void;measurePoints:[number,number,number][];sectionEnabled:boolean;sectionOffset:number;theme:string}){
  const parts=PARTS[engine];
  const orbitRef=useRef<OrbitControlsImpl>(null);
  const lastFitContext=useRef('');
- const {camera,size}=useThree();
+ const {camera,size,gl}=useThree();
+ useEffect(()=>{gl.clippingPlanes=sectionEnabled?[new THREE.Plane(new THREE.Vector3(0,1,0),-sectionOffset)]:[];return()=>{gl.clippingPlanes=[]}},[gl,sectionEnabled,sectionOffset]);
  useEffect(()=>{
   const controls=orbitRef.current;
   if(!controls||size.width<1||size.height<1)return;
@@ -155,21 +162,24 @@ function World({engine,selected,onSelect,explode,showShell,result,referenceMode,
   // A tighter desktop crop follows the real curved silhouette rather than the conservative box corners.
   // Narrow touch viewports keep the full fitted envelope to avoid cropping.
   const wide=size.width>=1080 && size.width/Math.max(1,size.height)>1.65;
-  const tightness=wide?.76+explode*.26:1;
+  const mobile=size.width<650;
+  const tightness=wide?.93+explode*.07:mobile?.79+explode*.21:1;
   perspective.position.copy(direction).multiplyScalar(upper*tightness);
   controls.target.set(0,0,0);
   controls.update();
  },[camera,size.width,size.height,engine,preset,viewReset,referenceMode,explode]);
  const shaftLength=engine==='turbofan'?9.4:7.6;
- return <><color attach="background" args={['#0c1925']}/><Suspense fallback={null}><Environment files={import.meta.env.BASE_URL+'assets/studio_small_08_1k.hdr'} environmentIntensity={.48}/></Suspense><fog attach="fog" args={['#0c1925',22,46]}/>
+ return <><color attach="background" args={[theme==='light'?'#e9f1f5':'#0c1925']}/><Suspense fallback={null}><Environment files={import.meta.env.BASE_URL+'assets/studio_small_08_1k.hdr'} environmentIntensity={.48}/></Suspense><fog attach="fog" args={[theme==='light'?'#e9f1f5':'#0c1925',22,46]}/>
  <ambientLight intensity={.95}/><hemisphereLight args={['#d7eaff','#31485f',2.4]}/>
  <directionalLight position={[-4,9,10]} intensity={3.1}/><directionalLight position={[6,-3,-8]} intensity={2.3} color="#92b7db"/>
  <pointLight position={[0,2,4]} intensity={65} distance={9} color="#d29563"/>
  {referenceMode && engine==='turbofan' ? <ReferenceCutaway onSelect={onSelect} explode={explode} showShell={showShell}/> : <group rotation={[0,-.16,0]}>
    <mesh rotation={[0,0,Math.PI/2]}><cylinderGeometry args={[.23,.23,shaftLength,32]}/><Material color="#587083"/></mesh>
-   {parts.map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} engine={engine} coreArea={result?.coreGeom??.2} bypassArea={result?.bypassGeom??1.8}/>)}
+   {parts.map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} engine={engine} coreArea={result?.coreGeom??.2} bypassArea={result?.bypassGeom??1.8} toolMode={toolMode} onMeasurePoint={onMeasurePoint}/>)}
  </group>}
- <Grid infiniteGrid sectionColor="#3d5a6c" cellColor="#203749" fadeDistance={25} cellSize={.65} sectionSize={2.6} position={[0,-2.35,0]} side={THREE.DoubleSide}/>
+ {measurePoints.map((pos,i)=><mesh key={i} position={pos}><sphereGeometry args={[.09,16,12]}/><meshBasicMaterial color={i===0?'#5ee5ef':'#ffc477'} depthTest={false}/></mesh>)}
+ {measurePoints.length===2&&<MeasurementSegment points={measurePoints}/>}
+ <Grid infiniteGrid sectionColor={theme==='light'?'#b5ceda':'#3d5a6c'} cellColor={theme==='light'?'#d1e0e9':'#203749'} fadeDistance={25} cellSize={.65} sectionSize={2.6} position={[0,-2.35,0]} side={THREE.DoubleSide}/>
  <ContactShadows opacity={.27} scale={20} blur={2.5} far={5} position={[0,-2.4,0]}/>
  <OrbitControls ref={orbitRef} makeDefault enableDamping dampingFactor={.09} minDistance={5} maxDistance={60} minPolarAngle={.25} maxPolarAngle={Math.PI-.25} target={[0,0,0]}/>
  </>;
@@ -198,9 +208,9 @@ function webGLSupported(){
  try{const canvas=document.createElement('canvas');const context=canvas.getContext('webgl2')||canvas.getContext('webgl');cachedWebGLSupport=Boolean(context);context?.getExtension('WEBGL_lose_context')?.loseContext();return cachedWebGLSupport;}catch{cachedWebGLSupport=false;return false;}
 }
 export type ViewPreset='threequarter'|'side'|'top'|'axial';
-export function EngineViewport({engine,selected,onSelect,explode,showShell,result,referenceMode=false,preset='threequarter',viewReset=0}:{engine:EngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;referenceMode?:boolean;preset?:ViewPreset;viewReset?:number}){
+export function EngineViewport({engine,selected,onSelect,explode,showShell,result,referenceMode=false,preset='threequarter',viewReset=0,toolMode='select',onMeasurePoint=()=>{},measurePoints=[],sectionEnabled=false,sectionOffset=0,theme='dark'}:{engine:EngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;referenceMode?:boolean;preset?:ViewPreset;viewReset?:number;toolMode?:ToolMode;onMeasurePoint?:(p:[number,number,number])=>void;measurePoints?:[number,number,number][];sectionEnabled?:boolean;sectionOffset?:number;theme?:string}){
  if(!webGLSupported())return <WebGLFallback engine={engine} onSelect={onSelect} selected={selected}/>;
  return <Canvas key={engine} dpr={[1,1.7]} gl={{antialias:true,powerPreference:'high-performance'}} camera={{position:typeof window!=='undefined'&&window.innerWidth<680?[21,10,34]:[8,4.4,12.4],fov:36,near:.1,far:100}} aria-label={engine+' interactive 3D engine model'}>
-  <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} result={result} referenceMode={referenceMode} preset={preset} viewReset={viewReset}/>
+  <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} result={result} referenceMode={referenceMode} preset={preset} viewReset={viewReset} toolMode={toolMode} onMeasurePoint={onMeasurePoint} measurePoints={measurePoints} sectionEnabled={sectionEnabled} sectionOffset={sectionOffset} theme={theme}/>
  </Canvas>;
 }

@@ -75,3 +75,7 @@ The screenshot-driven responsive redesign was developed on an isolated feature b
 - GitHub Pages static distribution committed and pushed to `gh-pages` at `1cdf6f6`; GitHub Actions Pages build/deployment run `41288819705` completed with `success`.
 - The public site was checked in Chromium across Engines, Courses, Analysis, Reference and Credits. The main turbofan canvas rendered, and the optional reference-model control was present. Some CDN edges initially returned cached older HTML or 404 responses for newly added assets, so users may need a refresh until caches expire.
 - This records **deployment approval for the educational preview only**, not scientific-model release acceptance.
+
+## Visual-first browser release — 2026-11-01
+
+The current engine route is an immersive single-engine 3D experience with a five-stage learning journey and Explore/Understand/Experiment modes. The former panel-heavy CAD workbench is no longer default. This design retains the bounded worker physics, project save/restore and visual-only airflow labels. This release does not complete physical RPM, D01 map matching, D02 nozzle closure or the original full engineering acceptance suite. See [Visual-First Release](VISUAL_FIRST_RELEASE.md).
