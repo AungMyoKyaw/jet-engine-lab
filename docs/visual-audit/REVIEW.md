@@ -1,3 +1,7 @@
+File: projects/jet-engine-lab/docs/visual-audit/REVIEW.md
+Lines: 1-98 of 98
+SHA-256: f218507494511a17eee7205776d0dd567bda07d8c51f8a09d2601ac10b8180fd
+
 # Jet Engine Lab — Playwright Visual Space Audit
 
 **Date:** 2026-11-01
@@ -95,3 +99,7 @@ All changes are on `feature/jet-engine-lab-redesign`; no application code was mo
 **Responsive interaction automation:** `bun run smoke:visual` exercises 1920×1080, 1440×900, 1024×768, 768×900, 390×844 and 360×740; tests inspect/close, camera presets, reset, quick throttle, model rendering, horizontal overflow and clipping of toolbar actions. A separate full-explosion manual screenshot check verified the separated model remains visible on desktop and mobile; Escape closes inspector. The original six-route production/offline tests remain required.
 
 **Scope remains the UI/visual-audit work:** full D01 map-calibrated off-design RPM, full D02 solver/nozzle matching, final course content and other release gates are still incomplete. This does not authorize merging to master or publishing to gh-pages.
+
+## Publication update — 2026-11-01
+
+The earlier review and audit statements describing an unmerged feature branch and prohibiting deployment reflect the **planning period**, before the user's subsequent explicit implementation and deployment authorizations. The visual redesign was fast-forward merged into `master` (`2ef9ec9`) and the educational preview published from `gh-pages` (`1cdf6f6`). The GitHub Pages deployment workflow completed successfully. This publication **does not** close the documented D01/D02 scientific and full-release acceptance gates. See `IMPLEMENTATION_STATUS.md` for current verification status.

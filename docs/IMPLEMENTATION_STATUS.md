@@ -1,6 +1,10 @@
+File: projects/jet-engine-lab/docs/IMPLEMENTATION_STATUS.md
+Lines: 1-71 of 71
+SHA-256: 0bef6e225795113d539049f40efac044dcc131d4ee0b8bc12569c597c8dbc100
+
 # Jet Engine Lab — Implementation Progress and Validation Report
 
-**Date:** 2026-11-01. **Branch:** `feature/jet-engine-lab-redesign` (isolated from `master`). **Release status:** INCOMPLETE; no production deployment. **Status classification:** source and browser working as an engineering preview, not all Q01–Q200 + D01=B/D02=B acceptance gates satisfied.
+**Date:** 2026-11-01. **Source:** `master` at `2ef9ec9` (merged from `feature/jet-engine-lab-redesign`). **Public preview:** published to the GitHub Pages `gh-pages` branch at `1cdf6f6`, with a successful Pages deployment workflow; https://aungmyokyaw.github.io/jet-engine-lab/. **Scientific acceptance:** INCOMPLETE; Q01–Q200, D01=B and D02=B release gates are not fully satisfied.
 
 ## What was implemented and tested
 
@@ -63,8 +67,15 @@ Use `bun run preview` to serve a production build. The local Vite preview was te
 3. Complete engine geometry, sections, camera states, accessibility and 15 substantive modules.
 4. Run full G1–G14 test/release matrix, review and fix defects, then obtain separate final approval before publishing.
 
-**No claim of complete implementation or production readiness is made.** No production deployment should occur based solely on the current successful preview tests.
+**The public website is explicitly an educational engineering preview, not a validated simulation product.** The user authorized merging and publishing this preview on 2026-11-01; independently validated off-design RPM and coupled nozzle closure still block final scientific acceptance. Publishing is not evidence that those gates passed.
 
 ## Visual workspace update — 2026-11-01
 
 The screenshot-driven responsive redesign was implemented on the isolated feature branch. It introduces an engine-first stage, responsive camera fitting (including explosion), a collapsible component inspector with mobile bottom-sheet treatment, compact floating telemetry and a primary quick throttle. See `visual-audit/REVIEW.md` for before/after measurements and screenshots. Six-viewport Playwright checks verify fit-related layout measurements, camera/reset, inspector toggle, mobile quick throttle, horizontal overflow and toolbar visibility. All prior scientific readiness limitations remain in force; this visual update does not satisfy mapped RPM or full off-design closure.
+
+## Public-preview publication — 2026-11-01
+
+- `master` fast-forwarded from the reviewed feature branch and pushed at `2ef9ec9`, including the updated README screenshots.
+- GitHub Pages static distribution committed and pushed to `gh-pages` at `1cdf6f6`; GitHub Actions Pages build/deployment run `41288819705` completed with `success`.
+- The public site was checked in Chromium across Engines, Courses, Analysis, Reference and Credits. The main turbofan canvas rendered, and the optional reference-model control was present. Some CDN edges initially returned cached older HTML or 404 responses for newly added assets, so users may need a refresh until caches expire.
+- This records **deployment approval for the educational preview only**, not scientific-model release acceptance.

@@ -1,3 +1,7 @@
+File: projects/jet-engine-lab/docs/ARCHITECTURE_READINESS.md
+Lines: 1-77 of 77
+SHA-256: 5344d382c84f48a4bb9c6c8d2c61cd1f6e82c8919992e34c1f0421727106db4a
+
 # ARCHITECTURE_READINESS.md — Final Reconciled Review
 
 **Reviewed:** 2026-11-01. **Authority:** Q01–Q200 plus explicitly locked **D01=B** and **D02=B**. **Scope:** this document originally reviewed the planning baseline. After 2026-11-01 implementation authorization, a partial preview was implemented on an isolated feature branch; see `IMPLEMENTATION_STATUS.md` for current evidence. Production has not been deployed. **Architecture review:** **COMPLETE — conditionally ready for implementation authorization**, with scientific/source evidence gates listed below. **Implementation authorization:** GRANTED 2026-11-01; feature-branch preview in progress. **Release readiness:** NOT READY.
@@ -74,3 +78,7 @@
 - **Production release readiness:** FAIL / NOT READY until all G1–G14 acceptance checks pass and user approves publish.
 
 For full details refer to `../PRODUCT.md`, `../DESIGN.md`, `REDESIGN_DECISIONS.md`, `PHYSICS_SPEC.md`, `OFF_DESIGN_MAPS_AND_NOZZLES.md`, `ENGINE_ASSEMBLIES.md`, `CURRICULUM.md`, `ASSET_PROVENANCE.md`, and `VERIFICATION_RELEASE.md`. This verdict records the final **planning** review, not a fabricated successful implementation test or independent aerodynamic validation.
+
+## Publication update — 2026-11-01
+
+The earlier review and audit statements describing an unmerged feature branch and prohibiting deployment reflect the **planning period**, before the user's subsequent explicit implementation and deployment authorizations. The visual redesign was fast-forward merged into `master` (`2ef9ec9`) and the educational preview published from `gh-pages` (`1cdf6f6`). The GitHub Pages deployment workflow completed successfully. This publication **does not** close the documented D01/D02 scientific and full-release acceptance gates. See `IMPLEMENTATION_STATUS.md` for current verification status.
