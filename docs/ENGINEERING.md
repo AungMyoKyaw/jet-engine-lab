@@ -1,5 +1,10 @@
 # Engineering model — current application
 
+## Additional 3D-only architecture studies (2026-11-01)
+
+The public interface now offers five interactive architectural models. **Only the original turbojet and high-bypass turbofan are inputs to the numerical 0D cycle described below.** Afterburning turbofan, centrifugal turbojet and geared turbofan have independently authored procedural assemblies and illustrative animations, **without numerical thrust/fuel-flow/RPM models**. Their 3D visuals and educational stage captions must not be treated as calibrated physical quantities. Details: [Five-Engine 3D Gallery](ENGINE_COLLECTION_RELEASE.md).
+
+
 **Status:** Published educational preview. This document describes the **React/TypeScript implementation actually running on the site**, not the final solver specified by [PHYSICS_SPEC.md](PHYSICS_SPEC.md) or [OFF_DESIGN_MAPS_AND_NOZZLES.md](OFF_DESIGN_MAPS_AND_NOZZLES.md).
 
 Jet Engine Lab currently supports a generic **single-spool turbojet** and a generic **two-spool, separate-flow high-bypass turbofan**. The scenes are educational assemblies, not dimension-verified production engines. The simplified steady-state model produces informative tendencies but does **not** supply calibrated off-design shaft RPM or an independently verified real-engine operating line.

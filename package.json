@@ -1,22 +1,24 @@
 {
   "name": "jet-engine-lab",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "bun run docs:check && tsc --noEmit && vite build && bun scripts/generate-precache.mjs",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "bun test src/physics.test.js src/app/physics.test.ts src/app/maps.test.ts src/app/studio/project.test.ts",
+    "test": "bun test src/physics.test.js src/app/physics.test.ts src/app/maps.test.ts src/app/studio/project.test.ts src/app/data/catalog.test.ts",
     "typecheck": "tsc --noEmit",
     "deploy": "bash scripts/deploy-pages.sh",
     "record": "bun scripts/record-website.mjs",
-    "smoke": "bun scripts/smoke-visual-first.mjs",
+    "smoke": "bun scripts/smoke-visual-first.mjs && bun scripts/smoke-engine-gallery.mjs",
     "smoke:production": "bun scripts/smoke-production.mjs",
     "smoke:all": "bun scripts/smoke-production.mjs --all-browsers",
     "smoke:visual": "bun scripts/smoke-visual-first.mjs",
     "docs:check": "bun scripts/check-docs.mjs",
-    "smoke:studio": "bun scripts/smoke-visual-first.mjs"
+    "smoke:studio": "bun scripts/smoke-visual-first.mjs",
+    "smoke:engines": "bun scripts/smoke-engine-gallery.mjs",
+    "previews:engines": "bun scripts/capture-engine-previews.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

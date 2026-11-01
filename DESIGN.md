@@ -120,3 +120,7 @@ The user approved the remaining **Q321–Q572=A** defaults and explicitly author
 ## Visual-first experience supersedes the CAD dashboard — 2026-11-01
 
 The engine route now uses a full-window single 3D engine with restrained overlays, five stage pictograms and Explore/Understand/Experiment modes. No permanent panel-heavy CAD layout. Controls remain accessible DOM and SVG; only the engine itself uses interactive WebGL. Previously approved docked-workbench defaults are deferred to optional advanced tools. See [Visual-First Release](docs/VISUAL_FIRST_RELEASE.md).
+
+## Engine-first visual collection (2026-11-01)
+
+The default UX provides a five-card engine collection with clean original 3D previews and one dominant interactive 3D scene after selection. Every engine uses the same orbit, zoom, isolation, stage-story and viewport actions. Educational effects (afterburner, radial impeller, gearbox, flow and heat) remain visibly illustrative. Cards use static WebGL render captures to avoid loading five heavyweight canvases concurrently. See [Engine Collection Release](docs/ENGINE_COLLECTION_RELEASE.md).

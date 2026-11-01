@@ -9,6 +9,7 @@ import {StudioBar} from '../studio/StudioBar';
 import {makeProject,parseProject,downloadProject,readRecovery,saveRecovery,type StudioMode,type ToolMode} from '../studio/project';
 import '../studio/studio.css';
 import {VisualLab} from '../visual/VisualLab';
+import {isCycleEngine,isVisualEngineId,type VisualEngineId} from '../data/catalog';
 import 'katex/dist/katex.min.css';
 import katex from 'katex';
 
@@ -37,7 +38,10 @@ function Formula({latex}:{latex:string}){const html=useMemo(()=>katex.renderToSt
 function Stat({label,value,unit,detail}:{label:string;value:string;unit?:string;detail?:string}){return <div className="stat"><span className="overline">{label}</span><strong className="mono">{value}<small>{unit}</small></strong>{detail&&<span className="stat-detail">{detail}</span>}</div>;}
 function useHash(){const[route,setRoute]=useState(readRoute);useEffect(()=>{const f=()=>setRoute(readRoute());window.addEventListener('hashchange',f);return()=>window.removeEventListener('hashchange',f);},[]);return route;}
 export function App(){
- const route=useHash(), engine:EngineId=route.includes('turbofan')?'turbofan':'turbojet';
+ const route=useHash();
+ const requestedEngine=route.startsWith('/engines/')?route.slice('/engines/'.length):'turbofan';
+ const visualEngine:VisualEngineId=isVisualEngineId(requestedEngine)?requestedEngine:'turbofan';
+ const engine:EngineId=isCycleEngine(visualEngine)?visualEngine:'turbofan';
  const[inputs,setInputs]=useState<Record<EngineId,Input>>(()=>({...DEFAULTS}));
  const input=inputs[engine];
  const[results,setResults]=useState<Record<EngineId,Result|null>>(()=>({turbojet:compute(DEFAULTS.turbojet),turbofan:compute(DEFAULTS.turbofan)}));
@@ -78,12 +82,12 @@ export function App(){
  const undo=()=>{const prev=undoStack.current.pop();if(!prev)return;redoStack.current.push(structuredClone(inputs));setInputs(prev);setHistoryRevision(n=>n+1)};
  const redo=()=>{const next=redoStack.current.pop();if(!next)return;undoStack.current.push(structuredClone(inputs));setInputs(next);setHistoryRevision(n=>n+1)};
  const projectView=()=>({mode:studioMode,selected,explode:Math.min(1,Math.max(0,explode)),showShell});
- const saveProject=()=>downloadProject(makeProject(projectName,inputs,engine,projectView()));
- const openProject=async(file:File|null)=>{if(!file)return;try{if(file.size>1_000_000)throw Error('Project exceeds 1 MB');const loaded=parseProject(await file.text());changeInputs(loaded.inputs);setProjectName(loaded.name);setStudioMode(loaded.view.mode);setSelected(loaded.view.selected);setExplode(loaded.view.explode);setShowShell(loaded.view.showShell);saveRecovery(loaded);nav('/engines/'+loaded.activeEngine);setError('');}catch(err){setError(err instanceof Error?err.message:'Unable to open project')}};
+ const saveProject=()=>downloadProject(makeProject(projectName,inputs,engine,projectView(),visualEngine));
+ const openProject=async(file:File|null)=>{if(!file)return;try{if(file.size>1_000_000)throw Error('Project exceeds 1 MB');const loaded=parseProject(await file.text());changeInputs(loaded.inputs);setProjectName(loaded.name);setStudioMode(loaded.view.mode);setSelected(loaded.view.selected);setExplode(loaded.view.explode);setShowShell(loaded.view.showShell);saveRecovery(loaded);nav('/engines/'+(loaded.visualEngine||loaded.activeEngine));setError('');}catch(err){setError(err instanceof Error?err.message:'Unable to open project')}};
  const newProject=()=>{changeInputs(structuredClone(DEFAULTS));setProjectName('Untitled Engine Study');setStudioMode('inspection');setExplode(0);setSelected('');nav('/engines/turbojet')};
  const selectMode=(mode:StudioMode)=>{setStudioMode(mode);if(mode==='simulation'||mode==='analysis')setAdvancedOpen(true)};
- useEffect(()=>{const restored=readRecovery();if(!restored)return;setInputs(restored.inputs);setProjectName(restored.name);setStudioMode(restored.view.mode);setShowShell(restored.view.showShell);setExplode(restored.view.explode);nav('/engines/'+restored.activeEngine);},[]);
- useEffect(()=>{if(validate(inputs.turbojet)||validate(inputs.turbofan))return;const h=window.setTimeout(()=>saveRecovery(makeProject(projectName,inputs,engine,projectView())),700);return()=>clearTimeout(h)},[inputs,engine,projectName,studioMode,selected,explode,showShell]);
+ useEffect(()=>{const restored=readRecovery();if(!restored)return;setInputs(restored.inputs);setProjectName(restored.name);setStudioMode(restored.view.mode);setShowShell(restored.view.showShell);setExplode(restored.view.explode);nav('/engines/'+(restored.visualEngine||restored.activeEngine));},[]);
+ useEffect(()=>{if(validate(inputs.turbojet)||validate(inputs.turbofan))return;const h=window.setTimeout(()=>saveRecovery(makeProject(projectName,inputs,engine,projectView(),visualEngine)),700);return()=>clearTimeout(h)},[inputs,engine,projectName,studioMode,selected,explode,showShell]);
  const reset=()=>{setInputs(p=>({...p,[engine]:{...DEFAULTS[engine]}}));setExplode(0);setSelected('');};
  const parts=PARTS[engine],part=parts.find(p=>p.id===selected)||parts[0];
  const selectPart=(id:string)=>{setSelected(id);setPartsOpen(true);};
@@ -97,7 +101,7 @@ export function App(){
  <header className="header"><button className="wordmark" onClick={()=>nav('/home')}><span className="wordmark-icon"><Layers size={18} strokeWidth={1.8}/></span><span>JET ENGINE <b>LAB</b></span><small>ENGINEERING STUDIO</small></button>
  <nav className="nav" aria-label="Main navigation">{[['/home','OVERVIEW'],['/engines/turbojet','ENGINES'],['/courses','COURSES'],['/analysis','ANALYSIS'],['/reference','REFERENCE']].map(([path,label])=><button key={path} className={((label==='ENGINES'&&route.startsWith('/engines'))||route===path)?'nav-active':''} onClick={()=>nav(path)}>{label}</button>)}</nav>
  <div className="header-actions"><span className="version">V 2.0 / ENGINEERING PREVIEW</span><IconButton title="Toggle light/dark theme" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')}>{theme==='dark'?<Sun size={18}/>:<Moon size={18}/>}</IconButton><IconButton title="About this preview" onClick={()=>nav('/reference')}><CircleHelp size={18}/></IconButton></div></header>
- {inLab?<><VisualLab engine={engine} input={input} result={result} error={error} pending={pending} theme={theme} onTheme={()=>setTheme(v=>v==='dark'?'light':'dark')} onEngine={id=>nav('/engines/'+id)} onInput={update} onOpen={()=>importRef.current?.click()} onSave={saveProject} onRoute={nav}/>{false&&<main className="lab studio-shell">
+ {inLab?<><VisualLab engine={visualEngine} input={input} result={isCycleEngine(visualEngine)?result:null} error={isCycleEngine(visualEngine)?error:''} pending={isCycleEngine(visualEngine)?pending:false} theme={theme} onTheme={()=>setTheme(v=>v==='dark'?'light':'dark')} onEngine={id=>nav('/engines/'+id)} onInput={update} onOpen={()=>importRef.current?.click()} onSave={saveProject} onRoute={nav}/>{false&&<main className="lab studio-shell">
    <StudioBar engine={engine} mode={studioMode} onMode={selectMode} tool={toolMode} onTool={setToolMode} projectName={projectName} onName={setProjectName} onNew={newProject} onOpen={()=>importRef.current?.click()} onSave={saveProject} onUndo={undo} onRedo={redo} canUndo={undoStack.current.length>0} canRedo={redoStack.current.length>0} partsOpen={partsOpen} onParts={()=>setPartsOpen(v=>!v)} advancedOpen={advancedOpen} onAdvanced={()=>setAdvancedOpen(v=>!v)} pending={pending} error={error} onRoute={nav} sectionEnabled={sectionEnabled} onSection={()=>setSectionEnabled(v=>!v)} theme={theme} onTheme={()=>setTheme(t=>t==='dark'?'light':'dark')}/>
    <div className="studio-mode-caption"><span>WORKSPACE / {studioMode.toUpperCase()}</span><span>{engine==='turbojet'?'SINGLE SPOOL':'DUAL SPOOL'} / LOCAL PROJECT</span></div>
   <div className="lab-heading"><div><div className="eyebrow"><span className="tiny-dot"/> INTERACTIVE PROPULSION / {route==='/home'?'OVERVIEW':'ENGINE WORKSPACE'}</div><h1>Inside the <em>{engine==='turbojet'?'turbojet.':'turbofan.'}</em></h1><p>Explore the machinery. Trace the energy. Investigate the limits.</p></div><div className="engine-select" role="group" aria-label="Select engine"><button onClick={()=>nav('/engines/turbojet')} className={engine==='turbojet'?'active':''}>01 <b>TURBOJET</b></button><button onClick={()=>nav('/engines/turbofan')} className={engine==='turbofan'?'active':''}>02 <b>TURBOFAN</b></button></div></div>

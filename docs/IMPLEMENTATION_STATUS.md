@@ -79,3 +79,7 @@ The screenshot-driven responsive redesign was developed on an isolated feature b
 ## Visual-first browser release — 2026-11-01
 
 The current engine route is an immersive single-engine 3D experience with a five-stage learning journey and Explore/Understand/Experiment modes. The former panel-heavy CAD workbench is no longer default. This design retains the bounded worker physics, project save/restore and visual-only airflow labels. This release does not complete physical RPM, D01 map matching, D02 nozzle closure or the original full engineering acceptance suite. See [Visual-First Release](VISUAL_FIRST_RELEASE.md).
+
+## Expanded 3D engine collection (2026-11-01)
+
+The immersive visual-first experience now includes five separately selectable procedural 3D engines, a rendered gallery, camera stage isolation, animation/visualization toggles, afterburner flame and petal controls, a radial compressor impeller/diffuser, an illustrative epicyclic gearbox and GPU-instanced airflow particles. Existing calibrated cycle coverage remains limited to the original two preview engines; new architectural visuals intentionally display **no numerical performance result**. See [Engine Collection Release](ENGINE_COLLECTION_RELEASE.md) for evidence, test scope and pending scientific work.

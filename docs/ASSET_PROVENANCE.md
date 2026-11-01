@@ -79,3 +79,7 @@ In addition to visual assets, raw compressor and turbine performance maps requir
 - **Integration:** loaded only when the user selects **CC0 reference model** on the turbofan route, via `ReferenceCutaway.tsx`; visibly marked **VISUAL ONLY — NOT THE SOLVER GEOMETRY**. Original glTF node groups preserved; quarter-cutaway transforms applied for viewport alignment and scale. No physics-linked meshes or calibrated RPM predictions claimed.
 - **Known omissions:** stators, independent concentric HP/LP spools, bearings, mounts, fuel plumbing, variable-geometry nozzle and several structural supports. For those reasons it is **not admitted as a mechanically complete model for Q42/D01/D02**, and the separate default procedural simulation geometry remains active. Attribution included voluntarily despite CC0 status.
 - **Performance limitation:** ~3.5 MB additional optional download, not prefetched when the reference mode is inactive. Source GLB is copyright-free but remains scientifically illustrative only.
+
+## Additional original 3D gallery previews — 2026-11-01
+
+The five PNG files under `public/assets/engine-previews/` are screenshots of **original procedurally generated Three.js jet-engine geometry** created by `scripts/capture-engine-previews.mjs` from this repository's own WebGL scenes. They introduce no separate third-party model license, stock photography, remote image host or S3 dependency. Existing environment HDRI and font license notices above still apply to the scene rendering. Their use is illustrative and not a claim of OEM geometry accuracy.

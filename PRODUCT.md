@@ -95,3 +95,7 @@ The user approved the remaining **Q321–Q572=A** defaults and explicitly author
 ## Superseding visual-first product direction — 2026-11-01
 
 The user authorized a release-oriented pivot: **one dominant interactive 3D jet engine**, a five-stage visual learning journey, short captions and Explore/Understand/Experiment modes. Permanent CAD sidebars and text-heavy workspaces are deferred. Q201–Q572 remains an archive of long-term design goals, not a claim that each ships in this release. Existing D01=B/D02=B scientific gates remain mandatory. See [Visual-First Release](docs/VISUAL_FIRST_RELEASE.md).
+
+## Released direction — five interactive 3D engine architectures (2026-11-01)
+
+The visual-first engine gallery now includes turbojet, high-bypass turbofan, afterburning turbofan, centrifugal turbojet and geared turbofan. One live Three.js engine is rendered at a time; the gallery uses lightweight captures of the same procedural models. Stage isolation and architecture-specific illustrative demonstrations prioritize showing, not describing. The three new architectures are visual-only and may not advertise calculated performance. D01=B and D02=B still gate physical off-design acceptance. Full release scope: [Engine Collection Release](docs/ENGINE_COLLECTION_RELEASE.md).

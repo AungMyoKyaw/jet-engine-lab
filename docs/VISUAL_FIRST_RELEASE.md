@@ -44,3 +44,7 @@ Source: `master`. Static deployment: `gh-pages`, GitHub Pages. Complete smoke te
 ## Browser verification detail
 
 Chromium and WebKit production checks passed for the immersive 3D scene and Reference. Chromium service-worker offline Reference check passed. The local Playwright Firefox launcher did not start (`Could not find profile folder`), so Firefox compatibility is not yet independently verified. This is an environment-level test blockage, not evidence that the application works or fails in Firefox.
+
+## Five-engine collection expansion — 2026-11-01
+
+The visual-first experience now includes three new procedural 3D architecture studies, a gallery of five engine models, scene-anchored focus, illustrative in-engine airflow particles, heat/power/ghost modes, afterburner flame/nozzle-petal controls and gearbox/radial-compressor visuals. Only turbojet and high-bypass turbofan retain preliminary numerical cycle readouts. The other three intentionally report no numerical model. See [Engine Collection Release](ENGINE_COLLECTION_RELEASE.md).

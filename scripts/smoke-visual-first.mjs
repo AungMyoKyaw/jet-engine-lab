@@ -33,8 +33,10 @@ try {
  await desktop.getByRole('menuitem',{name:'Save experiment'}).click();
  const file=await downloadEvent;
  if(!file.suggestedFilename().endsWith('.jetlab.json'))issues.push('project download extension');
- await desktop.getByRole('button',{name:'TURBOJET'}).click();
- await desktop.getByText('SINGLE STREAM').waitFor();
+ await desktop.getByRole('button',{name:/EXPLORE THE COLLECTION/}).click();
+ await desktop.getByRole('dialog',{name:'Explore five jet engines'}).waitFor();
+ await desktop.getByRole('button',{name:'Explore Turbojet'}).click();
+ await desktop.getByText('01 / THE ORIGINAL').waitFor();
  await desktop.getByRole('button',{name:'Toggle engine casing'}).click();
  await desktop.getByRole('button',{name:'Reset 3D view'}).click();
  await desktop.getByRole('button',{name:'Toggle theme'}).click();
