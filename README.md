@@ -1,93 +1,74 @@
 # Jet Engine Lab
 
-A jet engine makes more sense when you can open it up.
+**Interactive 3D engineering preview · React 19 + TypeScript + React Three Fiber + Three.js**
 
-Jet Engine Lab is a small, interactive explanation of a single-spool turbojet. Rotate the engine, expose the compressor and turbine, and follow the airflow from inlet to nozzle. The instruments are connected to a simplified thermodynamic model, so changing a setting changes the station pressures, temperatures, fuel flow, and thrust—not just the animation.
+Jet Engine Lab investigates how an axial turbojet and a separate-flow, two-spool high-bypass turbofan exchange shaft work, add fuel energy, and generate thrust. It combines an interactive CAD-inspired viewport, a compact instrument panel, preliminary station-cycle calculations, technical reference maps, and an introductory 15-topic learning index.
 
-![Cutaway view of the turbojet with live instrument readings](docs/preview.png)
+**Development status: engineering preview, not a release-ready or validated engine simulator.** The current model does **not** predict independently validated N1/N2 RPM, and its mapped off-design closure is not complete. The public data tables are available for inspection but are not yet coupled to the thermodynamic solver. Do not use its output for real-engine design, operation or safety decisions.
 
-**Try it:** Open the live demo from this repository's **About → Website** link.
+![Redesign desktop workbench](docs/redesign-desktop.png)
 
-## Explore the engine
+## Run on macOS/Linux
 
-The 3D model has five selectable sections: intake, axial compressor, combustor, turbine, and exhaust nozzle. Drag to orbit, scroll to zoom, and use **Cutaway**, **Explode**, or **Auto tour** to look inside.
+Requires **Bun** and a WebGL-capable browser. No paid tools.
 
-Below the model, five controls let you change throttle, compressor pressure ratio, air mass flow, altitude, and flight Mach number. Two graphs trace the calculated temperature and pressure through six stations. You can also study an airfoil at different angles of attack, explore rotor-relative velocity triangles, and work through a short self-check.
-
-The model is intentionally a **turbojet**, not a modern high-bypass turbofan. There is no bypass stream or second spool to hide the basic energy flow.
-
-## Run locally
-
-[Bun](https://bun.sh/) and a browser with WebGL support are all you need. No dependency installation, account, or API key is required.
-
-```sh
-# Clone this repository using GitHub's Code menu, then:
-cd jet-engine-lab
+```bash
+bun install --frozen-lockfile
 bun run dev
-```
+# http://127.0.0.1:4173/#/engines/turbojet
 
-Open **http://127.0.0.1:4173**.
-
-For a static production build:
-
-```sh
-bun test
+bun run typecheck
+bun run test
 bun run build
 bun run preview
+bun run smoke
+bun run smoke:production
 ```
 
-The finished site is in `dist/`. You can serve that directory with any static file host. Three.js is vendored so the simulation also runs without a network connection once the files are available.
+The Vite production build is in `dist/`, configured for a GitHub Pages project subpath `/jet-engine-lab/`. A versioned service worker precaches the shell, worker and Reference modules, then caches recently requested large 3D assets at runtime. A local production-subpath/offline smoke test is available. Hash routes avoid server-side rewrite requirements.
 
-## Publish updates
+**No deployment is performed by any build or test command.** The existing `bun run deploy` script publishes to `gh-pages`; do not use it until the verified release is explicitly approved.
 
-GitHub Pages serves the separate `gh-pages` branch. After editing the site, run:
+## What works in this preview
 
-```sh
-bun run deploy
-```
+- **Two distinct scenes:** single-spool turbojet and separate-flow two-spool turbofan, clickable assemblies, cutaway shells, exploded view and orbit navigation; mobile camera adjustments, self-hosted CC0 Poly Haven studio HDRI and procedural instanced airfoil-like rotor blade meshes.
+- **Preliminary numerical model:** temperature-dependent heat-capacity approximation, ISA atmosphere, compressor and turbine work, core/bypass nozzle capacity, effective/throat area distinction, choked flow indication, thrust and fuel flow. Inputs are range-validated, worker calculations are versioned, and the last accepted result remains on failed input.
+- **Engineering workspace:** dark/light CAD theme, persistent compact telemetry, SI/aviation input display, station plots, CSV export, paired-engine analysis, source-backed equations and Credits.
+- **Learning:** a 15-topic curriculum index with introductory explanations, experiment prompts, self-check explanations and locally stored reviewed status. The complete source-verified chapter text/assessments are **not** yet implemented.
+- **Public map research:** five pinned Apache-2.0 pyCycle reference tables (Fan, LPC, HPC, HPT, LPT), bilinear interpolation with no extrapolation, original source SHA-256 hashes, and an interactive map explorer under Reference.
+- **Build/test:** strict TypeScript, Bun unit tests, browser route screenshots and smoke automation, Impeccable detector, preview-specific provenance records.
 
-This tests the calculations, rebuilds the static files, and publishes the updated output to `gh-pages`. It requires push access to the repository, but does not need a GitHub Actions workflow token. Source changes belong on `master`; the deployment branch contains only the built site.
+## Scientific gaps that block final acceptance
 
-## Record the complete website
+1. **D01=B — mapped off-design RPM:** acquire and independently calibrate each map with a reference design point, solve component map working lines, shaft matching, mass and nozzle closure as one nonlinear system, and validate physical RPM against independent model reference cases. Current N1/N2 readouts intentionally display **—**.
+2. **D02=B — complete coupled variable nozzle:** the preview changes effective area, preliminary flow capacity and a corresponding parametric 3D throat, but does not yet close all mapped off-design equations with varying core/bypass nozzles and shaft speed.
+3. **Geometry:** major assemblies are mechanically distinct but still procedural. Detailed reference dimensions, bearings/supports, accurate independent shaft rigging, section-plane tools, LODs, and licensed imported high-resolution model components require further implementation and independent quality evidence.
+4. **Curriculum and accessibility:** full substantive modules, fully assessed numerical answers, 2D technical fallback, robust progress migration and reports are not complete.
+5. **Release:** multi-browser, measured GPU performance, independent physics reference fixtures, accessibility audit, offline update/rollback tests and complete recording must pass before GitHub Pages deployment.
 
-The recording script captures a 1600 × 900 browser viewport from the page header through the footer. It inspects each engine stage, changes the live controls, visits the airfoil and rotor-velocity laboratories, shows the cycle analysis and knowledge check, and finishes with an overlapping top-to-bottom coverage pass. The recording is converted to an H.264 MP4 using FFmpeg.
+See [implementation status](docs/IMPLEMENTATION_STATUS.md), [approved decisions](docs/REDESIGN_DECISIONS.md), [product specification](PRODUCT.md), [design system](DESIGN.md), [map/nozzle contract](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md), [physics specification](docs/PHYSICS_SPEC.md) and [release criteria](docs/VERIFICATION_RELEASE.md).
 
-Install the optional recording dependency once:
+## Source structure
 
-```sh
-bun add --dev playwright
-```
+| Path | Responsibility |
+|---|---|
+| `src/app/ui/` | React application, routes, CAD interface and CSS |
+| `src/app/engine/` | R3F/Three procedural engine scenes and animation |
+| `src/app/physics/` | Preliminary cycle solver, map interpolation and Web Worker |
+| `src/app/data/maps/` | Reproducible derived public pyCycle tabular map datasets |
+| `src/app/components/MapExplorer.tsx` | Interactive reference map inspector |
+| `scripts/import-pycycle-maps.py` | Source-pinned, AST-only public table extraction |
+| `scripts/smoke-redesign.mjs` | Browser route and interaction test |
+| `src/physics.js` / `src/scene.js` | Preserved original engine implementation for comparison |
+| `docs/` | Engineering, design, provenance and verification evidence |
 
-Then use the published site's URL or a local production preview:
+## Assets, credits and licensing
 
-```sh
-RECORD_URL="https://your-account.github.io/jet-engine-lab/" bun run record
-```
+- **Procedural engine geometry:** original code in this repository; see project [MIT LICENSE](LICENSE) for the project source.
+- **Turbofan cutaway visual study:** [Innerscene original CC0 mesh](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203); optional visual reference only, missing many mechanical assemblies, not used in the solver. Source hash and omissions in `docs/ASSET_PROVENANCE.md`.
+- **Studio Small 08 HDRI:** Sergej Majboroda, [Poly Haven](https://polyhaven.com/a/studio_small_08), CC0. Local 1K HDR; its exact SHA-256 and direct source are recorded in `docs/ASSET_PROVENANCE.md`.
+- **pyCycle map source:** [OpenMDAO/pyCycle](https://github.com/OpenMDAO/pyCycle), Apache-2.0; pinned commit and raw source hashes embedded in each derived JSON table. Open numerical map data are **not** evidence of an independently validated physical engine RPM prediction.
+- **Typography:** IBM Plex Sans/Mono, self-hosted through Fontsource under the SIL Open Font License.
+- **Reference physics:** [NASA Glenn](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/turbine-engines/) and the linked documents in the engineering specification.
 
-The MP4, sample frames and a timestamped coverage report are written to `recordings/` (Git-ignored). The report records visible sections and browser errors. Recording requires Playwright's Chromium and FFmpeg; the interactive website itself doesn't require either. The video is intentionally silent.
-
-## How it's organized
-
-| File | Role |
-| --- | --- |
-| `src/scene.js` | Procedural 3D model, camera, animation, cutaway and component interaction |
-| `src/physics.js` | Atmosphere, turbojet station states, thrust, airfoil model and velocity triangle |
-| `src/main.js` | Controls, charts, lessons and instrument readouts |
-| `src/physics.test.js` | Calculation tests and representative operating points |
-| `src/build.js` | Dependency-free Bun static bundler |
-| `src/server.js` | Minimal local development/preview server |
-| `docs/ENGINEERING.md` | Equations, assumptions, references and known limits |
-
-## What the numbers mean
-
-This is a **steady-state, zero-dimensional teaching model**. Component efficiencies and gas properties are fixed, the atmosphere follows an ISA approximation, and the nozzle uses an idealized convergent-flow calculation. The compressor, burner, turbine, and nozzle obey the same energy and momentum balances that drive the instruments.
-
-It's useful for answering questions such as “why does compressor work rise with pressure ratio?” and “where does the turbine's power go?” It isn't a compressor map, CFD solver, control-system model, or a substitute for engine design data. The rotor blades are illustrative rather than dimensioned replicas.
-
-See [Engineering notes](docs/ENGINEERING.md) for every major assumption and equation.
-
-## Sources and credits
-
-The explanations follow the introductory gas-turbine material from [NASA Glenn](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/turbine-engines/), including its [Brayton-cycle](https://www.grc.nasa.gov/www/k-12/BGP/brayton.html) and [axial-compressor](https://www.grc.nasa.gov/www/k-12/airplane/caxial.html) introductions. The [FAA's engine familiarization guide](https://www.faa.gov/sites/faa.gov/files/aircraft/air_cert/design_approvals/engine_prop/engine_malf_famil.pdf) provides useful operational context.
-
-Rendered with [Three.js](https://threejs.org/), distributed under its own MIT license in `src/vendor/LICENSE.three.js`. The project source is MIT-licensed; see [LICENSE](LICENSE).
+No proprietary engine manufacturer identity or logo is implied. Separate licenses apply to external assets; the MIT source license does not relicense independently authored third-party material.

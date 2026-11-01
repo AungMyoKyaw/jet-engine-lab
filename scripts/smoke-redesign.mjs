@@ -1,0 +1,30 @@
+import { chromium } from '@playwright/test';
+const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:1600,height:900},deviceScaleFactor:1});
+const errors=[];page.on('pageerror',e=>errors.push('PAGE '+e.message));page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE '+m.text())});
+for(const path of ['#/engines/turbojet','#/engines/turbofan','#/courses','#/analysis','#/reference','#/credits']){
+ await page.goto('http://127.0.0.1:4173/'+path,{waitUntil:'domcontentloaded'});
+ await page.waitForTimeout(800);
+ console.log(path,'title=',await page.title(),'h1=',await page.locator('h1').first().textContent(),'canvas=',await page.locator('canvas').count());
+ if(path.includes('turbojet'))await page.screenshot({path:'docs/redesign-desktop.png',fullPage:true});
+ if(path.includes('turbofan'))await page.screenshot({path:'docs/redesign-turbofan.png',fullPage:true});
+}
+await page.goto('http://127.0.0.1:4173/#/engines/turbojet');
+await page.locator('.viewport canvas').waitFor({state:'visible'});
+await page.getByRole('button',{name:'TURBOFAN'}).first().click();
+await page.waitForURL('**/#/engines/turbofan'); await page.getByRole('heading',{name:'Inside the turbofan.'}).waitFor();
+console.log('switch',await page.locator('h1').first().textContent());
+await page.goto('http://127.0.0.1:4173/#/reference');await page.getByText('Component map explorer').waitFor();await page.getByRole('button',{name:'HPC',exact:true}).click();
+console.log('map-preview',await page.getByText('PRESSURE RATIO',{exact:true}).count());
+await page.goto('http://127.0.0.1:4173/#/engines/turbofan');await page.locator('canvas').waitFor();await page.waitForTimeout(1600);
+await page.locator('select[aria-label="Camera view"]').selectOption('side');await page.waitForTimeout(400);
+if(await page.locator('select[aria-label="Camera view"]').inputValue()!=='side')throw Error('Camera preset failed');
+await page.getByRole('button',{name:'RESET VIEW'}).click();
+if(await page.locator('select[aria-label="Camera view"]').inputValue()!=='threequarter')throw Error('Camera reset failed');
+await page.getByRole('button',{name:'CC0 REFERENCE MODEL'}).click();await page.getByText('CC0 REFERENCE STUDY',{exact:false}).waitFor();await page.waitForTimeout(1100);
+await page.screenshot({path:'docs/redesign-cc0-reference.png',fullPage:true});
+await page.getByRole('button',{name:'SIMULATION MODEL'}).click();
+await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:4173/#/engines/turbofan');await page.locator('canvas').waitFor();await page.waitForTimeout(1850);await page.screenshot({path:'docs/redesign-mobile.png',fullPage:true});
+console.log('ERRORS',JSON.stringify(errors.slice(0,15)));
+await browser.close();
+if(errors.length)process.exitCode=1;
