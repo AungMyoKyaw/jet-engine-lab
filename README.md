@@ -1,93 +1,93 @@
-File: projects/jet-engine-lab/README.md
-Lines: 1-80 of 80
-SHA-256: be33faaac05a647b4069028062cf3cc67620596abc715999f1a0c91abd350206
-
 # Jet Engine Lab
 
-**Interactive 3D engineering preview · React 19 + TypeScript + React Three Fiber + Three.js**
+**Explore how turbojets and turbofans work—from rotating assemblies to the thermodynamic cycle.**
 
-Jet Engine Lab investigates how an axial turbojet and a separate-flow, two-spool high-bypass turbofan exchange shaft work, add fuel energy, and generate thrust. It combines an interactive CAD-inspired viewport, a compact instrument panel, preliminary station-cycle calculations, technical reference maps, and an introductory 15-topic learning index.
+[**Launch the interactive lab**](https://aungmyokyaw.github.io/jet-engine-lab/) · [Engineering model](docs/ENGINEERING.md) · [Contributing](CONTRIBUTING.md)
 
-**Development status: engineering preview, not a release-ready or validated engine simulator.** The current model does **not** predict independently validated N1/N2 RPM, and its mapped off-design closure is not complete. The public data tables are available for inspection but are not yet coupled to the thermodynamic solver. Do not use its output for real-engine design, operation or safety decisions.
+Jet Engine Lab is a free, browser-based engineering learning project. Inspect two distinct jet-engine architectures in 3D, adjust operating conditions, explore station pressure and temperature, and study the mechanics of thrust. Built with **React 19, TypeScript, Three.js, React Three Fiber and Bun**.
 
-## Latest screenshots
+> **Scientific status: educational preview.** The current solver is a preliminary steady-state approximation—not a calibrated off-design engine-performance model. Absolute shaft RPM (N1/N2) is deliberately unavailable. Results must not be used to design, operate or certify real engines. The live website is published, but scientific acceptance is still incomplete.
 
-### Turbofan engineering workspace — desktop
+## Screenshots
 
-![Jet Engine Lab 2.0: interactive turbofan CAD workspace, 1920px desktop](docs/visual-audit/after/turbofan-1920.png)
+**Turbofan — desktop engineering workspace**
 
-| Turbojet desktop | Turbofan mobile |
+![Turbofan workbench with interactive engine, part inspector controls and compact telemetry](docs/visual-audit/after/turbofan-1920.png)
+
+| Turbojet — desktop | Turbofan — mobile |
 |:---:|:---:|
-| ![Turbojet simulator with expanded 3D viewport](docs/visual-audit/after/turbojet-1440.png) | ![Responsive turbofan simulator and quick throttle on mobile](docs/visual-audit/after/turbofan-mobile-390.png) |
+| ![Turbojet engine in the responsive CAD workbench](docs/visual-audit/after/turbojet-1440.png) | ![Turbofan mobile workspace with engine and quick throttle](docs/visual-audit/after/turbofan-mobile-390.png) |
 
-The redesigned workspace uses responsive engine framing, an always-visible compact telemetry dock, a collapsible component inspector, and an in-viewport throttle. See the [Playwright before/after audit](docs/visual-audit/REVIEW.md) for additional captures, including light mode, mobile inspector, and fully exploded assemblies.
+[See the full before-and-after visual audit](docs/visual-audit/REVIEW.md), including the mobile component inspector, light theme and fully exploded assemblies.
 
-## Run on macOS/Linux
+## Explore the lab
 
-Requires **Bun** and a WebGL-capable browser. No paid tools.
+- **Engines:** Separate single-spool turbojet and two-spool, separate-flow turbofan models. Orbit, zoom, inspect assemblies, toggle the casing, explode parts and select camera presets. The workspace uses adaptive framing, a contextual component inspector, compact telemetry and a quick throttle.
+- **Operating conditions:** Change throttle, altitude, Mach number, compressor design pressure ratio and effective nozzle area. The turbofan also exposes bypass-ratio and independent bypass-nozzle controls. Invalid input is rejected; the previous accepted result remains visible.
+- **Analysis:** Review approximate station temperatures and pressures, thrust, fuel flow, flow split and fuel consumption. Export station data as CSV and inspect both engine types side by side. **The baseline engines have different design assumptions; this is not a calibrated, matched-condition performance comparison.**
+- **Courses:** Fifteen introductory learning topics with explanations, experiment prompts and self-check questions. Reviewed-state progress stays in your browser. These are **outlines**, not yet the complete validated engineering course.
+- **Reference:** Equations, assumptions, source links and a map explorer with five source-pinned [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) compressor/turbine reference datasets. These maps are inspectable but **not yet coupled to the engine solver**.
+- **Accessibility and mobile:** Responsive layouts, keyboard-operated controls, reduced-motion support and a labeled 2D schematic when WebGL is unavailable. Full accessibility acceptance remains outstanding.
+
+The optional, independently credited [Innerscene CC0 turbofan cutaway](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203) is a **visual reference**, not the mechanically complete solver geometry.
+
+## Run locally
+
+Requires [Bun](https://bun.sh/) and a modern browser. Install Playwright browser binaries if you want to run the browser checks.
 
 ```bash
 bun install --frozen-lockfile
 bun run dev
-# http://127.0.0.1:4173/#/engines/turbojet
+# Open http://127.0.0.1:4173/#/engines/turbofan
+```
 
+### Verify a change
+
+```bash
+bun run docs:check       # Markdown links and accidental tool-output metadata
 bun run typecheck
 bun run test
 bun run build
-bun run preview
-bun run smoke
-bun run smoke:production
-bun run smoke:visual       # six viewport/workbench interaction checks
+bun run smoke             # Chromium routes and interactions
+bun run smoke:visual      # Six responsive viewport checks
+bun run smoke:production  # GitHub Pages-style build and offline check
 ```
 
-The Vite production build is in `dist/`, configured for a GitHub Pages project subpath `/jet-engine-lab/`. A versioned service worker precaches the shell, worker and Reference modules, then caches recently requested large 3D assets at runtime. A local production-subpath/offline smoke test is available. Hash routes avoid server-side rewrite requirements.
+`bun run build` generates `dist/` with a `/jet-engine-lab/` base path and a versioned offline shell. `bun run preview` serves the production build. Hash routing makes the static site compatible with GitHub Pages.
 
-**Build and test commands never deploy.** Release maintainers use `bun run deploy` to publish the verified static preview to the dedicated `gh-pages` branch, after merging approved source changes to `master`. Deployment does not certify engineering accuracy; the model limitations below remain applicable.
+**Publishing:** `master` is the source branch. The site is served from `gh-pages` using `bun run deploy`, which rebuilds, tests and pushes the static distribution. Build, test and preview commands do not deploy. See [Contributing](CONTRIBUTING.md) before changing the release process.
 
-## What works in this preview
+## Implementation map
 
-- **Two distinct scenes:** single-spool turbojet and separate-flow two-spool turbofan, clickable assemblies, cutaway shells, exploded view and orbit navigation; mobile camera adjustments, self-hosted CC0 Poly Haven studio HDRI and procedural instanced airfoil-like rotor blade meshes.
-- **Preliminary numerical model:** temperature-dependent heat-capacity approximation, ISA atmosphere, compressor and turbine work, core/bypass nozzle capacity, effective/throat area distinction, choked flow indication, thrust and fuel flow. Inputs are range-validated, worker calculations are versioned, and the last accepted result remains on failed input.
-- **Engineering workspace:** dark/light CAD theme, persistent compact telemetry, SI/aviation input display, station plots, CSV export, paired-engine analysis, source-backed equations and Credits.
-- **Learning:** a 15-topic curriculum index with introductory explanations, experiment prompts, self-check explanations and locally stored reviewed status. The complete source-verified chapter text/assessments are **not** yet implemented.
-- **Public map research:** five pinned Apache-2.0 pyCycle reference tables (Fan, LPC, HPC, HPT, LPT), bilinear interpolation with no extrapolation, original source SHA-256 hashes, and an interactive map explorer under Reference.
-- **Build/test:** strict TypeScript, Bun unit tests, browser route screenshots and smoke automation, Impeccable detector, preview-specific provenance records.
-
-## Scientific gaps that block final acceptance
-
-1. **D01=B — mapped off-design RPM:** acquire and independently calibrate each map with a reference design point, solve component map working lines, shaft matching, mass and nozzle closure as one nonlinear system, and validate physical RPM against independent model reference cases. Current N1/N2 readouts intentionally display **—**.
-2. **D02=B — complete coupled variable nozzle:** the preview changes effective area, preliminary flow capacity and a corresponding parametric 3D throat, but does not yet close all mapped off-design equations with varying core/bypass nozzles and shaft speed.
-3. **Geometry:** major assemblies are mechanically distinct but still procedural. Detailed reference dimensions, bearings/supports, accurate independent shaft rigging, section-plane tools, LODs, and licensed imported high-resolution model components require further implementation and independent quality evidence.
-4. **Curriculum and accessibility:** full substantive modules, fully assessed numerical answers, 2D technical fallback, robust progress migration and reports are not complete.
-5. **Release:** multi-browser, measured GPU performance, independent physics reference fixtures, accessibility audit, offline update/rollback tests and complete recording must pass before GitHub Pages deployment.
-
-See [implementation status](docs/IMPLEMENTATION_STATUS.md), [approved decisions](docs/REDESIGN_DECISIONS.md), [product specification](PRODUCT.md), [design system](DESIGN.md), [map/nozzle contract](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md), [physics specification](docs/PHYSICS_SPEC.md) and [release criteria](docs/VERIFICATION_RELEASE.md).
-
-## Visual workbench and responsive behavior
-
-The engine workspace uses an auto-fitting 3D camera (including exploded assemblies), a collapsible component inspector, an always-visible compact telemetry dock, a first-screen throttle control, and an accessible mobile inspector sheet. Detailed desktop/mobile [Playwright before/after screenshots and measured UI audit](docs/visual-audit/REVIEW.md) document the layout changes.
-
-## Source structure
-
-| Path | Responsibility |
+| Path | What it owns |
 |---|---|
-| `src/app/ui/` | React application, routes, CAD interface and CSS |
-| `src/app/engine/` | R3F/Three procedural engine scenes and animation |
-| `src/app/physics/` | Preliminary cycle solver, map interpolation and Web Worker |
-| `src/app/data/maps/` | Reproducible derived public pyCycle tabular map datasets |
-| `src/app/components/MapExplorer.tsx` | Interactive reference map inspector |
-| `scripts/import-pycycle-maps.py` | Source-pinned, AST-only public table extraction |
-| `scripts/smoke-redesign.mjs` | Browser route and interaction test |
-| `src/physics.js` / `src/scene.js` | Preserved original engine implementation for comparison |
-| `docs/` | Engineering, design, provenance and verification evidence |
+| `src/app/ui/` | React application, navigation, workspace and styles |
+| `src/app/engine/` | Three.js / React Three Fiber engine scenes and optional reference cutaway |
+| `src/app/physics/cycle.ts` | Preliminary station-cycle calculations and input validation |
+| `src/app/physics/maps.ts` | Bounded reference-map interpolation; **not** a coupled off-design solver |
+| `src/app/physics/worker.ts` | Versioned calculations off the main UI thread |
+| `src/app/data/` | Component registry, course outlines and source-pinned map tables |
+| `src/app/components/MapExplorer.tsx` | Technical reference-map viewer |
+| `scripts/import-pycycle-maps.py` | Reproducible, pinned map-table extraction |
+| `scripts/smoke-*.mjs`, `scripts/verify-visual-workspace.mjs` | Browser, responsive and production checks |
+| `src/physics.js`, `src/scene.js` | Preserved **legacy** turbojet implementation; not the current React application |
 
-## Assets, credits and licensing
+## What is not yet validated
 
-- **Procedural engine geometry:** original code in this repository; see project [MIT LICENSE](LICENSE) for the project source.
-- **Turbofan cutaway visual study:** [Innerscene original CC0 mesh](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203); optional visual reference only, missing many mechanical assemblies, not used in the solver. Source hash and omissions in `docs/ASSET_PROVENANCE.md`.
-- **Studio Small 08 HDRI:** Sergej Majboroda, [Poly Haven](https://polyhaven.com/a/studio_small_08), CC0. Local 1K HDR; its exact SHA-256 and direct source are recorded in `docs/ASSET_PROVENANCE.md`.
-- **pyCycle map source:** [OpenMDAO/pyCycle](https://github.com/OpenMDAO/pyCycle), Apache-2.0; pinned commit and raw source hashes embedded in each derived JSON table. Open numerical map data are **not** evidence of an independently validated physical engine RPM prediction.
-- **Typography:** IBM Plex Sans/Mono, self-hosted through Fontsource under the SIL Open Font License.
-- **Reference physics:** [NASA Glenn](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/turbine-engines/) and the linked documents in the engineering specification.
+1. **D01 — Actual off-design RPM:** calibrated compressor/turbine maps, coupled compressor/flow/spool matching and independently verified physical N1/N2 RPM. Numerical RPM remains unavailable instead of being fabricated.
+2. **D02 — Fully coupled variable-area nozzles:** the preview demonstrates effective-area controls and corresponding geometry, but does not yet solve the complete map/nozzle/shaft operating point.
+3. **Mechanical fidelity:** detailed verified dimensions, bearings, shaft clearances, sectioning, high-detail LODs and complete explosion/geometry acceptance.
+4. **Teaching and release:** full-length assessed chapters, complete screen-reader and multi-browser verification, measured performance, and an independently reviewed numerical reference suite.
 
-No proprietary engine manufacturer identity or logo is implied. Separate licenses apply to external assets; the MIT source license does not relicense independently authored third-party material.
+Track the precise state in [Implementation Status](docs/IMPLEMENTATION_STATUS.md). The approved long-term requirements live in [PRODUCT.md](PRODUCT.md) and [DESIGN.md](DESIGN.md); they are **targets**, not declarations that every feature is complete. The scientific acceptance gates are in [Physics Spec](docs/PHYSICS_SPEC.md), [Off-Design Maps & Nozzles](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md) and [Verification & Release](docs/VERIFICATION_RELEASE.md).
+
+## Credits and licensing
+
+Jet Engine Lab's original source is released under the [MIT License](LICENSE). Third-party material retains its own terms:
+
+- **Studio Small 08 HDRI** — Sergej Majboroda / [Poly Haven](https://polyhaven.com/a/studio_small_08), CC0.
+- **Optional turbofan cutaway** — [Innerscene](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203), CC0; illustrative only.
+- **Reference component maps** — [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle), Apache-2.0; source commit and hashes recorded with the datasets.
+- **IBM Plex Sans / IBM Plex Mono** — SIL Open Font License; self-hosted using Fontsource.
+
+See the [asset provenance register](docs/ASSET_PROVENANCE.md) and [public Credits page](https://aungmyokyaw.github.io/jet-engine-lab/#/credits). The included datasets and visual references do not imply endorsement by any manufacturer or validation of real-engine performance.

@@ -1,15 +1,11 @@
-File: projects/jet-engine-lab/docs/ARCHITECTURE_READINESS.md
-Lines: 1-77 of 77
-SHA-256: 5344d382c84f48a4bb9c6c8d2c61cd1f6e82c8919992e34c1f0421727106db4a
-
 # ARCHITECTURE_READINESS.md — Final Reconciled Review
 
-**Reviewed:** 2026-11-01. **Authority:** Q01–Q200 plus explicitly locked **D01=B** and **D02=B**. **Scope:** this document originally reviewed the planning baseline. After 2026-11-01 implementation authorization, a partial preview was implemented on an isolated feature branch; see `IMPLEMENTATION_STATUS.md` for current evidence. Production has not been deployed. **Architecture review:** **COMPLETE — conditionally ready for implementation authorization**, with scientific/source evidence gates listed below. **Implementation authorization:** GRANTED 2026-11-01; feature-branch preview in progress. **Release readiness:** NOT READY.
+**Reviewed:** 2026-11-01. **Authority:** Q01–Q200 plus explicitly locked **D01=B** and **D02=B**. **Scope:** this document originally reviewed the planning baseline. After 2026-11-01 implementation authorization, a partial preview was implemented on an isolated feature branch; see `IMPLEMENTATION_STATUS.md` for current evidence. The educational preview has since been published from `master`/`gh-pages`; see the publication update below. **Architecture review:** **COMPLETE — conditionally ready for implementation authorization**, with scientific/source evidence gates listed below. **Implementation authorization:** GRANTED 2026-11-01; public educational preview deployed. Full scientific acceptance remains incomplete. **Release readiness:** NOT READY.
 
 ## 1. Final decisions — CLOSED
 - **D01=B: map-based off-design actual shaft RPM prediction.** Require source-traceable, redistributable, independently validated compressor and turbine maps with corrected-flow/corrected-speed characteristics; calibrated physical RPM, turbine/compressor matching, LP/HP torque/power closure and source-domain checks. TJ one shaft, TF two shafts. Accept no merely illustrative RPM as fulfillment. Do not conflate a generic-engine model prediction with actual OEM engine performance.
 - **D02=B: adjustable effective nozzle throat area.** TJ A8 and separate TF core A8 and bypass A18, with discharge-coefficient and physical area relation, coupled nozzle flow/mass capacity and influence on thrust/shaft matching; corresponding parametric rendered throat geometry, area labels and safety ranges must update from same valid solver result. Not a UI-only graphic slider.
-- Q01–Q200 preserved exactly; D01/D02 supplement, not change them. No further genuinely unresolved **user-choice** questions remain. Any missing data remain documented engineering verification dependencies. User explicitly forbids implementation, commit and deployment until subsequent explicit authorization.
+- Q01–Q200 preserved exactly; D01/D02 supplement, not change them. No further genuinely unresolved **user-choice** questions remain. Any missing data remain documented engineering verification dependencies. At the original planning checkpoint implementation/deployment required additional authorization; those permissions were subsequently granted for this educational preview.
 
 ## 2. Contradictions and compatibility matrix
 | ID | Interacting approvals | Final resolution | Remaining evidence |
@@ -73,7 +69,7 @@ SHA-256: 5344d382c84f48a4bb9c6c8d2c61cd1f6e82c8919992e34c1f0421727106db4a
 - **Requirements completeness:** PASS — Q01–Q200 and D01=B/D02=B captured, all architectural user decisions closed.
 - **Cross-document design coherence:** PASS *at specification level*, subject to actual map/nozzle feasibility testing in E01–E04.
 - **Architecture-definition readiness:** **CONDITIONAL PASS**, not claim of tested engineering feasibility. Core interfaces, state, source policies, degrees-of-freedom strategy, visuals and QA gates specified. Map source and absolute rpm calibration are the critical unresolved *data evidence*.
-- **Implementation authorization:** **GRANTED 2026-11-01**. Work proceeds on the isolated implementation feature branch; merge and public deployment remain contingent on passing final gates and review.
+- **Implementation authorization:** **GRANTED 2026-11-01**. The educational preview has been merged and published; validated scientific release remains gated on independent numerical, asset and quality evidence.
 - **Technical implementation completeness:** PARTIAL. React migration, initial engine scenes, optional CC0 reference model, preliminary thermodynamics, reference map imports, and limited QA exist; calibrated off-design RPM, fully coupled nozzle physics and other release requirements are incomplete. See `IMPLEMENTATION_STATUS.md`.
 - **Production release readiness:** FAIL / NOT READY until all G1–G14 acceptance checks pass and user approves publish.
 

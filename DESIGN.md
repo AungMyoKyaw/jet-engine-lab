@@ -89,7 +89,7 @@ Independent camera state per engine, but explicit model switching retains matchi
 Wordmark **Jet Engine Lab**, restrained machine/section symbol; new favicon and cover art may be designed after user implementation approval, without importing logos or manufacturer marks. Use authored CAD-like diagram language with thin leader lines, station ticks, axis compass, exact units and source references. Materials/lighting follow `docs/ENGINE_ASSEMBLIES.md`, asset license gate `docs/ASSET_PROVENANCE.md`.
 
 ## Deliverable acceptance for design
-Source tokens live in the future implementation and correspond to this doc. Screenshots capture every declared screen/state in `docs/VERIFICATION_RELEASE.md`. Impeccable design audit once after implementation, fix detected issues and a bounded confirmation pass; do not falsely mark designs verified now. All numerically proposed values should be calibrated in actual rendered viewport QA before calling DESIGN.md final.
+**Implementation distinction:** the live UI tokens are in `src/app/ui/style.css` and the React workspace in `src/app/ui/App.tsx`. Responsive screenshots and measured audit findings are in `docs/visual-audit/REVIEW.md`; only the tested views/states are evidenced. The tables above document the target system, not a claim that every proposed color, breakpoint, motion or accessibility acceptance criterion is already implemented. Continue measuring actual rendered contrast, responsive layouts and interaction states before design-system sign-off.
 
 ## Final mandatory D01=B / D02=B interactions — supersedes earlier illustrative-speed proposals
 

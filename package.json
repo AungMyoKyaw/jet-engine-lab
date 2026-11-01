@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc --noEmit && vite build && bun scripts/generate-precache.mjs",
+    "build": "bun run docs:check && tsc --noEmit && vite build && bun scripts/generate-precache.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "bun test src/physics.test.js src/app/physics.test.ts src/app/maps.test.ts",
     "typecheck": "tsc --noEmit",
@@ -14,7 +14,8 @@
     "smoke": "bun scripts/smoke-redesign.mjs",
     "smoke:production": "bun scripts/smoke-production.mjs",
     "smoke:all": "bun scripts/smoke-production.mjs --all-browsers",
-    "smoke:visual": "bun scripts/verify-visual-workspace.mjs"
+    "smoke:visual": "bun scripts/verify-visual-workspace.mjs",
+    "docs:check": "bun scripts/check-docs.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

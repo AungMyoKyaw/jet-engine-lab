@@ -1,7 +1,3 @@
-File: projects/jet-engine-lab/docs/IMPLEMENTATION_STATUS.md
-Lines: 1-71 of 71
-SHA-256: 0bef6e225795113d539049f40efac044dcc131d4ee0b8bc12569c597c8dbc100
-
 # Jet Engine Lab — Implementation Progress and Validation Report
 
 **Date:** 2026-11-01. **Source:** `master` at `2ef9ec9` (merged from `feature/jet-engine-lab-redesign`). **Public preview:** published to the GitHub Pages `gh-pages` branch at `1cdf6f6`, with a successful Pages deployment workflow; https://aungmyokyaw.github.io/jet-engine-lab/. **Scientific acceptance:** INCOMPLETE; Q01–Q200, D01=B and D02=B release gates are not fully satisfied.
@@ -71,7 +67,7 @@ Use `bun run preview` to serve a production build. The local Vite preview was te
 
 ## Visual workspace update — 2026-11-01
 
-The screenshot-driven responsive redesign was implemented on the isolated feature branch. It introduces an engine-first stage, responsive camera fitting (including explosion), a collapsible component inspector with mobile bottom-sheet treatment, compact floating telemetry and a primary quick throttle. See `visual-audit/REVIEW.md` for before/after measurements and screenshots. Six-viewport Playwright checks verify fit-related layout measurements, camera/reset, inspector toggle, mobile quick throttle, horizontal overflow and toolbar visibility. All prior scientific readiness limitations remain in force; this visual update does not satisfy mapped RPM or full off-design closure.
+The screenshot-driven responsive redesign was developed on an isolated feature branch and has since been merged into `master` and published as the educational preview. It introduces an engine-first stage, responsive camera fitting (including explosion), a collapsible component inspector with mobile bottom-sheet treatment, compact floating telemetry and a primary quick throttle. See `visual-audit/REVIEW.md` for before/after measurements and screenshots. Six-viewport Playwright checks verify fit-related layout measurements, camera/reset, inspector toggle, mobile quick throttle, horizontal overflow and toolbar visibility. All prior scientific readiness limitations remain in force; this visual update does not satisfy mapped RPM or full off-design closure.
 
 ## Public-preview publication — 2026-11-01
 

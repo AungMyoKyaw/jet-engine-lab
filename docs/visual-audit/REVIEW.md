@@ -1,7 +1,3 @@
-File: projects/jet-engine-lab/docs/visual-audit/REVIEW.md
-Lines: 1-98 of 98
-SHA-256: f218507494511a17eee7205776d0dd567bda07d8c51f8a09d2601ac10b8180fd
-
 # Jet Engine Lab — Playwright Visual Space Audit
 
 **Date:** 2026-11-01
@@ -65,11 +61,11 @@ The following positions are browser DOM bounding rectangles in CSS pixels (not v
 4. Component selection, exploded-view motion, camera reset, keyboard navigation, 2D fallback and dark/light themes still work.
 5. Re-run Playwright desktop/mobile screenshots and tests; compare against these captures before editing, then manually inspect every route.
 
-**Status:** Findings only. Source, git branch and deployment unchanged; screenshots/report are uncommitted audit artifacts.
+**Audit history:** The first section records the pre-implementation baseline. The recommendations have since been implemented, committed, merged into `master` and published; see the results and publication update below.
 
 ## IMPLEMENTED — second-pass review (2026-11-01)
 
-All changes are on `feature/jet-engine-lab-redesign`; no application code was modified in `master`, and no public deployment occurred.
+Implementation began on `feature/jet-engine-lab-redesign` and was subsequently merged into `master` and published to GitHub Pages as an educational preview.
 
 **Delivered:**
 - Collapsible anatomy/part inspector instead of a permanent left rail; accessible Escape dismissal and focus return. On mobile it becomes a visually reviewed bottom sheet.
