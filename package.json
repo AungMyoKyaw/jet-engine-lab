@@ -13,7 +13,8 @@
     "record": "bun scripts/record-website.mjs",
     "smoke": "bun scripts/smoke-redesign.mjs",
     "smoke:production": "bun scripts/smoke-production.mjs",
-    "smoke:all": "bun scripts/smoke-production.mjs --all-browsers"
+    "smoke:all": "bun scripts/smoke-production.mjs --all-browsers",
+    "smoke:visual": "bun scripts/verify-visual-workspace.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

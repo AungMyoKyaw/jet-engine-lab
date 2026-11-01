@@ -64,3 +64,7 @@ Use `bun run preview` to serve a production build. The local Vite preview was te
 4. Run full G1–G14 test/release matrix, review and fix defects, then obtain separate final approval before publishing.
 
 **No claim of complete implementation or production readiness is made.** No production deployment should occur based solely on the current successful preview tests.
+
+## Visual workspace update — 2026-11-01
+
+The screenshot-driven responsive redesign was implemented on the isolated feature branch. It introduces an engine-first stage, responsive camera fitting (including explosion), a collapsible component inspector with mobile bottom-sheet treatment, compact floating telemetry and a primary quick throttle. See `visual-audit/REVIEW.md` for before/after measurements and screenshots. Six-viewport Playwright checks verify fit-related layout measurements, camera/reset, inspector toggle, mobile quick throttle, horizontal overflow and toolbar visibility. All prior scientific readiness limitations remain in force; this visual update does not satisfy mapped RPM or full off-design closure.

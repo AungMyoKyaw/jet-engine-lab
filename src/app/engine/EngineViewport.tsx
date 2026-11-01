@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useMemo, useRef } from 'react';
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Grid, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
@@ -105,7 +105,61 @@ function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,e
 function World({engine,selected,onSelect,explode,showShell,result,referenceMode,preset,viewReset}:{engine:EngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;referenceMode:boolean;preset:ViewPreset;viewReset:number}){
  const parts=PARTS[engine];
  const orbitRef=useRef<OrbitControlsImpl>(null);
- useEffect(()=>{const c=orbitRef.current;if(!c)return;const mobile=typeof window!=='undefined'&&window.innerWidth<680;const poses:Record<ViewPreset,[number,number,number]>={threequarter:mobile?[20,9.3,32]:[8,4.4,12.4],side:mobile?[0,2.5,30]:[0,2,16],top:mobile?[0,30,.001]:[0,17,.001],axial:mobile?[-30,1.5,0]:[-18,1.2,0]};c.target.set(0,0,0);c.object.position.set(...poses[preset]);c.update();},[engine,preset,viewReset]);
+ const lastFitContext=useRef('');
+ const {camera,size}=useThree();
+ useEffect(()=>{
+  const controls=orbitRef.current;
+  if(!controls||size.width<1||size.height<1)return;
+  const normal:Record<ViewPreset,THREE.Vector3>={
+   threequarter:new THREE.Vector3(.63,.33,1),
+   side:new THREE.Vector3(0,.13,1),
+   top:new THREE.Vector3(0,1,.001),
+   axial:new THREE.Vector3(-1,.09,.001)
+  };
+  const fitContext=[engine,preset,viewReset,referenceMode,size.width,size.height].join(':');
+  // Adjusting explosion must preserve any custom orbit angle, not jump back to a preset.
+  const currentDirection=controls.object.position.clone().sub(controls.target).normalize();
+  const direction=lastFitContext.current===fitContext?currentDirection:normal[preset].normalize();
+  lastFitContext.current=fitContext;
+  // Fit actual assembly envelopes instead of an oversized whole-engine cuboid.
+  // The radial envelope varies strongly along the axis, especially at the inlet.
+  const points=[] as THREE.Vector3[];
+  const twist=new THREE.Matrix4().makeRotationY(-.16);
+  for(const part of parts){
+   const span=part.kind==='bypass'?4.3:part.kind==='nozzle'?1:.78;
+   const radius=part.radius*(part.kind==='bypass'?1.04:1.06);
+   for(const dx of [-span,span])for(const y of [-radius,radius])for(const z of [-radius,radius]){
+    const displacement=explode*(part.x<0?-1:1)*(1.2+Math.abs(part.x)*.1);
+    points.push(new THREE.Vector3(part.x+displacement+dx,y,z).applyMatrix4(twist));
+   }
+  }
+  if(referenceMode && engine==='turbofan'){
+   for(const x of [-5.6,5.6])for(const y of [-2.3,2.3])for(const z of [-2.3,2.3])points.push(new THREE.Vector3(x,y,z));
+  }
+  const perspective=camera as THREE.PerspectiveCamera;
+  const fits=(distance:number)=>{
+   perspective.position.copy(direction).multiplyScalar(distance);
+   perspective.lookAt(0,0,0);
+   perspective.updateMatrixWorld(true);
+   perspective.updateProjectionMatrix();
+   for(const point of points){
+    const viewPoint=point.clone().applyMatrix4(perspective.matrixWorldInverse);
+    if(viewPoint.z>=-.3)return false;
+    const projected=point.clone().project(perspective);
+    if(Math.abs(projected.x)>.83||Math.abs(projected.y)>.82)return false;
+   }
+   return true;
+  };
+  let lower=4,upper=90;
+  for(let i=0;i<34;i++){const distance=(lower+upper)/2;if(fits(distance))upper=distance;else lower=distance;}
+  // A tighter desktop crop follows the real curved silhouette rather than the conservative box corners.
+  // Narrow touch viewports keep the full fitted envelope to avoid cropping.
+  const wide=size.width>=1080 && size.width/Math.max(1,size.height)>1.65;
+  const tightness=wide?.76+explode*.26:1;
+  perspective.position.copy(direction).multiplyScalar(upper*tightness);
+  controls.target.set(0,0,0);
+  controls.update();
+ },[camera,size.width,size.height,engine,preset,viewReset,referenceMode,explode]);
  const shaftLength=engine==='turbofan'?9.4:7.6;
  return <><color attach="background" args={['#0c1925']}/><Suspense fallback={null}><Environment files={import.meta.env.BASE_URL+'assets/studio_small_08_1k.hdr'} environmentIntensity={.48}/></Suspense><fog attach="fog" args={['#0c1925',22,46]}/>
  <ambientLight intensity={.95}/><hemisphereLight args={['#d7eaff','#31485f',2.4]}/>
@@ -117,7 +171,7 @@ function World({engine,selected,onSelect,explode,showShell,result,referenceMode,
  </group>}
  <Grid infiniteGrid sectionColor="#3d5a6c" cellColor="#203749" fadeDistance={25} cellSize={.65} sectionSize={2.6} position={[0,-2.35,0]} side={THREE.DoubleSide}/>
  <ContactShadows opacity={.27} scale={20} blur={2.5} far={5} position={[0,-2.4,0]}/>
- <OrbitControls ref={orbitRef} makeDefault enableDamping dampingFactor={.09} minDistance={9} maxDistance={30} minPolarAngle={.25} maxPolarAngle={Math.PI-.25} target={[0,0,0]}/>
+ <OrbitControls ref={orbitRef} makeDefault enableDamping dampingFactor={.09} minDistance={5} maxDistance={60} minPolarAngle={.25} maxPolarAngle={Math.PI-.25} target={[0,0,0]}/>
  </>;
 }
 function WebGLFallback({engine,onSelect,selected}:{engine:EngineId;onSelect:(id:string)=>void;selected:string}) {

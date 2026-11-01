@@ -23,6 +23,7 @@ bun run build
 bun run preview
 bun run smoke
 bun run smoke:production
+bun run smoke:visual       # six viewport/workbench interaction checks
 ```
 
 The Vite production build is in `dist/`, configured for a GitHub Pages project subpath `/jet-engine-lab/`. A versioned service worker precaches the shell, worker and Reference modules, then caches recently requested large 3D assets at runtime. A local production-subpath/offline smoke test is available. Hash routes avoid server-side rewrite requirements.
@@ -47,6 +48,10 @@ The Vite production build is in `dist/`, configured for a GitHub Pages project s
 5. **Release:** multi-browser, measured GPU performance, independent physics reference fixtures, accessibility audit, offline update/rollback tests and complete recording must pass before GitHub Pages deployment.
 
 See [implementation status](docs/IMPLEMENTATION_STATUS.md), [approved decisions](docs/REDESIGN_DECISIONS.md), [product specification](PRODUCT.md), [design system](DESIGN.md), [map/nozzle contract](docs/OFF_DESIGN_MAPS_AND_NOZZLES.md), [physics specification](docs/PHYSICS_SPEC.md) and [release criteria](docs/VERIFICATION_RELEASE.md).
+
+## Visual workbench and responsive behavior
+
+The engine workspace uses an auto-fitting 3D camera (including exploded assemblies), a collapsible component inspector, an always-visible compact telemetry dock, a first-screen throttle control, and an accessible mobile inspector sheet. Detailed desktop/mobile [Playwright before/after screenshots and measured UI audit](docs/visual-audit/REVIEW.md) document the layout changes.
 
 ## Source structure
 
