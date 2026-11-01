@@ -8,9 +8,13 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 
 > **Educational preview, not engineering certification.** Three newly added architectures are **visual-only studies** and intentionally have no fabricated thrust, fuel-flow or RPM outputs. The original turbojet and high-bypass turbofan retain preliminary 0D numerical cycle estimates. No model here is validated for real-engine design, manufacture or operation.
 
+## Inside the interactive 3D lab
+
+![Live Jet Engine Lab high-bypass turbofan workspace, captured with Playwright CLI at 1600 × 900](docs/readme/turbofan-workspace.png)
+
 ## Five engines to explore
 
-![Jet Engine Lab gallery showing five distinct 3D jet-engine designs](docs/engine-gallery-audit/gallery-desktop.png)
+![Live five-engine selection gallery, freshly captured from the deployed website](docs/readme/gallery-desktop.png)
 
 | Engine | One big idea | Model status |
 |---|---|---|
@@ -24,9 +28,15 @@ Every engine is an **interactive procedural 3D model**, not a static image. The 
 
 ## See more; read less
 
-| Afterburner demonstration | Radial compressor close-up |
+| Afterburner and variable nozzle | Centrifugal compressor impeller | Geared turbofan power path |
+|:---:|:---:|:---:|
+| ![Live afterburning turbofan with afterburner lit and variable nozzle set to 80 percent](docs/readme/afterburner-experiment.png) | ![Live isolated centrifugal impeller in Understand mode](docs/readme/centrifugal-impeller.png) | ![Live geared turbofan demonstrating the illustrative power path](docs/readme/geared-power.png) |
+
+### Designed for mobile, too
+
+| Engine workspace | Five-engine collection |
 |:---:|:---:|
-| ![Afterburning turbofan with visual afterburner and nozzle controls](docs/engine-gallery-audit/afterburner-on.png) | ![Isolated radial impeller with visually distinct blades](docs/engine-gallery-audit/radial-focus-delayed.png) |
+| ![Geared turbofan 3D workspace at 390 pixel phone width](docs/readme/engine-mobile.png) | ![Five-engine gallery on a 390 pixel mobile viewport](docs/readme/gallery-mobile.png) |
 
 The interface keeps three actions: **Explore, Understand, Experiment**.
 
@@ -55,7 +65,23 @@ bun run smoke             # Existing 3D experience plus all five engine-gallery 
 bun run smoke:production  # Static production build, reference and offline shell
 ```
 
-For maintainers: `bun run previews:engines` regenerates the five gallery images from the locally running 3D scenes using Playwright. `bun run smoke:engines` checks engine selection, 3D assets, visual-only numeric integrity, focus, afterburner, nozzle and gear interactions, project state and responsive gallery layout.
+For maintainers: `bun run previews:engines` regenerates the five gallery card images from the locally running 3D scenes using Playwright. `bun run smoke:engines` checks engine selection, 3D assets, visual-only numeric integrity, focus, afterburner, nozzle and gear interactions, project state and responsive gallery layout.
+
+### Recreate the README screenshots with Playwright CLI
+
+All seven screenshots in `docs/readme/` were captured from the **live deployed site**, not mockups or stock imagery. The desktop hero uses Playwright's screenshot CLI; the gallery, demonstration and mobile views use its test CLI to interact with the actual app.
+
+```bash
+bunx playwright screenshot -b chromium --viewport-size '1600,900' \
+  --block-service-workers \
+  --wait-for-selector '.visual-engine-scene canvas' --wait-for-timeout 1100 \
+  'https://aungmyokyaw.github.io/jet-engine-lab/?capture=readme-20261101#/engines/turbofan' \
+  docs/readme/turbofan-workspace.png
+
+bunx playwright test scripts/readme-screenshots.spec.ts --workers=1 --reporter=line
+```
+
+The automated captures check for visible WebGL, all five loaded gallery thumbnails, specific interactive engine states and responsive mobile layout before saving images.
 
 ## Scientific limits
 
