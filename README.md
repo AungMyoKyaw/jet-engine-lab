@@ -1,3 +1,7 @@
+File: projects/jet-engine-lab/README.md
+Lines: 1-80 of 80
+SHA-256: be33faaac05a647b4069028062cf3cc67620596abc715999f1a0c91abd350206
+
 # Jet Engine Lab
 
 **Interactive 3D engineering preview · React 19 + TypeScript + React Three Fiber + Three.js**
@@ -6,7 +10,17 @@ Jet Engine Lab investigates how an axial turbojet and a separate-flow, two-spool
 
 **Development status: engineering preview, not a release-ready or validated engine simulator.** The current model does **not** predict independently validated N1/N2 RPM, and its mapped off-design closure is not complete. The public data tables are available for inspection but are not yet coupled to the thermodynamic solver. Do not use its output for real-engine design, operation or safety decisions.
 
-![Redesign desktop workbench](docs/redesign-desktop.png)
+## Latest screenshots
+
+### Turbofan engineering workspace — desktop
+
+![Jet Engine Lab 2.0: interactive turbofan CAD workspace, 1920px desktop](docs/visual-audit/after/turbofan-1920.png)
+
+| Turbojet desktop | Turbofan mobile |
+|:---:|:---:|
+| ![Turbojet simulator with expanded 3D viewport](docs/visual-audit/after/turbojet-1440.png) | ![Responsive turbofan simulator and quick throttle on mobile](docs/visual-audit/after/turbofan-mobile-390.png) |
+
+The redesigned workspace uses responsive engine framing, an always-visible compact telemetry dock, a collapsible component inspector, and an in-viewport throttle. See the [Playwright before/after audit](docs/visual-audit/REVIEW.md) for additional captures, including light mode, mobile inspector, and fully exploded assemblies.
 
 ## Run on macOS/Linux
 
@@ -28,7 +42,7 @@ bun run smoke:visual       # six viewport/workbench interaction checks
 
 The Vite production build is in `dist/`, configured for a GitHub Pages project subpath `/jet-engine-lab/`. A versioned service worker precaches the shell, worker and Reference modules, then caches recently requested large 3D assets at runtime. A local production-subpath/offline smoke test is available. Hash routes avoid server-side rewrite requirements.
 
-**No deployment is performed by any build or test command.** The existing `bun run deploy` script publishes to `gh-pages`; do not use it until the verified release is explicitly approved.
+**Build and test commands never deploy.** Release maintainers use `bun run deploy` to publish the verified static preview to the dedicated `gh-pages` branch, after merging approved source changes to `master`. Deployment does not certify engineering accuracy; the model limitations below remain applicable.
 
 ## What works in this preview
 
