@@ -6,7 +6,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "$ROOT"
 
-bun test
+# Use the project's curated unit-test suite, not Bun's auto-discovery:
+# Playwright browser specs are executed separately by the smoke scripts.
+bun run test
 bun run build
 
 REMOTE="$(git remote get-url origin)"
