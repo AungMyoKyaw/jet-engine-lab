@@ -2,6 +2,10 @@
 
 **Status:** Active source/asset provenance and admission policy. A CC0 Poly Haven HDRI and an optional Innerscene CC0 turbofan visual-reference GLB have been imported with SHA-256 and origin evidence. Pinned Apache-2.0 pyCycle map tables are also present. Mechanically complete solver-coupled third-party assets and numerical reference calibration remain pending.
 
+## Original SolidCraft component models — integrated 2026-11-02
+
+Nine original CAD designs were authored for Jet Engine Lab using SolidCraft CLI (B-rep sketches, lofts, primitives, booleans and circular patterns): `rotor-stage`, `planetary-reducer`, `combustor-manifold`, `intake-duct`, `bypass-lattice`, `nozzle-housing`, `radial-impeller`, `radial-diffuser`, and `afterburner-assembly`. Each design has an editable `.sc` file and replayable `.json` command timeline in `assets/solidcraft/`. These are **not downloaded or adapted third-party engine models**. Blender converts the SolidCraft-exported geometry to batched web GLBs in `public/assets/solidcraft/`; material colors are original artwork. All five default assembled engines, focused parts and newly regenerated gallery thumbnails now use these CAD assets, plus narrowly scoped procedural interactive effects. No OEM dimensions or aerospace certification are claimed. See `docs/solidcraft-cad/README.md` for exact sources, conversion commands and verification evidence. The separately selectable third-party CC0 reference GLB and HDRI retain independent attribution/licensing requirements.
+
 ## Admission policy
 Asset must be free of acquisition and ongoing licensing cost, technically usable for this site, suitable for mechanical adaptation, self-hostable on public GitHub Pages, and legally redistributable as shipped (including binary derivative source distribution in a public repository). Accept an asset only with **documented affirmative evidence** of right to download, adapt/transform, redistribute and display publicly. A site's visible 'free' label, unauthenticated 3D preview or download button is not sufficient evidence.
 

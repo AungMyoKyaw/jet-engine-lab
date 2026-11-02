@@ -1,0 +1,92 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | centrifugal impeller illustration"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 480,
+        "top_radius": 1010,
+        "height": 490,
+        "base": [
+          -245,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Radial impeller disk"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 350,
+        "top_radius": 130,
+        "height": 270,
+        "base": [
+          -390,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inducer hub"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 390,
+        "width": 390,
+        "height": 65,
+        "corner": [
+          -205,
+          590,
+          -32.5
+        ],
+        "body_name": "Swept radial vane"
+      }
+    },
+    {
+      "command": "solid.move",
+      "params": {
+        "bodies": [
+          "Swept radial vane"
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "angle": 18
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Swept radial vane"
+        ],
+        "axis": "X",
+        "count": 18
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 190,
+        "height": 660,
+        "base": [
+          -420,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Impeller central shaft"
+      }
+    }
+  ]
+}

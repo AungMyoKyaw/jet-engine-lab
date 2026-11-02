@@ -24,6 +24,8 @@
 .visual-actions button:hover,.visual-side-controls button:hover,.visual-side-controls button[aria-pressed=true]{background:#245467;color:#aaf4f3;border-color:#84cddc}
 .visual-coordinate{top:104px;left:clamp(18px,3.2vw,56px);display:flex;align-items:center;gap:10px;color:#a7c0ce;font:10px 'IBM Plex Mono',monospace;letter-spacing:.11em;pointer-events:none}
 .visual-coordinate i{width:1px;height:14px;background:#6e85966d}
+.visual-cad-mark{padding:4px 6px;border:1px solid #75b5c369;color:#b5e3ec;background:#173345a0;font-size:9px;letter-spacing:.05em}
+.visual-cad-disclosure{display:block;margin-top:7px;color:#90b4c6;font:10px/1.45 'IBM Plex Mono',monospace;letter-spacing:0}
 .visual-pulse{height:6px;width:6px;border-radius:50%;background:#80e2b7;box-shadow:0 0 14px #66e6c999}
 .visual-side-controls{top:42%;right:clamp(20px,3.2vw,56px);display:flex;flex-direction:column;gap:8px}
 .visual-side-controls button{width:44px;height:44px}
@@ -161,6 +163,9 @@
 [data-theme=light] .visual-readout>span,[data-theme=light] .visual-readout>div,[data-theme=light] .visual-readout>strong em{color:#53788c}
 [data-theme=light] .visual-part-note{background:#e2eff5ea}
 [data-theme=light] .visual-part-note strong,[data-theme=light] .visual-part-note p{color:#26546a}
+[data-theme=light] .visual-cad-mark{color:#245d71;background:#dceef5;border-color:#9ec3d1}
+@media(max-width:600px){.visual-coordinate .visual-cad-mark{display:none}}
+[data-theme=light] .visual-cad-disclosure{color:#476c80}
 [data-theme=light] .visual-disclaimer{color:#678a9c}
 
 .visual-advanced-button{display:none}

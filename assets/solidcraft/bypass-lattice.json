@@ -1,0 +1,186 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | open lattice bypass flow duct"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1000,
+        "height": 95,
+        "base": [
+          -3950,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass structural hoop -3950"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 938,
+        "height": 105,
+        "base": [
+          -3955,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass hoop bore -3950"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass structural hoop -3950",
+        "tools": [
+          "Bypass hoop bore -3950"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1000,
+        "height": 95,
+        "base": [
+          -2600,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass structural hoop -2600"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 938,
+        "height": 105,
+        "base": [
+          -2605,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass hoop bore -2600"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass structural hoop -2600",
+        "tools": [
+          "Bypass hoop bore -2600"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1000,
+        "height": 95,
+        "base": [
+          600,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass structural hoop 600"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 938,
+        "height": 105,
+        "base": [
+          595,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass hoop bore 600"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass structural hoop 600",
+        "tools": [
+          "Bypass hoop bore 600"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1000,
+        "height": 95,
+        "base": [
+          3550,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass structural hoop 3550"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 938,
+        "height": 105,
+        "base": [
+          3545,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass hoop bore 3550"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass structural hoop 3550",
+        "tools": [
+          "Bypass hoop bore 3550"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 17,
+        "height": 7600,
+        "base": [
+          -3920,
+          980,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass axial longeron"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass axial longeron"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef } from 'react';
+import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { OrbitControls, Grid, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -8,10 +8,16 @@ import type { Result } from '../physics/cycle';
 import type { VisualEngineId } from '../data/catalog';
 import {AfterburnerGeometry,RadialImpeller,RadialDiffuser,PlanetaryGearbox,VariablePetals,IllustrationOverlay,type OverlayMode} from './SpecialGeometry';
 
-import { PARTS, type Part } from '../data/parts';
+import { PARTS, hasCadDetail, type Part } from '../data/parts';
 import { ReferenceCutaway } from './ReferenceCutaway';
 import {EngineFlowParticles} from './EngineFlowParticles';
+import {SolidCraftDetail} from './SolidCraftDetail';
 const SILVER='#aebcc7',DARK='#344756',BRONZE='#b68758',SELECT='#7bdff1';
+class CadAssetBoundary extends Component<{children:ReactNode;fallback:ReactNode},{failed:boolean}>{
+ state={failed:false};
+ static getDerivedStateFromError(){return {failed:true};}
+ render(){return this.state.failed?this.props.fallback:this.props.children;}
+}
 function Material({color= SILVER,metalness=.88,roughness=.31,transparent=false,opacity=1}:{color?:string;metalness?:number;roughness?:number;transparent?:boolean;opacity?:number}){return <meshStandardMaterial color={color} metalness={metalness} roughness={roughness} transparent={transparent} opacity={opacity} side={THREE.DoubleSide}/>;}
 function Ring({radius,x=0,color=SILVER,tube=.035}:{radius:number;x?:number;color?:string;tube?:number}){return <mesh position={[x,0,0]} rotation={[0,Math.PI/2,0]}><torusGeometry args={[radius,tube,8,64]}/><Material color={color}/></mesh>;}
 function Duct({radius,length=1.6,color=DARK,opacity=.8}:{radius:number;length?:number;color?:string;opacity?:number}){return <mesh rotation={[0,0,Math.PI/2]}><cylinderGeometry args={[radius*.91,radius,length,64,1,true,0,Math.PI*1.48]}/><Material color={color} opacity={opacity} transparent={opacity<1}/></mesh>;}
@@ -75,7 +81,8 @@ function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,e
  const throatRadius=Math.sqrt(Math.max(.04,nozzleArea)/Math.PI);
  const color=selected?SELECT:overlay==='heat'&&thermal?'#f39b63':thermal?BRONZE:SILVER;
  const pick=(e:ThreeEvent<MouseEvent>)=>{e.stopPropagation();if(toolMode==='measure')onMeasurePoint([e.point.x,e.point.y,e.point.z]);else onSelect(part.id);};
- return <group position={[part.x+displacement,0,0]} onClick={pick}>
+ const useCad=hasCadDetail(part.kind);
+ const procedural=<>
   {part.kind==='afterburner'?<AfterburnerGeometry active={afterburnerOn} selected={selected} overlay={overlay}/>:part.kind==='impeller'?<RadialImpeller selected={selected} overlay={overlay}/>:part.kind==='diffuser'?<RadialDiffuser selected={selected}/>:part.kind==='gearbox'?<PlanetaryGearbox selected={selected} overlay={overlay}/>:part.kind==='nozzle'&&engine==='afterburning-turbofan'?<VariablePetals radius={part.radius} open={nozzleOpen} selected={selected}/>:part.kind==='nozzle'?<>
     <mesh position={[.25,0,0]} rotation={[0,0,-Math.PI/2]}>
       <cylinderGeometry args={[throatRadius,part.radius,.98,64,1,true]}/><Material color={selected?SELECT:'#677d8b'}/>
@@ -104,6 +111,25 @@ function Section({part,selected,onSelect,explode,showShell,coreArea,bypassArea,e
     </group>)}
     {engine==='turbofan'&&part.kind==='fan'&&<Ring radius={1.95} color="#668b9c"/>}
   </>}
+ </>;
+ return <group position={[part.x+displacement,0,0]} onClick={pick}>
+  {useCad?<CadAssetBoundary fallback={procedural}>
+   <Suspense fallback={procedural}><SolidCraftDetail kind={part.kind} radius={part.radius} shaft={part.shaft}/></Suspense>
+  </CadAssetBoundary>:procedural}
+  {useCad&&part.kind==='nozzle'&&(
+    engine==='afterburning-turbofan'?<VariablePetals radius={part.radius} open={nozzleOpen} selected={selected}/>:
+    <mesh position={[.3,0,0]} rotation={[0,0,-Math.PI/2]}>
+     <cylinderGeometry args={[throatRadius,part.radius*.87,.72,64,1,true,0,Math.PI*1.5]}/>
+     <Material color={selected?SELECT:'#a58b73'} opacity={.81} transparent/>
+    </mesh>)}
+  {useCad&&part.kind==='afterburner'&&afterburnerOn&&<AfterburnerGeometry active selected={selected} overlay={overlay}/>}
+  {useCad&&part.kind==='gearbox'&&overlay==='power'&&<PlanetaryGearbox selected={selected} overlay={overlay}/>}
+  {useCad&&showShell&&part.kind==='inlet'&&<Duct radius={part.radius} length={1.45} opacity={.28}/>}
+  {useCad&&showShell&&part.kind==='bypass'&&<Duct radius={part.radius} length={8.4} opacity={.22}/>}
+  {useCad&&part.kind==='bypass'&&<mesh position={[4.1,0,0]} rotation={[0,0,-Math.PI/2]}>
+   <cylinderGeometry args={[Math.sqrt(1.08**2+Math.max(.04,nozzleArea)/Math.PI),part.radius,.7,64,1,true,0,Math.PI*1.48]}/>
+   <Material color={selected?SELECT:'#69899a'} opacity={.72} transparent/>
+  </mesh>}
  </group>;
 }
 function MeasurementSegment({points}:{points:[number,number,number][]}){
@@ -168,7 +194,9 @@ function World({engine,selected,onSelect,explode,showShell,result,referenceMode,
   // Narrow touch viewports keep the full fitted envelope to avoid cropping.
   const wide=size.width>=1080 && size.width/Math.max(1,size.height)>1.65;
   const mobile=size.width<650;
-  const tightness=focus?1.65:wide?.93+explode*.07:mobile?.79+explode*.21:1;
+  // A CAD component is the subject of focus mode, not a tiny feature in a distant whole-engine frame.
+  // Preserve the conservative fit on narrow screens where controls overlap the canvas.
+  const tightness=focus?(mobile?1.55:1.1):wide?.93+explode*.07:mobile?.79+explode*.21:1;
   perspective.position.copy(direction).multiplyScalar(upper*tightness).add(center);
   controls.target.copy(center);
   controls.update();

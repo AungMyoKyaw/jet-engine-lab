@@ -1,0 +1,74 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | cutaway nozzle support housing"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 930,
+        "top_radius": 625,
+        "height": 1020,
+        "base": [
+          -510,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle variable throat casing"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 830,
+        "top_radius": 510,
+        "height": 1040,
+        "base": [
+          -520,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nozzle variable throat casing",
+        "tools": [
+          "Nozzle bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 1300,
+        "width": 1200,
+        "height": 1200,
+        "corner": [
+          -650,
+          0,
+          0
+        ],
+        "body_name": "Nozzle inspection section"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nozzle variable throat casing",
+        "tools": [
+          "Nozzle inspection section"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

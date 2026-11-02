@@ -6,3 +6,8 @@ test-results/
 *.log
 
 recordings/
+
+# Generated intermediates. Keep the editable SolidCraft designs and web GLBs.
+assets/solidcraft/*.obj
+assets/solidcraft/*.sc.bak
+assets/solidcraft/*.sc.lock

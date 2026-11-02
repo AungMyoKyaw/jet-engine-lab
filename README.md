@@ -10,11 +10,11 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 
 ## Inside the interactive 3D lab
 
-![Live Jet Engine Lab high-bypass turbofan workspace, captured with Playwright CLI at 1600 × 900](docs/readme/turbofan-workspace.png)
+![Live full SolidCraft CAD high-bypass turbofan engine captured at 1440 × 900](docs/readme/turbofan-workspace.png)
 
 ## Five engines to explore
 
-![Live five-engine selection gallery, freshly captured from the deployed website](docs/readme/gallery-desktop.png)
+![Five-engine SolidCraft CAD gallery, captured from the local integrated preview](docs/readme/gallery-desktop.png)
 
 | Engine | One big idea | Model status |
 |---|---|---|
@@ -24,7 +24,17 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 | [Centrifugal turbojet](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/centrifugal-turbojet) | A rotating impeller throws air radially outward | **3D visual study only** |
 | [Geared turbofan](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/geared-turbofan) | A reduction gearbox allows a slower fan | **3D visual study only** |
 
-Every engine is an **interactive procedural 3D model**, not a static image. The gallery cards use screenshots captured from those same scenes, so selecting an engine opens the actual object for inspection.
+Every engine is an **interactive 3D CAD assembly**, not a static image. Original SolidCraft B-rep component models form the assembled machine; targeted real-time procedural animations preserve airflow, variable-nozzle actuation and explanatory visual effects. All five gallery cards are recaptured from the same assembled CAD scenes.
+
+## Inspect the machinery, not just the shell
+
+The **complete engine** now uses original SolidCraft CAD assets throughout: intake, rotor stages, combustor, turbine, nozzle, bypass structure and architecture-specific impeller, diffuser, afterburner or reduction gearbox. Select any component to inspect the same CAD geometry in isolation, then return to the full engine. These editable designs are educational illustrations, not production-validated engine parts.
+
+| Lofted rotor blades | Annular fuel injectors | Planetary reduction gearbox |
+|:---:|:---:|:---:|
+| ![SolidCraft CAD rotor with tapered blades](docs/solidcraft-cad/compressor.png) | ![SolidCraft CAD annular fuel manifold](docs/solidcraft-cad/combustor.png) | ![SolidCraft CAD epicyclic gearbox and carrier](docs/solidcraft-cad/gearbox.png) |
+
+The CAD design files, reproducible `solidcraft-cli` commands and browser verification are documented in [SolidCraft component detail](docs/solidcraft-cad/README.md). None of these shapes adds a new engine-performance claim.
 
 ## See more; read less
 

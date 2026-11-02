@@ -18,7 +18,10 @@
     "docs:check": "bun scripts/check-docs.mjs",
     "smoke:studio": "bun scripts/smoke-visual-first.mjs",
     "smoke:engines": "bun scripts/smoke-engine-gallery.mjs",
-    "previews:engines": "bun scripts/capture-engine-previews.mjs"
+    "previews:engines": "bun scripts/capture-engine-previews.mjs",
+    "cad:generate": "python3 scripts/generate-solidcraft-cad.py && blender -b -t 4 -P scripts/solidcraft-obj-to-glb.py",
+    "smoke:cad": "bun scripts/smoke-solidcraft-cad.mjs",
+    "smoke:cad:full": "bun scripts/smoke-solidcraft-full.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

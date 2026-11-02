@@ -1,0 +1,135 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | afterburner flameholder and fuel bars"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 910,
+        "height": 90,
+        "base": [
+          -440,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flameholder hoop -440"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 825,
+        "height": 100,
+        "base": [
+          -445,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flameholder bore -440"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Flameholder hoop -440",
+        "tools": [
+          "Flameholder bore -440"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 910,
+        "height": 90,
+        "base": [
+          300,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flameholder hoop 300"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 825,
+        "height": 100,
+        "base": [
+          295,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flameholder bore 300"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Flameholder hoop 300",
+        "tools": [
+          "Flameholder bore 300"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 26,
+        "height": 730,
+        "base": [
+          -360,
+          780,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Spray bar"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Spray bar"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 68,
+        "top_radius": 12,
+        "height": 125,
+        "base": [
+          300,
+          780,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Spray nozzle"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Spray nozzle"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

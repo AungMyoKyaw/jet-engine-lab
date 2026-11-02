@@ -1,5 +1,11 @@
 import type { VisualEngineId } from './catalog';
 export type Part={id:string;name:string;role:string;x:number;radius:number;kind:'fan'|'compressor'|'burner'|'turbine'|'nozzle'|'inlet'|'bypass'|'afterburner'|'impeller'|'diffuser'|'gearbox';shaft:'LP'|'HP'|'TJ'|null};
+
+export const CAD_DETAIL_KINDS = ['inlet','fan','compressor','impeller','diffuser','burner','turbine','gearbox','afterburner','nozzle','bypass'] as const;
+export type CadDetailKind = (typeof CAD_DETAIL_KINDS)[number];
+export function hasCadDetail(kind:Part['kind']):kind is CadDetailKind {
+ return (CAD_DETAIL_KINDS as readonly string[]).includes(kind);
+}
 export const PARTS:Record<VisualEngineId,Part[]>={
  turbojet:[
   {id:'inlet',name:'Air intake',role:'Diffuses incoming air and delivers it to the compressor.',x:-4.2,radius:1.30,kind:'inlet',shaft:null},

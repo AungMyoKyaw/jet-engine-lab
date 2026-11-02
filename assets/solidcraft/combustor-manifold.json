@@ -1,0 +1,121 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | annular combustor fuel manifold (representative)"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 565,
+        "height": 125,
+        "base": [
+          -62.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Annular fuel manifold"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 447,
+        "height": 135,
+        "base": [
+          -67.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Manifold bore tool"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Annular fuel manifold",
+        "tools": [
+          "Manifold bore tool"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 26,
+        "height": 480,
+        "base": [
+          -246,
+          505,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fuel delivery tube"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fuel delivery tube"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 60,
+        "height": 72,
+        "base": [
+          -115,
+          505,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Injector collar"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Injector collar"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 67,
+        "top_radius": 11,
+        "height": 110,
+        "base": [
+          212,
+          505,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Atomizer tip"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Atomizer tip"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

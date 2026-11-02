@@ -1,0 +1,150 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | 270-degree cutaway intake duct"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 1030,
+        "top_radius": 855,
+        "height": 1500,
+        "base": [
+          -750,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Intake duct outer"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 940,
+        "top_radius": 775,
+        "height": 1520,
+        "base": [
+          -760,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Intake flow bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Intake duct outer",
+        "tools": [
+          "Intake flow bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 1800,
+        "width": 1300,
+        "height": 1300,
+        "corner": [
+          -900,
+          0,
+          0
+        ],
+        "body_name": "Cutaway quadrant tool"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Intake duct outer",
+        "tools": [
+          "Cutaway quadrant tool"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1010,
+        "height": 65,
+        "base": [
+          -710,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Intake flange at -710"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 925,
+        "height": 75,
+        "base": [
+          -715,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flange bore at -710"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Intake flange at -710",
+        "tools": [
+          "Flange bore at -710"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 830,
+        "height": 65,
+        "base": [
+          690,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Intake flange at 690"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 745,
+        "height": 75,
+        "base": [
+          685,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Flange bore at 690"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Intake flange at 690",
+        "tools": [
+          "Flange bore at 690"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

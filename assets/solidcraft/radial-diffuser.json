@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | centrifugal diffuser illustration"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1040,
+        "height": 145,
+        "base": [
+          -72.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser outer shroud"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 825,
+        "height": 155,
+        "base": [
+          -77.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser passage"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Diffuser outer shroud",
+        "tools": [
+          "Diffuser passage"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 195,
+        "width": 490,
+        "height": 45,
+        "corner": [
+          -97,
+          420,
+          -22.5
+        ],
+        "body_name": "Radial flow guide vane"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Radial flow guide vane"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    }
+  ]
+}

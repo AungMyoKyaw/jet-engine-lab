@@ -1,0 +1,390 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | geared fan epicyclic reducer (representative)"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 690,
+        "height": 125,
+        "base": [
+          -62.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Annular gearbox housing"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 555,
+        "height": 135,
+        "base": [
+          -67.5,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bore cutter"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Annular gearbox housing",
+        "tools": [
+          "Bore cutter"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 176,
+        "height": 156,
+        "base": [
+          -78,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Sun wheel"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 55,
+        "height": 220,
+        "base": [
+          -110,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Input drive shaft"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 154,
+        "width": 67,
+        "height": 37,
+        "corner": [
+          -77,
+          165,
+          -18.5
+        ],
+        "body_name": "Sun gear tooth"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Sun gear tooth"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 131,
+        "height": 123,
+        "base": [
+          -61.5,
+          363,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Planet wheel 1"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 124,
+        "width": 36,
+        "height": 30,
+        "corner": [
+          -62,
+          485,
+          -15
+        ],
+        "body_name": "Planet tooth 1"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Planet tooth 1"
+        ],
+        "axis": {
+          "origin": [
+            0,
+            363,
+            0
+          ],
+          "dir": [
+            1,
+            0,
+            0
+          ]
+        },
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 43,
+        "height": 214,
+        "base": [
+          -107,
+          363,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Planet bearing 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 131,
+        "height": 123,
+        "base": [
+          -61.5,
+          0,
+          363
+        ],
+        "axis": "X",
+        "body_name": "Planet wheel 2"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 124,
+        "width": 36,
+        "height": 30,
+        "corner": [
+          -62,
+          122,
+          348
+        ],
+        "body_name": "Planet tooth 2"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Planet tooth 2"
+        ],
+        "axis": {
+          "origin": [
+            0,
+            0,
+            363
+          ],
+          "dir": [
+            1,
+            0,
+            0
+          ]
+        },
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 43,
+        "height": 214,
+        "base": [
+          -107,
+          0,
+          363
+        ],
+        "axis": "X",
+        "body_name": "Planet bearing 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 131,
+        "height": 123,
+        "base": [
+          -61.5,
+          -363,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Planet wheel 3"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 124,
+        "width": 36,
+        "height": 30,
+        "corner": [
+          -62,
+          -241,
+          -15
+        ],
+        "body_name": "Planet tooth 3"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Planet tooth 3"
+        ],
+        "axis": {
+          "origin": [
+            0,
+            -363,
+            0
+          ],
+          "dir": [
+            1,
+            0,
+            0
+          ]
+        },
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 43,
+        "height": 214,
+        "base": [
+          -107,
+          -363,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Planet bearing 3"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 131,
+        "height": 123,
+        "base": [
+          -61.5,
+          0,
+          -363
+        ],
+        "axis": "X",
+        "body_name": "Planet wheel 4"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 124,
+        "width": 36,
+        "height": 30,
+        "corner": [
+          -62,
+          122,
+          -378
+        ],
+        "body_name": "Planet tooth 4"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Planet tooth 4"
+        ],
+        "axis": {
+          "origin": [
+            0,
+            0,
+            -363
+          ],
+          "dir": [
+            1,
+            0,
+            0
+          ]
+        },
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 43,
+        "height": 214,
+        "base": [
+          -107,
+          0,
+          -363
+        ],
+        "axis": "X",
+        "body_name": "Planet bearing 4"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 45,
+        "width": 345,
+        "height": 55,
+        "corner": [
+          110,
+          0,
+          -27.5
+        ],
+        "body_name": "Planet carrier arm"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Planet carrier arm"
+        ],
+        "axis": "X",
+        "count": 4
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 112,
+        "height": 42,
+        "base": [
+          108,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Output carrier boss"
+      }
+    }
+  ]
+}
