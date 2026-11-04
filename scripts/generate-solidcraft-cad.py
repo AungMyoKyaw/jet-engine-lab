@@ -430,6 +430,67 @@ def bearing_cartridge():
     return commands
 
 
+def bearing_roller_train():
+    """Discrete rolling elements and oil-feed hardware inside the aft bearing races."""
+    commands, add = build("Jet Engine Lab | serviceable rolling-element bearing internals")
+    # The bearing cartridge's inner and outer races span radii 243–283 and
+    # 303–354 mm. Cylindrical rollers occupy the intervening radial clearance.
+    add("solid.cylinder", radius=9, height=94,
+        base=[217, 293, 0], axis="X", body_name="Bearing rolling element")
+    add("solid.pattern.circular", bodies=["Bearing rolling element"], axis="X", count=28)
+    annulus(add, "Bearing cage forward lip", 302, 284, 17, 196)
+    annulus(add, "Bearing cage aft lip", 302, 284, 17, 316)
+    annulus(add, "Bearing oil gallery", 415, 389, 28, 315)
+    add("solid.cylinder", radius=19, height=82,
+        base=[341, 407, 0], axis="X", body_name="Bearing oil feed port")
+    add("solid.pattern.circular", bodies=["Bearing oil feed port"], axis="X", count=6)
+    return commands
+
+
+def compressor_service_hardware():
+    """Bleed ports and bolted split-case service bands outside the stator ring."""
+    commands, add = build("Jet Engine Lab | compressor bleed and case service details")
+    annulus(add, "Forward compressor service ring", 892, 867, 41, -270)
+    annulus(add, "Aft compressor service ring", 892, 867, 41, 242)
+    for index, x in enumerate((-255, 260), start=1):
+        add("solid.cylinder", radius=16, height=43, base=[x, 879, 0],
+            axis="X", body_name=f"Compressor service stud {index}")
+        add("solid.pattern.circular", bodies=[f"Compressor service stud {index}"], axis="X", count=24)
+    add("solid.cylinder", radius=38, height=135, base=[-84, 883, 0],
+        axis="X", body_name="Compressor bleed manifold port")
+    add("solid.pattern.circular", bodies=["Compressor bleed manifold port"], axis="X", count=12)
+    return commands
+
+
+def combustor_thermal_hardware():
+    """Cooling-ring and igniter service features around the cutaway liner."""
+    commands, add = build("Jet Engine Lab | combustor cooling and ignition hardware")
+    for index, x in enumerate((-398, 400), start=1):
+        annulus(add, f"Combustor cooling support band {index}", 817, 795, 26, x)
+    add("solid.cylinder", radius=23, height=94,
+        base=[-390, 791, 0], axis="X", body_name="Combustor cooling plenum feed")
+    add("solid.pattern.circular", bodies=["Combustor cooling plenum feed"], axis="X", count=24)
+    add("solid.cylinder", radius=43, height=165,
+        base=[88, 808, 0], axis="X", body_name="Igniter service boss")
+    add("solid.pattern.circular", bodies=["Igniter service boss"], axis="X", count=2)
+    return commands
+
+
+def gearbox_support_hardware():
+    """Additional bearing supports, lubrication gallery and housing fasteners."""
+    commands, add = build("Jet Engine Lab | epicyclic gearbox bearing and oil system")
+    annulus(add, "Gearbox carrier bearing outer race", 740, 705, 65, 96)
+    annulus(add, "Gearbox carrier bearing inner race", 676, 646, 65, 96)
+    annulus(add, "Gearbox oil distribution gallery", 778, 754, 32, -106)
+    add("solid.cylinder", radius=20, height=54, base=[-115, 768, 0],
+        axis="X", body_name="Gearbox lubrication injector")
+    add("solid.pattern.circular", bodies=["Gearbox lubrication injector"], axis="X", count=12)
+    add("solid.cylinder", radius=22, height=70, base=[103, 713, 0],
+        axis="X", body_name="Gearbox housing retention stud")
+    add("solid.pattern.circular", bodies=["Gearbox housing retention stud"], axis="X", count=20)
+    return commands
+
+
 def combustor_dome():
     """Annular dome face and twelve swirler cups around the fuel delivery ring."""
     commands, add = build("Jet Engine Lab | annular combustor dome and fuel air swirlers")
@@ -486,7 +547,9 @@ def main():
     models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
               "fan-blisk": fan_blisk(), "compressor-cassette": compressor_cassette(), "turbine-wheel": turbine_wheel(), "turbine-shroud": turbine_shroud(), "stator-vane-ring": stator_vane_ring(), "combustor-liner": combustor_liner(), "nozzle-actuators": nozzle_actuators(),
               "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals(),
-              "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool()}
+              "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool(),
+              "bearing-roller-train": bearing_roller_train(), "compressor-service-hardware": compressor_service_hardware(),
+              "combustor-thermal-hardware": combustor_thermal_hardware(), "gearbox-support-hardware": gearbox_support_hardware()}
     requested = set(sys.argv[1:])
     if requested - models.keys():
         raise ValueError(f"Unknown SolidCraft families: {sorted(requested - models.keys())}")

@@ -1,0 +1,172 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | epicyclic gearbox bearing and oil system"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 740,
+        "height": 65,
+        "base": [
+          96,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox carrier bearing outer race"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 705,
+        "height": 77,
+        "base": [
+          90,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox carrier bearing outer race bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Gearbox carrier bearing outer race",
+        "tools": [
+          "Gearbox carrier bearing outer race bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 676,
+        "height": 65,
+        "base": [
+          96,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox carrier bearing inner race"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 646,
+        "height": 77,
+        "base": [
+          90,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox carrier bearing inner race bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Gearbox carrier bearing inner race",
+        "tools": [
+          "Gearbox carrier bearing inner race bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 778,
+        "height": 32,
+        "base": [
+          -106,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox oil distribution gallery"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 754,
+        "height": 44,
+        "base": [
+          -112,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox oil distribution gallery bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Gearbox oil distribution gallery",
+        "tools": [
+          "Gearbox oil distribution gallery bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 20,
+        "height": 54,
+        "base": [
+          -115,
+          768,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox lubrication injector"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Gearbox lubrication injector"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 22,
+        "height": 70,
+        "base": [
+          103,
+          713,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Gearbox housing retention stud"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Gearbox housing retention stud"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    }
+  ]
+}

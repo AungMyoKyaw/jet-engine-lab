@@ -24,7 +24,7 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 | [Centrifugal turbojet](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/centrifugal-turbojet) | A rotating impeller throws air radially outward | **3D visual study only** |
 | [Geared turbofan](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/geared-turbofan) | A reduction gearbox allows a slower fan | **3D visual study only** |
 
-Every engine is an **interactive 3D CAD assembly**, not a static image. **24 original SolidCraft B-rep design families** supply the drive shafts, fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Every visible mechanical part in the WebGL engine scenes is a model authored with SolidCraft CLI; animated airflow, explanatory power cues and lighting are visual effects. All five gallery cards use renders of the same assembled CAD scenes. The viewer waits for the complete CAD assembly before revealing it. If an original CAD asset fails, the viewer reports the failure with a retry action instead of substituting another engine model.
+Every engine is an **interactive 3D CAD assembly**, not a static image. **28 original SolidCraft B-rep design families** supply the drive shafts, fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Every visible mechanical part in the WebGL engine scenes is a model authored with SolidCraft CLI; animated airflow, explanatory power cues and lighting are visual effects. All five gallery cards use renders of the same assembled CAD scenes. The viewer waits for the complete CAD assembly before revealing it. If an original CAD asset fails, the viewer reports the failure with a retry action instead of substituting another engine model.
 
 ## Inspect the machinery, not just the shell
 
@@ -48,6 +48,10 @@ Each model can be orbited and exploded, with individual assemblies isolated for 
 |:---:|:---:|:---:|
 | ![Live afterburning turbofan with afterburner lit and variable nozzle set to 80 percent](docs/readme/afterburner-experiment.png) | ![Live isolated centrifugal impeller in Understand mode](docs/readme/centrifugal-impeller.png) | ![Live geared turbofan demonstrating the illustrative power path](docs/readme/geared-power.png) |
 
+| Exploded original CAD assembly | Preliminary force and shaft audit |
+|:---:|:---:|
+| ![Interactive SolidCraft assembly separated with the adjustable exploded-view control](docs/readme/exploded-assembly.png) | ![Transparent preliminary thrust components and shaft-work mismatch on a high-bypass turbofan](docs/readme/cycle-diagnostics.png) |
+
 ### Designed for mobile, too
 
 | Engine workspace | Five-engine collection |
@@ -56,7 +60,7 @@ Each model can be orbited and exploded, with individual assemblies isolated for 
 
 The interface keeps three actions: **Explore, Understand, Experiment**.
 
-**Explore** rotates and zooms the engine, switches architectures, selects assemblies, hides casing, explodes parts, and reveals illustrative 3D airflow, heat zones, ghost views and shaft power paths. **Understand** guides you through five visual steps, focusing on one assembly at a time and offering a clear return to the full engine. **Experiment** provides preliminary numerical operating controls only on the two existing solved engines. On visual-only engines, it instead offers architecture-specific demonstrations such as afterburner on/off, nozzle-petal opening, radial impeller inspection and gearbox power-path highlighting.
+**Explore** rotates and zooms the engine, switches architectures, selects assemblies, hides casing, explodes parts, and reveals illustrative 3D airflow, heat zones, ghost views and shaft power paths. **Understand** guides you through five visual steps, focusing on one assembly at a time and offering a clear return to the full engine. **Experiment** provides preliminary numerical operating controls and a visible momentum, pressure-force and shaft-work diagnostic only on the two existing solved engines. On visual-only engines, it instead offers architecture-specific demonstrations such as afterburner on/off, nozzle-petal opening, radial impeller inspection and gearbox power-path highlighting.
 
 The 3D models and visual effects are educational illustrations, not aerospace CAD drawings or computational fluid dynamics. Flame, rotation and motion are **not** predictions of real temperatures, speeds, clearances or performance.
 
@@ -87,7 +91,7 @@ For maintainers: `bun run previews:engines` regenerates the five gallery card im
 
 ### Recreate the README screenshots with Playwright CLI
 
-All seven screenshots in `docs/readme/` are captured from the **live deployed site**, not mockups or stock imagery. The Playwright capture verifies that CAD assets loaded before saving the engine hero, gallery, interactive demonstrations and mobile views.
+All nine screenshots in `docs/readme/` are captures of the **running 3D WebGL site**, not mockups or stock imagery. The Playwright capture verifies that the original CAD assets load before saving the engine hero, gallery, exploded CAD, solver diagnostics, interactive demonstrations and mobile views. By default the script uses the public deployed site; for local pre-release verification, set `JETLAB_SCREENSHOT_BASE=http://127.0.0.1:4173/` and run the same capture command.
 
 ```bash
 bunx playwright test scripts/readme-screenshots.spec.ts --workers=1 --reporter=line

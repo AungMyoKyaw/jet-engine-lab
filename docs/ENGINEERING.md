@@ -2,7 +2,7 @@
 
 ## Additional 3D-only architecture studies (2026-11-01)
 
-The public interface now offers five interactive architectural models. **Only the original turbojet and high-bypass turbofan are inputs to the numerical 0D cycle described below.** Afterburning turbofan, centrifugal turbojet and geared turbofan have independently authored procedural assemblies and illustrative animations, **without numerical thrust/fuel-flow/RPM models**. Their 3D visuals and educational stage captions must not be treated as calibrated physical quantities. Details: [Five-Engine 3D Gallery](ENGINE_COLLECTION_RELEASE.md).
+The public interface now offers five interactive architectural models. **Only the original turbojet and high-bypass turbofan are inputs to the numerical 0D cycle described below.** Afterburning turbofan, centrifugal turbojet and geared turbofan have independently authored SolidCraft-originated CAD assemblies and illustrative animations, **without numerical thrust/fuel-flow/RPM models**. Their 3D visuals and educational stage captions must not be treated as calibrated physical quantities. Details: [Five-Engine 3D Gallery](ENGINE_COLLECTION_RELEASE.md).
 
 
 **Status:** Published educational preview. This document describes the **React/TypeScript implementation actually running on the site**, not the final solver specified by [PHYSICS_SPEC.md](PHYSICS_SPEC.md) or [OFF_DESIGN_MAPS_AND_NOZZLES.md](OFF_DESIGN_MAPS_AND_NOZZLES.md).
@@ -18,8 +18,8 @@ Jet Engine Lab currently supports a generic **single-spool turbojet** and a gene
 | Reference component-map lookup | `src/app/physics/maps.ts` |
 | Pinned Fan/LPC/HPC/HPT/LPT table data | `src/app/data/maps/*.json` |
 | Model components, selection and shaft identity | `src/app/data/parts.ts` |
-| Procedural 3D geometry and scene controls | `src/app/engine/EngineViewport.tsx` |
-| Optional CC0 cutaway reference asset | `src/app/engine/ReferenceCutaway.tsx` |
+| 3D SolidCraft assembly and scene controls | `src/app/engine/EngineViewport.tsx` and `src/app/engine/SolidCraftDetail.tsx` |
+| CAD source and reproducible conversion | `assets/solidcraft/` and `scripts/solidcraft-obj-to-glb.py` |
 | Engine switching, controls, readouts and equations | `src/app/ui/App.tsx` |
 
 The former `turbojetCycle()` in `src/physics.js` is **legacy code**, not the source of the current React telemetry. Its original detailed description is preserved in [ENGINEERING_LEGACY.md](ENGINEERING_LEGACY.md).
@@ -89,7 +89,9 @@ F_net ≈ Σ(exhaust mass flow × jet velocity + pressure thrust) − inlet mass
 
 For the turbofan the exhaust sum includes **both core and bypass** streams. Fuel is included in the core exhaust mass. TSFC is displayed only for positive net thrust with the applicable unit normalization.
 
-The nozzle sliders change the preliminary nozzle-capacity calculation and corresponding procedural throat geometry. They **do not** yet trigger a fully coupled mapped off-design solution with shaft speeds and flow conservation across all components. The scene's visible rotor animation is illustrative, not RPM telemetry.
+The Experiment view exposes the preliminary net thrust as momentum force plus pressure force and the percentage difference between calculated turbine extraction and compressor/fan demand. These are *diagnostics*, not validated model closure; the turbofan can exhibit a substantial shaft-work mismatch because independently estimated nozzle mass flows are not coupled to a compressor/fan working line.
+
+The nozzle sliders change the preliminary nozzle-capacity calculation and corresponding illustrative SolidCraft petal spacing. They **do not** yet trigger a fully coupled mapped off-design solution with shaft speeds and flow conservation across all components. The scene's visible rotor animation is illustrative, not RPM telemetry.
 
 ## Public reference maps are not yet solver inputs
 
@@ -99,9 +101,9 @@ The current cycle solver does **not** invoke these maps. Map data alone cannot e
 
 ## Visual and accessibility scope
 
-- Interactive React Three Fiber scenes use custom procedural component geometry, independently selected part IDs, cutaway casing and exploded view. They are **representative**, not dimensioned drawings.
-- An optional [Innerscene CC0 turbofan cutaway](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203) is a **visual reference only**, not a coupled solver mesh. It lacks verified independent shafts and nozzle actuation.
-- A labeled 2D schematic is shown when WebGL is unavailable. This fallback is useful but is **not** the full planned set of accessible technical illustrations.
+- Interactive React Three Fiber scenes load 28 original SolidCraft CAD design families, independently selected part IDs, cutaway casing and adjustable exploded view. They are **representative**, not dimensioned drawings.
+- The active engine viewer uses the original SolidCraft geometry throughout. Failed CAD assets surface an explicit error without substituting other geometry.
+- A WebGL or CAD asset failure is surfaced explicitly to the user. The CAD viewer does not substitute alternative engine geometry.
 - User-selected camera presets, reduced-motion handling and a responsive inspector support inspection; final accessibility and multi-browser acceptance is outstanding.
 
 ## How this model can and cannot be used

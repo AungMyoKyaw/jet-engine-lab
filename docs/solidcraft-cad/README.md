@@ -30,8 +30,12 @@
 | `rotor-stage` | legacy source retained for reproducibility | Earlier general-purpose rotor; no longer substituted for the fan, compressor or turbine |
 | `shaft-single-spool` | turbojet and centrifugal turbojet | Hollow central drive tube, coupling rings and concentric bearing collars |
 | `shaft-dual-spool` | turbofan, afterburning turbofan and geared turbofan | Coaxial HP/LP drive tubes, coupling flanges and bearing rings |
+| `bearing-roller-train` | turbine (stationary supplement) | Separate bearing retention hardware with 28 patterned rollers |
+| `compressor-service-hardware` | axial compressor (stationary supplement) | Additional exterior support, service bosses and fasteners |
+| `combustor-thermal-hardware` | burner (stationary supplement) | Combustor thermal-protection and retention features |
+| `gearbox-support-hardware` | gearbox (stationary supplement) | Gearbox support mounts and service hardware |
 
-All **24 B-rep designs** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with shared materials; originals remain independently editable.
+All **28 B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable.
 
 All **11 component categories** across the five engine configurations have a SolidCraft CAD source. Rotating fan, compressor and turbine geometry is now distinct, while guide vanes and turbine shrouds stay stationary as the shaft rotates. A given design family is scaled across configurations according to the illustration's part hierarchy. Individual HP/LP spools can still share a family geometry. Realistic detail here means a more complete **visual and interactive engineering study**; dimensions, airfoils, materials, cooling passage topology and performance predictions have **not** been validated against any measured aircraft engine.
 
@@ -39,9 +43,10 @@ All **11 component categories** across the five engine configurations have a Sol
 
 - The *assembled* view loads the CAD mesh for each part by default. The selected component is independently pickable through its enclosing part group.
 - The five-stage journey focuses the **same CAD geometry**; **Show full engine** returns to the assembled model.
+- Exploded separation is adjustable in the interactive scene from 0% to 160% of representative assembly displacement.
 - Three.js caches each distinct GLB per session. Each scene placement clones the loaded scene while sharing geometry/material resources.
 - Converter output batches original CAD bodies into about 1–4 web render meshes per source, greatly reducing the draw calls for repeated compressor stages.
-- Fan, compressor, turbine and centrifugal impeller animate as grouped original CAD rotors (respecting reduced-motion). Stator rows, turbine shrouds, combustor liner, bearings and nozzle linkages remain fixed. The nozzle-opening control scales original CAD petal geometry illustratively; its motion is not an engineered linkage or an accurately coupled throat-area model.
+- Fan, compressor, turbine and centrifugal impeller animate as grouped original CAD rotors (respecting reduced-motion), with qualitative throttle response rather than measured RPM. Stator rows, turbine shrouds, combustor liner, bearings and nozzle linkages remain fixed. The nozzle-opening control scales original CAD petal geometry illustratively; its motion is not an engineered linkage or an accurately coupled throat-area model.
 - Heat lighting, flow markers and shaft-power highlighting are procedural explanatory overlays, with no physical substitute meshes. Casing visibility hides the named casing bodies in the CAD files; individual parts remain pickable.
 - CAD assets load through React Suspense. Load errors produce an explicit `CAD ASSET UNAVAILABLE` status; the renderer does not silently use a placeholder or downloaded engine model.
 - The former optional CC0 reference engine viewer and its downloaded GLB have been removed from the runtime.
@@ -53,7 +58,7 @@ All **11 component categories** across the five engine configurations have a Sol
 From the Jet Engine Lab project root:
 
 ```bash
-bun run cad:generate       # solidcraft-cli -> 24 .sc designs + OBJ intermediates -> 24 .glb files
+bun run cad:generate       # solidcraft-cli -> 28 .sc designs + OBJ intermediates -> 28 .glb files
 bun run build
 bun run dev                # or preview on port 4173
 bun run smoke:cad          # focus mode + mobile

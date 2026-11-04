@@ -11,10 +11,10 @@ type CadAssembly={file:string;radius:number;axial?:number;targetAxial?:number;ro
 /** SolidCraft B-rep families; stationary stators never rotate with the shaft. */
 const MODELS:Record<CadDetailKind,CadAssembly>={
   fan:{file:'fan-blisk',radius:1.05,supplements:[{file:'fan-outlet-guides'}]},
-  compressor:{file:'compressor-cassette',radius:.923,supplements:[{file:'stator-vane-ring'},{file:'compressor-case-detail'}]},
-  turbine:{file:'turbine-wheel',radius:.872,supplements:[{file:'turbine-nozzle-guide'},{file:'turbine-shroud'},{file:'bearing-cartridge'}]},
-  gearbox:{file:'planetary-reducer',radius:.70},
-  burner:{file:'combustor-liner',radius:.79,rotation:[Math.PI,0,0],supplements:[{file:'combustor-dome'},{file:'combustor-manifold',position:[-.42,0,0]}]},
+  compressor:{file:'compressor-cassette',radius:.923,supplements:[{file:'stator-vane-ring'},{file:'compressor-case-detail'},{file:'compressor-service-hardware'}]},
+  turbine:{file:'turbine-wheel',radius:.872,supplements:[{file:'turbine-nozzle-guide'},{file:'turbine-shroud'},{file:'bearing-cartridge'},{file:'bearing-roller-train'}]},
+  gearbox:{file:'planetary-reducer',radius:.70,supplements:[{file:'gearbox-support-hardware'}]},
+  burner:{file:'combustor-liner',radius:.79,rotation:[Math.PI,0,0],supplements:[{file:'combustor-dome'},{file:'combustor-manifold',position:[-.42,0,0]},{file:'combustor-thermal-hardware'}]},
   inlet:{file:'intake-duct',radius:1.03,axial:1.5,targetAxial:1.45},
   bypass:{file:'bypass-lattice',radius:1.0,axial:7.6,targetAxial:8.4},
   nozzle:{file:'nozzle-housing',radius:.962,axial:1.02,targetAxial:.98,rotation:[Math.PI,0,0],supplements:[{file:'nozzle-petals'},{file:'nozzle-actuators'}]},
@@ -55,14 +55,14 @@ function CadAsset({file,scale,position,rotation,showShell=true,selected=false}:{
   return <primitive object={instance} scale={scale} position={position} rotation={rotation}/>;
 }
 
-export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=false,nozzleOpen=.5}:{kind:CadDetailKind;radius:number;shaft:Part['shaft'];showShell?:boolean;selected?:boolean;nozzleOpen?:number}){
+export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=false,nozzleOpen=.5,motionSpeed=1}:{kind:CadDetailKind;radius:number;shaft:Part['shaft'];showShell?:boolean;selected?:boolean;nozzleOpen?:number;motionSpeed?:number}){
   const config=MODELS[kind];
   const rotor=useRef<THREE.Group>(null);
   const reducedMotion=useMemo(()=>typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,[]);
   const spins=shaft!==null&&(kind==='fan'||kind==='compressor'||kind==='turbine'||kind==='impeller');
   useFrame((_,dt)=>{
     if(spins&&!reducedMotion&&rotor.current)
-      rotor.current.rotation.x+=Math.min(dt,.04)*(shaft==='HP'?1.3:shaft==='LP'?.72:1);
+      rotor.current.rotation.x+=Math.min(dt,.04)*(shaft==='HP'?1.3:shaft==='LP'?.72:1)*motionSpeed;
   });
   const radial=radius/config.radius;
   const axial=config.axial&&config.targetAxial?config.targetAxial/config.axial:radial;

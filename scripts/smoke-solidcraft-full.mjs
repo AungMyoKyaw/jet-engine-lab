@@ -2,10 +2,10 @@ import {chromium} from '@playwright/test';
 import {PARTS} from '../src/app/data/parts';
 
 const assets={
-  inlet:['intake-duct'],fan:['fan-blisk','fan-outlet-guides'],compressor:['compressor-cassette','stator-vane-ring','compressor-case-detail'],
+  inlet:['intake-duct'],fan:['fan-blisk','fan-outlet-guides'],compressor:['compressor-cassette','stator-vane-ring','compressor-case-detail','compressor-service-hardware'],
   impeller:['radial-impeller'],diffuser:['radial-diffuser'],
-  burner:['combustor-liner','combustor-dome','combustor-manifold'],turbine:['turbine-wheel','turbine-nozzle-guide','turbine-shroud','bearing-cartridge'],
-  gearbox:['planetary-reducer'],afterburner:['afterburner-assembly'],
+  burner:['combustor-liner','combustor-dome','combustor-manifold','combustor-thermal-hardware'],turbine:['turbine-wheel','turbine-nozzle-guide','turbine-shroud','bearing-cartridge','bearing-roller-train'],
+  gearbox:['planetary-reducer','gearbox-support-hardware'],afterburner:['afterburner-assembly'],
   nozzle:['nozzle-housing','nozzle-petals','nozzle-actuators'],bypass:['bypass-lattice']
 };
 const supportedEngines=['turbojet','turbofan','afterburning-turbofan','centrifugal-turbojet','geared-turbofan'];

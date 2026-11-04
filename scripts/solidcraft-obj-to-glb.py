@@ -14,15 +14,15 @@ TARGET = ROOT / "public" / "assets" / "solidcraft"
 TARGET.mkdir(parents=True, exist_ok=True)
 
 PALETTES = {
-    "blade": ((.60,.69,.73,1),.87,.28),
-    "shell": ((.18,.25,.30,1),.79,.43),
-    "bronze": ((.77,.52,.30,1),.84,.32),
-    "steel": ((.39,.47,.52,1),.83,.34),
-    "heat": ((.61,.50,.44,1),.87,.31),
-    "heat_shell": ((.34,.31,.30,1),.83,.44),
-    "fastener": ((.72,.74,.73,1),.86,.24),
-    "seal": ((.105,.13,.16,1),.69,.45),
-    "fuel": ((.66,.40,.23,1),.81,.30),
+    "blade": ((.61,.70,.76,1),.91,.235),
+    "shell": ((.21,.29,.34,1),.84,.34),
+    "bronze": ((.78,.54,.33,1),.87,.255),
+    "steel": ((.45,.54,.61,1),.90,.275),
+    "heat": ((.68,.57,.48,1),.84,.30),
+    "heat_shell": ((.37,.33,.32,1),.80,.39),
+    "fastener": ((.74,.78,.80,1),.91,.21),
+    "seal": ((.105,.13,.16,1),.70,.42),
+    "fuel": ((.69,.43,.26,1),.82,.29),
 }
 
 def role(name):
@@ -33,15 +33,15 @@ def role(name):
         return "heat_shell"
     if any(w in name for w in ("fuel delivery", "fuel manifold", "fuel swirler", "spray bar")):
         return "fuel"
-    if any(w in name for w in ("bolt","stud","fastener","retention pin","segment lock","end pin","pitch boss")):
+    if any(w in name for w in ("bolt","stud","fastener","retention pin","segment lock","end pin","pitch boss","rolling element")):
         return "fastener"
-    if any(w in name for w in ("labyrinth", "bearing seal", "inner race", "outer race")):
+    if any(w in name for w in ("labyrinth", "bearing seal", "inner race", "outer race", "bearing cage")):
         return "seal"
     if any(w in name for w in ("vane","blade","bucket","tooth","impeller disk","guide")):
         return "blade"
     if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","outer liner","case ring","casing rib", "support case", "nozzle synchronization")):
         return "shell"
-    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener")):
+    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener","igniter", "lubrication", "oil feed")):
         return "bronze"
     return "steel"
 
@@ -68,6 +68,8 @@ models=(
     "fan-outlet-guides","compressor-case-detail","turbine-nozzle-guide",
     "bearing-cartridge","combustor-dome","nozzle-petals",
     "shaft-single-spool","shaft-dual-spool",
+    "bearing-roller-train","compressor-service-hardware",
+    "combustor-thermal-hardware","gearbox-support-hardware",
 )
 requested = set(sys.argv[sys.argv.index('--')+1:]) if '--' in sys.argv else set()
 if requested - set(models):

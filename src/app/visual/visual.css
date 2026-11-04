@@ -264,3 +264,29 @@
 [data-theme=light] .cad-assembly-state p{color:#456b7d}
 [data-theme=light] .cad-assembly-failed{background:#e7f1f6ee}
 [data-theme=light] .cad-assembly-failed strong{color:#8c3a28}
+
+/* Optional CAD inspection control and transparent preliminary solver audit. */
+.visual-explode-adjust{position:absolute;z-index:5;top:47%;right:clamp(82px,8.2vw,150px);width:205px;display:flex;flex-direction:column;gap:9px;padding:13px 14px;background:#102839e5;border:1px solid #6e9aa785;border-radius:12px;backdrop-filter:blur(18px);color:#e0f6f6;box-shadow:0 12px 30px #0006}
+.visual-explode-adjust>span{display:flex;justify-content:space-between;gap:9px;font:9px 'IBM Plex Mono',monospace;letter-spacing:.07em}
+.visual-explode-adjust output{color:#a8eef1}
+.visual-explode-adjust input{width:100%;accent-color:#9be6e7}
+.visual-explode-adjust small{color:#94b7c5;font:9px/1.35 'IBM Plex Sans',sans-serif}
+.visual-diagnostics{padding:12px;margin:1px 0 15px;background:#162f3ec9;border:1px solid #52778b73;border-radius:10px}
+.visual-diagnostics>span{display:flex;justify-content:space-between;gap:12px;font:9px 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#a8dce1}
+.visual-diagnostics>span em{font:8px 'IBM Plex Mono',monospace;color:#c3ae83;font-style:normal}
+.visual-diagnostics dl{margin:10px 0 9px;display:grid;gap:6px}
+.visual-diagnostics dl>div{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.visual-diagnostics dt{font-size:11px;color:#a5c1cc}
+.visual-diagnostics dd{font:12px 'IBM Plex Mono',monospace;color:#e7f5f7;margin:0;white-space:nowrap}
+.visual-diagnostics dd.audit-gap{color:#f0bd8f}
+.visual-diagnostics>small{display:block;font-size:9px;line-height:1.55;color:#90aebe}
+[data-theme=light] .visual-explode-adjust{color:#215269;background:#e9f4f8e8;border-color:#a9c9d4}
+[data-theme=light] .visual-explode-adjust small{color:#517b8d}
+[data-theme=light] .visual-diagnostics{background:#e0eef3;border-color:#bbd2dc}
+[data-theme=light] .visual-diagnostics dt,[data-theme=light] .visual-diagnostics dd{color:#25536a}
+[data-theme=light] .visual-diagnostics>small{color:#557787}
+@media(max-width:600px){
+ .visual-explode-adjust{top:290px;right:13px;width:176px;padding:9px 10px}
+ .visual-explode-adjust>span{font-size:8px}
+ .visual-experiment:not(.expanded) .visual-diagnostics{display:none}
+}

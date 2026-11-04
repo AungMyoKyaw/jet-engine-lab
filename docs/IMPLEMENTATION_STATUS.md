@@ -1,5 +1,19 @@
 # Jet Engine Lab — Implementation Progress and Validation Report
 
+## Updated implementation status — 2026-11-05
+
+The sections dated **2026-11-01** below are retained as historical release evidence. They describe the earlier procedural prototype and should not be read as the current geometry or publication status. The current release is an educational preview with **five fully assembled SolidCraft-originated 3D engine architectures**. All active WebGL engine components use original CAD geometry; failed CAD requests produce an explicit error with a retry action, with no substitute engine mesh. The repository contains **28 source CAD model families**, including bearing rollers, compressor service hardware, combustor thermal hardware and gearbox supports. CAD source files (`.json` and `.sc`) and generated GLBs are maintained together.
+
+The current 3D scenes provide selectable assemblies, isolated stage views, exploded separation, animated rotor groups, airflow and power-path illustrations, and responsive desktop/mobile layouts. CAD geometry is **an original educational design**, not an OEM-accurate, dimensioned or manufacturing-qualified replica. Animations are illustrative and not derived from measured shaft RPM.
+
+Numerical thrust and fuel-flow estimates exist **only** for the turbojet and high-bypass turbofan. The afterburning turbofan, centrifugal turbojet and geared turbofan remain visual architecture studies without calibrated performance outputs. The preliminary solver separately reports momentum and pressure thrust and its compressor/fan-versus-turbine shaft-work gap; a mismatch warning is shown above 5%. The reference turbofan operating point has a substantial shaft-work gap; mapped off-design matching, independent validation and physical N1/N2 predictions remain outstanding. The original G1–G14 scientific acceptance gates remain incomplete. Public preview publication is separately authorized from scientific acceptance.
+
+Current reproducible validation: `bun run test`, `bun run typecheck`, `bun run build`, `bun run smoke:cad:full`, `bun run smoke:cad`, `bun run smoke:cad:reveal`, `bun run smoke:engines` and `bun run smoke:production`. CAD full-scene screenshots are in `docs/solidcraft-cad/`; the README showcase captures are in `docs/readme/`. See [Engineering](ENGINEERING.md) and [SolidCraft design sources](solidcraft-cad/README.md) for current details.
+
+---
+
+## Historical implementation snapshot — 2026-11-01
+
 **Date:** 2026-11-01. **Source:** `master` at `2ef9ec9` (merged from `feature/jet-engine-lab-redesign`). **Public preview:** published to the GitHub Pages `gh-pages` branch at `1cdf6f6`, with a successful Pages deployment workflow; https://aungmyokyaw.github.io/jet-engine-lab/. **Scientific acceptance:** INCOMPLETE; Q01–Q200, D01=B and D02=B release gates are not fully satisfied.
 
 ## What was implemented and tested

@@ -1,0 +1,158 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | compressor bleed and case service details"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 892,
+        "height": 41,
+        "base": [
+          -270,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward compressor service ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 867,
+        "height": 53,
+        "base": [
+          -276,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward compressor service ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Forward compressor service ring",
+        "tools": [
+          "Forward compressor service ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 892,
+        "height": 41,
+        "base": [
+          242,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft compressor service ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 867,
+        "height": 53,
+        "base": [
+          236,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft compressor service ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft compressor service ring",
+        "tools": [
+          "Aft compressor service ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 16,
+        "height": 43,
+        "base": [
+          -255,
+          879,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor service stud 1"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor service stud 1"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 16,
+        "height": 43,
+        "base": [
+          260,
+          879,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor service stud 2"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor service stud 2"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 38,
+        "height": 135,
+        "base": [
+          -84,
+          883,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor bleed manifold port"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor bleed manifold port"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

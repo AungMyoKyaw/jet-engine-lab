@@ -1,7 +1,7 @@
 export type EngineId='turbojet'|'turbofan';
 export type Input={engine:EngineId;throttle:number;altitude:number;mach:number;pressureRatio:number;bypassRatio:number;coreArea:number;bypassArea:number};
 export type Station={id:string;name:string;temperature:number;pressure:number;kind:'static'|'total'};
-export type Result={valid:boolean;engine:EngineId;thrust:number;fuelFlow:number;tsfc:number|null;massFlow:number;coreMass:number;bypassMass:number;coreVelocity:number;coreChoked:boolean;bypassChoked:boolean;coreArea:number;bypassArea:number;coreGeom:number;bypassGeom:number;compressorPower:number;turbinePower:number;stations:Station[];n1:null;n2:null;warning:string};
+export type Result={valid:boolean;engine:EngineId;thrust:number;momentumThrust:number;pressureThrust:number;shaftPowerMismatchPercent:number;fuelFlow:number;tsfc:number|null;massFlow:number;coreMass:number;bypassMass:number;coreVelocity:number;coreChoked:boolean;bypassChoked:boolean;coreArea:number;bypassArea:number;coreGeom:number;bypassGeom:number;compressorPower:number;turbinePower:number;stations:Station[];n1:null;n2:null;warning:string};
 export const DEFAULTS:Record<EngineId,Input>={
  turbojet:{engine:'turbojet',throttle:.68,altitude:0,mach:.2,pressureRatio:13,bypassRatio:0,coreArea:.28,bypassArea:0},
  turbofan:{engine:'turbofan',throttle:.72,altitude:0,mach:.28,pressureRatio:9.2,bypassRatio:5.2,coreArea:.20,bypassArea:1.85}
@@ -56,7 +56,12 @@ export function compute(v:Input):Result{
   turbinePower=(coreMass+fuelFlow)*(enthalpy(t4,'gas')-enthalpy(t5,'gas'));
   stations.push(station(fan),station(lpc),station(hpc),station(burner),station(hpt),station(lpt),station({id:'8',name:'Core exhaust',t:hot.te,p:hot.pe},'static'),station({id:'18',name:'Bypass exhaust',t:by.te,p:by.pe},'static'));
  }
- const thrust=(coreMass+fuelFlow)*hot.v+bypassMass*(by?.v??0)+hot.pressure+(by?.pressure??0)-(coreMass+bypassMass)*speed;
+ const momentumThrust=(coreMass+fuelFlow)*hot.v+bypassMass*(by?.v??0)-(coreMass+bypassMass)*speed;
+ const pressureThrust=hot.pressure+(by?.pressure??0);
+ const thrust=momentumThrust+pressureThrust;
  if(!Number.isFinite(thrust)||coreMass<=0)throw Error('Operating state is not physically feasible.');
- return {valid:thrust>0,engine:v.engine,thrust,fuelFlow,tsfc:thrust>1?fuelFlow*3600/(thrust/1000):null,massFlow:coreMass+bypassMass,coreMass,bypassMass,coreVelocity:hot.v,coreChoked:hot.choked,bypassChoked:by?.choked??false,coreArea:v.coreArea,bypassArea:v.engine==='turbofan'?v.bypassArea:0,coreGeom:hot.geometric,bypassGeom:by?.geometric??0,compressorPower:power,turbinePower,stations,n1:null,n2:null,warning:'Preliminary steady-state cycle; independently validated component maps and physical RPM prediction remain unimplemented.'};
+ const shaftPowerMismatchPercent=100*Math.abs(turbinePower-power)/Math.max(turbinePower,power);
+ const warning='Preliminary steady-state cycle; independently validated component maps and physical RPM prediction remain unimplemented.'+
+  (shaftPowerMismatchPercent>5?' Shaft work is not closed ('+shaftPowerMismatchPercent.toFixed(1)+'% difference between computed turbine extraction and compressor/fan demand).':'');
+ return {valid:thrust>0,engine:v.engine,thrust,momentumThrust,pressureThrust,shaftPowerMismatchPercent,fuelFlow,tsfc:thrust>1?fuelFlow*3600/(thrust/1000):null,massFlow:coreMass+bypassMass,coreMass,bypassMass,coreVelocity:hot.v,coreChoked:hot.choked,bypassChoked:by?.choked??false,coreArea:v.coreArea,bypassArea:v.engine==='turbofan'?v.bypassArea:0,coreGeom:hot.geometric,bypassGeom:by?.geometric??0,compressorPower:power,turbinePower,stations,n1:null,n2:null,warning};
 }

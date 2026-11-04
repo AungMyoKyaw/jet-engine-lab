@@ -1,0 +1,172 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | serviceable rolling-element bearing internals"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 9,
+        "height": 94,
+        "base": [
+          217,
+          293,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing rolling element"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bearing rolling element"
+        ],
+        "axis": "X",
+        "count": 28
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 302,
+        "height": 17,
+        "base": [
+          196,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing cage forward lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 284,
+        "height": 29,
+        "base": [
+          190,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing cage forward lip bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bearing cage forward lip",
+        "tools": [
+          "Bearing cage forward lip bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 302,
+        "height": 17,
+        "base": [
+          316,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing cage aft lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 284,
+        "height": 29,
+        "base": [
+          310,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing cage aft lip bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bearing cage aft lip",
+        "tools": [
+          "Bearing cage aft lip bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 415,
+        "height": 28,
+        "base": [
+          315,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing oil gallery"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 389,
+        "height": 40,
+        "base": [
+          309,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing oil gallery bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bearing oil gallery",
+        "tools": [
+          "Bearing oil gallery bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 19,
+        "height": 82,
+        "base": [
+          341,
+          407,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing oil feed port"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bearing oil feed port"
+        ],
+        "axis": "X",
+        "count": 6
+      }
+    }
+  ]
+}

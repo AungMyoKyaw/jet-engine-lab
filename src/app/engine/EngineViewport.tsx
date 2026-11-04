@@ -36,11 +36,11 @@ function CadAssemblyState({failed}:{failed:boolean}){
   </div>}
  </div>;
 }
-function Section({part,selected,onSelect,explode,showShell,nozzleOpen,toolMode,onMeasurePoint}:{part:Part;selected:boolean;onSelect:(id:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void}){
+function Section({part,selected,onSelect,explode,showShell,nozzleOpen,motionSpeed,toolMode,onMeasurePoint}:{part:Part;selected:boolean;onSelect:(id:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;motionSpeed:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void}){
  const displacement=explode*(part.x<0?-1:1)*(1.2+Math.abs(part.x)*.1);
  const pick=(e:ThreeEvent<MouseEvent>)=>{e.stopPropagation();if(toolMode==='measure')onMeasurePoint([e.point.x,e.point.y,e.point.z]);else onSelect(part.id);};
  return <group name={'cad-part-'+part.id} position={[part.x+displacement,0,0]} onClick={pick} userData={{cadPart:part.id,selected}}>
-  <SolidCraftDetail kind={part.kind} radius={part.radius} shaft={part.shaft} showShell={showShell} selected={selected} nozzleOpen={nozzleOpen}/>
+  <SolidCraftDetail kind={part.kind} radius={part.radius} shaft={part.shaft} showShell={showShell} selected={selected} nozzleOpen={nozzleOpen} motionSpeed={motionSpeed}/>
  </group>;
 }
 function MeasurementSegment({points}:{points:[number,number,number][]}){
@@ -48,7 +48,7 @@ function MeasurementSegment({points}:{points:[number,number,number][]}){
  useEffect(()=>()=>{line.geometry.dispose();(line.material as THREE.Material).dispose()},[line]);
  return <primitive object={line}/>;
 }
-function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburnerOn,preset,viewReset,toolMode,onMeasurePoint,measurePoints,sectionEnabled,sectionOffset,theme,overlay,focusPart,flowEnabled,onAssemblyReady,onAssemblyError}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;afterburnerOn:boolean;preset:ViewPreset;viewReset:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void;measurePoints:[number,number,number][];sectionEnabled:boolean;sectionOffset:number;theme:string;overlay:OverlayMode;focusPart:string|null;flowEnabled:boolean;onAssemblyReady:()=>void;onAssemblyError:()=>void}){
+function World({engine,selected,onSelect,explode,showShell,nozzleOpen,motionSpeed,afterburnerOn,preset,viewReset,toolMode,onMeasurePoint,measurePoints,sectionEnabled,sectionOffset,theme,overlay,focusPart,flowEnabled,onAssemblyReady,onAssemblyError}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;motionSpeed:number;afterburnerOn:boolean;preset:ViewPreset;viewReset:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void;measurePoints:[number,number,number][];sectionEnabled:boolean;sectionOffset:number;theme:string;overlay:OverlayMode;focusPart:string|null;flowEnabled:boolean;onAssemblyReady:()=>void;onAssemblyError:()=>void}){
  const parts=PARTS[engine];
  const orbitRef=useRef<OrbitControlsImpl>(null);
  const lastFitContext=useRef('');
@@ -126,7 +126,7 @@ function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburne
     <Suspense fallback={null}>
      <group name="original-solidcraft-cad-assembly">
       {!focusPart&&<SolidCraftShaft engine={engine} selected={false}/>}
-      {parts.filter(p=>!focusPart||p.id===focusPart).map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} toolMode={toolMode} onMeasurePoint={onMeasurePoint}/>)}
+      {parts.filter(p=>!focusPart||p.id===focusPart).map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} motionSpeed={motionSpeed} toolMode={toolMode} onMeasurePoint={onMeasurePoint}/>)}
       <CadAssemblyReady onReady={onAssemblyReady}/>
      </group>
     </Suspense>
@@ -151,7 +151,7 @@ function webGLSupported(){
  try{const canvas=document.createElement('canvas');const context=canvas.getContext('webgl2')||canvas.getContext('webgl');cachedWebGLSupport=Boolean(context);context?.getExtension('WEBGL_lose_context')?.loseContext();return cachedWebGLSupport;}catch{cachedWebGLSupport=false;return false;}
 }
 export type ViewPreset='threequarter'|'side'|'top'|'axial';
-export function EngineViewport({engine,selected,onSelect,explode,showShell,preset='threequarter',viewReset=0,toolMode='select',onMeasurePoint=()=>{},measurePoints=[],sectionEnabled=false,sectionOffset=0,theme='dark',overlay='none',focusPart=null,flowEnabled=true,nozzleOpen=.5,afterburnerOn=false}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;preset?:ViewPreset;viewReset?:number;toolMode?:ToolMode;onMeasurePoint?:(p:[number,number,number])=>void;measurePoints?:[number,number,number][];sectionEnabled?:boolean;sectionOffset?:number;theme?:string;overlay?:OverlayMode;focusPart?:string|null;flowEnabled?:boolean;nozzleOpen?:number;afterburnerOn?:boolean}){
+export function EngineViewport({engine,selected,onSelect,explode,showShell,preset='threequarter',viewReset=0,toolMode='select',onMeasurePoint=()=>{},measurePoints=[],sectionEnabled=false,sectionOffset=0,theme='dark',overlay='none',focusPart=null,flowEnabled=true,nozzleOpen=.5,motionSpeed=1,afterburnerOn=false}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;preset?:ViewPreset;viewReset?:number;toolMode?:ToolMode;onMeasurePoint?:(p:[number,number,number])=>void;measurePoints?:[number,number,number][];sectionEnabled?:boolean;sectionOffset?:number;theme?:string;overlay?:OverlayMode;focusPart?:string|null;flowEnabled?:boolean;nozzleOpen?:number;motionSpeed?:number;afterburnerOn?:boolean}){
  const assemblyKey=engine+':'+(focusPart??'complete');
  const [assembly,setAssembly]=useState<{key:string;status:'ready'|'failed'}|null>(null);
  const onAssemblyReady=useCallback(()=>setAssembly({key:assemblyKey,status:'ready'}),[assemblyKey]);
@@ -159,8 +159,8 @@ export function EngineViewport({engine,selected,onSelect,explode,showShell,prese
  const status=assembly?.key===assemblyKey?assembly.status:'loading';
  if(!webGLSupported())return <WebGLUnavailable/>;
  return <>
-  <Canvas key={engine} dpr={[1,1.7]} gl={{antialias:true,powerPreference:'high-performance'}} camera={{position:typeof window!=='undefined'&&window.innerWidth<680?[21,10,34]:[8,4.4,12.4],fov:36,near:.1,far:100}} aria-label={engine+' interactive 3D engine model'}>
-   <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} afterburnerOn={afterburnerOn} preset={preset} viewReset={viewReset} toolMode={toolMode} onMeasurePoint={onMeasurePoint} measurePoints={measurePoints} sectionEnabled={sectionEnabled} sectionOffset={sectionOffset} theme={theme} overlay={overlay} focusPart={focusPart} flowEnabled={flowEnabled} onAssemblyReady={onAssemblyReady} onAssemblyError={onAssemblyError}/>
+  <Canvas key={engine} dpr={typeof window!=='undefined'&&window.innerWidth<650?[1,1.25]:[1,1.7]} gl={{antialias:true,powerPreference:'high-performance'}} camera={{position:typeof window!=='undefined'&&window.innerWidth<680?[21,10,34]:[8,4.4,12.4],fov:36,near:.1,far:100}} aria-label={engine+' interactive 3D engine model'}>
+   <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} motionSpeed={motionSpeed} afterburnerOn={afterburnerOn} preset={preset} viewReset={viewReset} toolMode={toolMode} onMeasurePoint={onMeasurePoint} measurePoints={measurePoints} sectionEnabled={sectionEnabled} sectionOffset={sectionOffset} theme={theme} overlay={overlay} focusPart={focusPart} flowEnabled={flowEnabled} onAssemblyReady={onAssemblyReady} onAssemblyError={onAssemblyError}/>
   </Canvas>
   {status!=='ready'&&<CadAssemblyState failed={status==='failed'}/>}
  </>;

@@ -12,5 +12,17 @@ describe('Preliminary cycle model',()=>{
  it('separate bypass nozzle changes bypass flow',()=>{const a=compute(DEFAULTS.turbofan),b=compute({...DEFAULTS.turbofan,bypassArea:DEFAULTS.turbofan.bypassArea*.8});expect(b.bypassMass).toBeLessThan(a.bypassMass);expect(b.coreMass).toBeCloseTo(a.coreMass,4);});
  it('does not claim validated N1/N2 without maps',()=>{const r=compute(DEFAULTS.turbofan);expect(r.n1).toBeNull();expect(r.warning).toMatch(/maps/);});
  it('keeps total-temperature and static-temperature labels explicit',()=>{const r=compute(DEFAULTS.turbojet);expect(r.stations[0].kind).toBe('static');expect(r.stations[1].kind).toBe('total');});
+ for(const id of ['turbojet','turbofan'] as EngineId[]){
+  it(id+' exposes explicit net thrust and shaft-work closure diagnostics',()=>{
+   const r=compute(DEFAULTS[id]);
+   expect(r.momentumThrust+r.pressureThrust).toBeCloseTo(r.thrust,8);
+   expect(Number.isFinite(r.shaftPowerMismatchPercent)).toBe(true);
+    // The model uses a reference bypass ratio while the two nozzle capacities
+    // independently determine actual flow. Expose that non-closure honestly.
+    expect(r.shaftPowerMismatchPercent).toBeGreaterThanOrEqual(0);
+    expect(r.shaftPowerMismatchPercent).toBeLessThan(100);
+   expect(r.n1).toBeNull();expect(r.n2).toBeNull();
+  });
+ }
  it('outputs no infinite TSFC on zero or nonpositive thrust',()=>{for(const id of ['turbojet','turbofan'] as EngineId[]){const r=compute(DEFAULTS[id]);if(r.tsfc!==null)expect(Number.isFinite(r.tsfc)).toBe(true);}});
 });

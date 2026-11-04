@@ -103,6 +103,28 @@ test('README geared power path screenshot', async ({ page }) => {
   console.log('READ_ME_SCREENSHOT', OUTPUT + '/geared-power.png');
 });
 
+test('README exploded CAD and cycle diagnostics screenshots', async ({ page }) => {
+  await mkdir(OUTPUT, { recursive: true });
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await openEngine(page, 'turbofan');
+
+  await page.getByRole('button', { name: 'Toggle exploded view' }).click();
+  const separation = page.getByRole('slider', { name: 'Assembly separation' });
+  await expect(separation).toBeVisible();
+  await expect(separation).toHaveValue('100');
+  await separation.focus();
+  await separation.press('ArrowRight');
+  await expect(separation).toHaveValue('105');
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: OUTPUT + '/exploded-assembly.png', animations: 'disabled' });
+
+  await page.getByRole('button', { name: 'Toggle exploded view' }).click();
+  await page.getByRole('button', { name: 'Experiment', exact: true }).click();
+  await expect(page.locator('.visual-diagnostics')).toBeVisible();
+  await expect(page.getByText('Shaft-work gap')).toBeVisible();
+  await page.screenshot({ path: OUTPUT + '/cycle-diagnostics.png', animations: 'disabled' });
+});
+
 test('README mobile screenshots — live production', async ({ page }) => {
   await mkdir(OUTPUT, { recursive: true });
   await page.setViewportSize({ width: 390, height: 844 });

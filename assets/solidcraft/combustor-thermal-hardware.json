@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | combustor cooling and ignition hardware"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 817,
+        "height": 26,
+        "base": [
+          -398,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling support band 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 795,
+        "height": 38,
+        "base": [
+          -404,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling support band 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor cooling support band 1",
+        "tools": [
+          "Combustor cooling support band 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 817,
+        "height": 26,
+        "base": [
+          400,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling support band 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 795,
+        "height": 38,
+        "base": [
+          394,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling support band 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor cooling support band 2",
+        "tools": [
+          "Combustor cooling support band 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 23,
+        "height": 94,
+        "base": [
+          -390,
+          791,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling plenum feed"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor cooling plenum feed"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 43,
+        "height": 165,
+        "base": [
+          88,
+          808,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Igniter service boss"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Igniter service boss"
+        ],
+        "axis": "X",
+        "count": 2
+      }
+    }
+  ]
+}
