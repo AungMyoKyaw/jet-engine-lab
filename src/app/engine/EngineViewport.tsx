@@ -114,7 +114,7 @@ function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburne
   controls.target.copy(center);
   controls.update();
  },[camera,size.width,size.height,engine,preset,viewReset,explode,focusPart]);
- return <><color attach="background" args={[theme==='light'?'#e9f1f5':'#0c1925']}/><Suspense fallback={null}><Environment files={import.meta.env.BASE_URL+'assets/studio_small_08_1k.hdr'} environmentIntensity={.48}/></Suspense><fog attach="fog" args={[theme==='light'?'#e9f1f5':'#0c1925',22,46]}/>
+ return <><color attach="background" args={[theme==='light'?'#e9f1f5':'#0c1925']}/><Suspense fallback={null}><Environment files={import.meta.env.BASE_URL+'assets/studio_small_08_1k.hdr'} environmentIntensity={.48}/></Suspense>{size.width>=650&&<fog attach="fog" args={[theme==='light'?'#e9f1f5':'#0c1925',22,46]}/>}
  <ambientLight intensity={.95}/><hemisphereLight args={['#d7eaff','#31485f',2.4]}/>
  <directionalLight position={[-4,9,10]} intensity={3.1}/><directionalLight position={[6,-3,-8]} intensity={2.3} color="#92b7db"/>
  <pointLight position={[0,2,4]} intensity={65} distance={9} color="#d29563"/>
