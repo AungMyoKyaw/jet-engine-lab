@@ -1,6 +1,6 @@
-import { Component, Suspense, useEffect, useMemo, useRef, type ReactNode } from 'react';
+import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Canvas, useThree, type ThreeEvent } from '@react-three/fiber';
-import { OrbitControls, Grid, ContactShadows, Environment, Html } from '@react-three/drei';
+import { OrbitControls, Grid, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import type {ToolMode} from '../studio/project';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
@@ -11,23 +11,36 @@ import {IllustrationOverlay,type OverlayMode} from './SpecialGeometry';
 import { PARTS, type Part } from '../data/parts';
 import {EngineFlowParticles} from './EngineFlowParticles';
 import {SolidCraftDetail,SolidCraftShaft} from './SolidCraftDetail';
-/** No substitute meshes: every visible physical component is SolidCraft CAD. */
-class CadAssetBoundary extends Component<{children:ReactNode;part:Part},{failed:boolean}>{
+/** Assembly is all-or-nothing: never present an incomplete engine as a finished CAD model. */
+class CadAssemblyBoundary extends Component<{children:ReactNode;engine:VisualEngineId;onError:()=>void},{failed:boolean}>{
  state={failed:false};
  static getDerivedStateFromError(){return {failed:true};}
- componentDidCatch(error:Error){console.error('SolidCraft CAD unavailable:',this.props.part.id,error.message);}
- render(){return this.state.failed?
-  <Html center distanceFactor={10} className="cad-asset-error" aria-live="assertive">
-   <div role="alert"><strong>CAD ASSET UNAVAILABLE</strong><span>{this.props.part.name}</span><small>Reload to retry the original SolidCraft model.</small></div>
-  </Html>:this.props.children;}
+ componentDidCatch(error:Error){console.error('SolidCraft CAD assembly unavailable:',this.props.engine,error.message);this.props.onError();}
+ render(){return this.state.failed?null:this.props.children;}
+}
+function CadAssemblyReady({onReady}:{onReady:()=>void}){
+ useEffect(()=>onReady(),[onReady]);
+ return null;
+}
+function CadAssemblyState({failed}:{failed:boolean}){
+ return <div className={'cad-assembly-overlay'+(failed?' cad-asset-error':' cad-loading-surface')}>
+  {failed?<div className="cad-assembly-state cad-assembly-failed" role="alert">
+   <strong>CAD ASSET UNAVAILABLE</strong>
+   <p>The complete original SolidCraft assembly could not be loaded.</p>
+   <button type="button" onClick={()=>window.location.reload()}>Retry loading CAD</button>
+  </div>:<div className="cad-assembly-state cad-assembly-loading" role="status" aria-live="polite">
+   <div className="cad-loading-trace" aria-hidden="true"><span/><span/><span/><span/><span/></div>
+   <strong>Assembling SolidCraft CAD</strong>
+   <p>Loading the original 3D components and drive shafts.</p>
+   <div className="cad-loading-track" aria-hidden="true"><span/></div>
+  </div>}
+ </div>;
 }
 function Section({part,selected,onSelect,explode,showShell,nozzleOpen,toolMode,onMeasurePoint}:{part:Part;selected:boolean;onSelect:(id:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void}){
  const displacement=explode*(part.x<0?-1:1)*(1.2+Math.abs(part.x)*.1);
  const pick=(e:ThreeEvent<MouseEvent>)=>{e.stopPropagation();if(toolMode==='measure')onMeasurePoint([e.point.x,e.point.y,e.point.z]);else onSelect(part.id);};
  return <group name={'cad-part-'+part.id} position={[part.x+displacement,0,0]} onClick={pick} userData={{cadPart:part.id,selected}}>
-  <CadAssetBoundary key={part.id} part={part}>
-   <Suspense fallback={null}><SolidCraftDetail kind={part.kind} radius={part.radius} shaft={part.shaft} showShell={showShell} selected={selected} nozzleOpen={nozzleOpen}/></Suspense>
-  </CadAssetBoundary>
+  <SolidCraftDetail kind={part.kind} radius={part.radius} shaft={part.shaft} showShell={showShell} selected={selected} nozzleOpen={nozzleOpen}/>
  </group>;
 }
 function MeasurementSegment({points}:{points:[number,number,number][]}){
@@ -35,7 +48,7 @@ function MeasurementSegment({points}:{points:[number,number,number][]}){
  useEffect(()=>()=>{line.geometry.dispose();(line.material as THREE.Material).dispose()},[line]);
  return <primitive object={line}/>;
 }
-function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburnerOn,preset,viewReset,toolMode,onMeasurePoint,measurePoints,sectionEnabled,sectionOffset,theme,overlay,focusPart,flowEnabled}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;afterburnerOn:boolean;preset:ViewPreset;viewReset:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void;measurePoints:[number,number,number][];sectionEnabled:boolean;sectionOffset:number;theme:string;overlay:OverlayMode;focusPart:string|null;flowEnabled:boolean}){
+function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburnerOn,preset,viewReset,toolMode,onMeasurePoint,measurePoints,sectionEnabled,sectionOffset,theme,overlay,focusPart,flowEnabled,onAssemblyReady,onAssemblyError}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;nozzleOpen:number;afterburnerOn:boolean;preset:ViewPreset;viewReset:number;toolMode:ToolMode;onMeasurePoint:(p:[number,number,number])=>void;measurePoints:[number,number,number][];sectionEnabled:boolean;sectionOffset:number;theme:string;overlay:OverlayMode;focusPart:string|null;flowEnabled:boolean;onAssemblyReady:()=>void;onAssemblyError:()=>void}){
  const parts=PARTS[engine];
  const orbitRef=useRef<OrbitControlsImpl>(null);
  const lastFitContext=useRef('');
@@ -109,8 +122,15 @@ function World({engine,selected,onSelect,explode,showShell,nozzleOpen,afterburne
  <group rotation={[0,-.16,0]}>
    <IllustrationOverlay engine={engine} mode={overlay}/>
    {flowEnabled&&!focusPart&&<EngineFlowParticles engine={engine}/>}
-   {!focusPart&&<CadAssetBoundary part={{id:'shaft',name:'Original SolidCraft drive shafts',kind:'turbine',x:0,radius:0,role:'',shaft:null}}><Suspense fallback={null}><SolidCraftShaft engine={engine} selected={false}/></Suspense></CadAssetBoundary>}
-   {parts.filter(p=>!focusPart||p.id===focusPart).map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} toolMode={toolMode} onMeasurePoint={onMeasurePoint}/>)}
+   <CadAssemblyBoundary key={engine+':'+(focusPart??'complete')} engine={engine} onError={onAssemblyError}>
+    <Suspense fallback={null}>
+     <group name="original-solidcraft-cad-assembly">
+      {!focusPart&&<SolidCraftShaft engine={engine} selected={false}/>}
+      {parts.filter(p=>!focusPart||p.id===focusPart).map(p=><Section key={p.id} part={p} selected={selected===p.id} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} toolMode={toolMode} onMeasurePoint={onMeasurePoint}/>)}
+      <CadAssemblyReady onReady={onAssemblyReady}/>
+     </group>
+    </Suspense>
+   </CadAssemblyBoundary>
  </group>
  {measurePoints.map((pos,i)=><mesh key={i} position={pos}><sphereGeometry args={[.09,16,12]}/><meshBasicMaterial color={i===0?'#5ee5ef':'#ffc477'} depthTest={false}/></mesh>)}
  {measurePoints.length===2&&<MeasurementSegment points={measurePoints}/>}
@@ -132,8 +152,16 @@ function webGLSupported(){
 }
 export type ViewPreset='threequarter'|'side'|'top'|'axial';
 export function EngineViewport({engine,selected,onSelect,explode,showShell,preset='threequarter',viewReset=0,toolMode='select',onMeasurePoint=()=>{},measurePoints=[],sectionEnabled=false,sectionOffset=0,theme='dark',overlay='none',focusPart=null,flowEnabled=true,nozzleOpen=.5,afterburnerOn=false}:{engine:VisualEngineId;selected:string;onSelect:(s:string)=>void;explode:number;showShell:boolean;result:Result|null;preset?:ViewPreset;viewReset?:number;toolMode?:ToolMode;onMeasurePoint?:(p:[number,number,number])=>void;measurePoints?:[number,number,number][];sectionEnabled?:boolean;sectionOffset?:number;theme?:string;overlay?:OverlayMode;focusPart?:string|null;flowEnabled?:boolean;nozzleOpen?:number;afterburnerOn?:boolean}){
+ const assemblyKey=engine+':'+(focusPart??'complete');
+ const [assembly,setAssembly]=useState<{key:string;status:'ready'|'failed'}|null>(null);
+ const onAssemblyReady=useCallback(()=>setAssembly({key:assemblyKey,status:'ready'}),[assemblyKey]);
+ const onAssemblyError=useCallback(()=>setAssembly({key:assemblyKey,status:'failed'}),[assemblyKey]);
+ const status=assembly?.key===assemblyKey?assembly.status:'loading';
  if(!webGLSupported())return <WebGLUnavailable/>;
- return <Canvas key={engine} dpr={[1,1.7]} gl={{antialias:true,powerPreference:'high-performance'}} camera={{position:typeof window!=='undefined'&&window.innerWidth<680?[21,10,34]:[8,4.4,12.4],fov:36,near:.1,far:100}} aria-label={engine+' interactive 3D engine model'}>
-  <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} afterburnerOn={afterburnerOn} preset={preset} viewReset={viewReset} toolMode={toolMode} onMeasurePoint={onMeasurePoint} measurePoints={measurePoints} sectionEnabled={sectionEnabled} sectionOffset={sectionOffset} theme={theme} overlay={overlay} focusPart={focusPart} flowEnabled={flowEnabled}/>
- </Canvas>;
+ return <>
+  <Canvas key={engine} dpr={[1,1.7]} gl={{antialias:true,powerPreference:'high-performance'}} camera={{position:typeof window!=='undefined'&&window.innerWidth<680?[21,10,34]:[8,4.4,12.4],fov:36,near:.1,far:100}} aria-label={engine+' interactive 3D engine model'}>
+   <World engine={engine} selected={selected} onSelect={onSelect} explode={explode} showShell={showShell} nozzleOpen={nozzleOpen} afterburnerOn={afterburnerOn} preset={preset} viewReset={viewReset} toolMode={toolMode} onMeasurePoint={onMeasurePoint} measurePoints={measurePoints} sectionEnabled={sectionEnabled} sectionOffset={sectionOffset} theme={theme} overlay={overlay} focusPart={focusPart} flowEnabled={flowEnabled} onAssemblyReady={onAssemblyReady} onAssemblyError={onAssemblyError}/>
+  </Canvas>
+  {status!=='ready'&&<CadAssemblyState failed={status==='failed'}/>}
+ </>;
 }

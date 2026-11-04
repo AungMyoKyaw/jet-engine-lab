@@ -24,7 +24,7 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 | [Centrifugal turbojet](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/centrifugal-turbojet) | A rotating impeller throws air radially outward | **3D visual study only** |
 | [Geared turbofan](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/geared-turbofan) | A reduction gearbox allows a slower fan | **3D visual study only** |
 
-Every engine is an **interactive 3D CAD assembly**, not a static image. **24 original SolidCraft B-rep design families** supply the drive shafts, fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Every visible mechanical part in the WebGL engine scenes is a model authored with SolidCraft CLI; animated airflow, explanatory power cues and lighting are visual effects. All five gallery cards use renders of the same assembled CAD scenes. If an original CAD asset fails to load, the viewer reports the failure instead of substituting another engine model.
+Every engine is an **interactive 3D CAD assembly**, not a static image. **24 original SolidCraft B-rep design families** supply the drive shafts, fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Every visible mechanical part in the WebGL engine scenes is a model authored with SolidCraft CLI; animated airflow, explanatory power cues and lighting are visual effects. All five gallery cards use renders of the same assembled CAD scenes. The viewer waits for the complete CAD assembly before revealing it. If an original CAD asset fails, the viewer reports the failure with a retry action instead of substituting another engine model.
 
 ## Inspect the machinery, not just the shell
 
@@ -79,6 +79,7 @@ bun run test
 bun run build
 bun run smoke             # Existing 3D experience plus all five engine-gallery workflows
 bun run smoke:cad:full     # All five assemblies, 3D asset responses, screenshots (preview server on :4173)
+bun run smoke:cad:reveal   # Entire CAD assembly loads together; missing-part retry tested
 bun run smoke:production  # Static production build, missing-asset error and offline shell
 ```
 

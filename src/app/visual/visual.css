@@ -5,6 +5,23 @@
 .visual-engine-scene{position:absolute;inset:0;z-index:0}
 .visual-engine-scene>div{height:100%;width:100%}
 .visual-engine-scene canvas{display:block;width:100%;height:100%;touch-action:none}
+.cad-assembly-overlay{position:absolute;inset:0;z-index:2;pointer-events:none}
+.cad-assembly-state{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:90px 18px 140px;color:#e9f4f9;font-family:'IBM Plex Sans',sans-serif}
+.cad-assembly-state strong{font-size:clamp(17px,2vw,23px);font-weight:600;letter-spacing:-.025em}
+.cad-assembly-state p{font-size:12px;line-height:1.55;color:#a5c1ce;max-width:270px;margin:0}
+.cad-loading-trace{display:flex;align-items:center;justify-content:center;gap:7px;height:54px;margin-bottom:12px}
+.cad-loading-trace span{display:block;width:5px;border-radius:4px;background:#97dce5;animation:cad-trace-pulse 1.6s ease-in-out infinite alternate;box-shadow:0 0 12px #93dae554}
+.cad-loading-trace span:nth-child(1),.cad-loading-trace span:nth-child(5){height:15px;animation-delay:-1.2s}
+.cad-loading-trace span:nth-child(2),.cad-loading-trace span:nth-child(4){height:29px;animation-delay:-.8s}
+.cad-loading-trace span:nth-child(3){height:47px;animation-delay:-.4s}
+@keyframes cad-trace-pulse{from{opacity:.25;transform:scaleY(.45)}to{opacity:1;transform:scaleY(1)}}
+.cad-loading-track{position:relative;overflow:hidden;width:156px;height:2px;background:#668a9b55;margin-top:15px}
+.cad-loading-track span{position:absolute;top:0;left:0;width:42%;height:100%;background:#a4edf1;animation:cad-track-slide 1.5s ease-in-out infinite}
+@keyframes cad-track-slide{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+.cad-assembly-failed{background:#0c1c2ce6;pointer-events:none}
+.cad-assembly-failed strong{color:#f6ba99}
+.cad-assembly-failed button{margin-top:12px;padding:11px 17px;border-radius:7px;border:1px solid #8eacb9;background:#203f50;color:#f1faff;font:600 12px 'IBM Plex Sans',sans-serif;cursor:pointer;pointer-events:auto}
+.cad-assembly-failed button:hover,.cad-assembly-failed button:focus-visible{background:#315c70;border-color:#b2e4eb}
 .visual-scene-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#07121eeb 0%,#07121e35 16%,transparent 31%,transparent 56%,#07121e40 74%,#07121efa 100%),linear-gradient(90deg,#07121e78 0%,transparent 32%,transparent 77%,#07121e35 100%)}
 .visual-header,.visual-coordinate,.visual-side-controls,.visual-flow,.visual-narrative,.visual-readout,.visual-bottom,.visual-options,.visual-experiment,.visual-disclaimer{position:absolute;z-index:3}
 .visual-header{left:0;right:0;top:0;height:83px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,3.2vw,56px);gap:25px}
@@ -109,6 +126,10 @@
  .visual-experiment{top:170px;max-height:calc(100dvh - 310px)}
 }
 @media(max-width:600px){
+ .cad-assembly-state{padding:108px 20px 245px;gap:8px}
+ .cad-assembly-state strong{font-size:16px}
+ .cad-assembly-state p{font-size:11px;max-width:200px}
+ .cad-loading-trace{margin-bottom:8px}
  .visual-header{height:64px;padding:0 13px;gap:8px}
  .visual-logo{gap:7px}.visual-logo>span{height:30px;width:30px;border-radius:8px}.visual-logo>b{font-size:11px;letter-spacing:0}.visual-logo small{display:none}
  .visual-switch{padding:3px;gap:1px}
@@ -239,3 +260,7 @@
 .visual-back-engine:hover,.visual-back-engine:focus-visible{border-color:#a8eff5;background:#264b5d}
 @media(max-width:600px){.visual-back-engine{left:auto;right:13px;top:94px;padding:6px 8px;font-size:9px}}
 [data-theme=light] .visual-back-engine{background:#e5f0f6;color:#285b70;border-color:#a6c1ce}
+[data-theme=light] .cad-assembly-state{color:#214a5d}
+[data-theme=light] .cad-assembly-state p{color:#456b7d}
+[data-theme=light] .cad-assembly-failed{background:#e7f1f6ee}
+[data-theme=light] .cad-assembly-failed strong{color:#8c3a28}
