@@ -1,0 +1,315 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | turbine inlet nozzle guide vanes and heat shield"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 846,
+        "height": 90,
+        "base": [
+          -372,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine NGV outer seal"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 800,
+        "height": 102,
+        "base": [
+          -378,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine NGV outer seal bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine NGV outer seal",
+        "tools": [
+          "Turbine NGV outer seal bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 421,
+        "height": 92,
+        "base": [
+          -372,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine NGV inner support"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 382,
+        "height": 104,
+        "base": [
+          -378,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine NGV inner support bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine NGV inner support",
+        "tools": [
+          "Turbine NGV inner support bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine nozzle guide vane inner section",
+        "plane": {
+          "origin": [
+            0,
+            393,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -420.68,
+            -32.75
+          ],
+          [
+            -374.57,
+            -56
+          ],
+          [
+            -288.71,
+            -47.32
+          ],
+          [
+            -255.32,
+            -18.18
+          ],
+          [
+            -323.69,
+            6
+          ],
+          [
+            -395.24,
+            -0.1999999999999993
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine nozzle guide vane middle section",
+        "plane": {
+          "origin": [
+            0,
+            602,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -392.76,
+            1.75
+          ],
+          [
+            -345.49,
+            -17
+          ],
+          [
+            -257.47,
+            -10.0
+          ],
+          [
+            -223.24,
+            13.5
+          ],
+          [
+            -293.33,
+            33
+          ],
+          [
+            -366.68,
+            28.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine nozzle guide vane outer section",
+        "plane": {
+          "origin": [
+            0,
+            802,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -367.44,
+            27.75
+          ],
+          [
+            -324.81,
+            15
+          ],
+          [
+            -245.43,
+            19.759999999999998
+          ],
+          [
+            -214.56,
+            35.74
+          ],
+          [
+            -277.77,
+            49
+          ],
+          [
+            -343.92,
+            45.6
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Turbine nozzle guide vane inner section"
+          },
+          {
+            "sketch": "Turbine nozzle guide vane middle section"
+          },
+          {
+            "sketch": "Turbine nozzle guide vane outer section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Turbine nozzle guide vane blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Turbine nozzle guide vane blade"
+        ],
+        "axis": "X",
+        "count": 26
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 15,
+        "height": 48,
+        "base": [
+          -377,
+          820,
+          0
+        ],
+        "axis": "X",
+        "body_name": "NGV segment lock"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "NGV segment lock"
+        ],
+        "axis": "X",
+        "count": 26
+      }
+    }
+  ]
+}

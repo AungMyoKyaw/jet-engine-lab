@@ -5,7 +5,8 @@ for (const [program,args] of [
   ['bun',['scripts/smoke-solidcraft-full.mjs']],
   ['python3',['scripts/crop-engine-previews.py']],
 ]){
-  const result=spawnSync(program,args,{stdio:'inherit',cwd:process.cwd(),timeout:120_000});
+  // Five software-rendered WebGL scenes and two screenshots each can exceed two minutes.
+  const result=spawnSync(program,args,{stdio:'inherit',cwd:process.cwd(),timeout:300_000});
   if(result.error||result.status!==0){
     console.error(program+' failed:',result.error?.message||result.signal||result.status);
     process.exit(1);

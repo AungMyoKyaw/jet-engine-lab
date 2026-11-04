@@ -1,0 +1,210 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | shaft bearing cartridge and support spider"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 354,
+        "height": 186,
+        "base": [
+          180,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft bearing outer race"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 303,
+        "height": 198,
+        "base": [
+          174,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft bearing outer race bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft bearing outer race",
+        "tools": [
+          "Aft bearing outer race bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 283,
+        "height": 186,
+        "base": [
+          180,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft bearing inner race"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 243,
+        "height": 198,
+        "base": [
+          174,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft bearing inner race bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft bearing inner race",
+        "tools": [
+          "Aft bearing inner race bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 387,
+        "height": 36,
+        "base": [
+          356,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing seal retainer"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 284,
+        "height": 48,
+        "base": [
+          350,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing seal retainer bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bearing seal retainer",
+        "tools": [
+          "Bearing seal retainer bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 635,
+        "height": 64,
+        "base": [
+          272,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing support case"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 595,
+        "height": 76,
+        "base": [
+          266,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing support case bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bearing support case",
+        "tools": [
+          "Bearing support case bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 64,
+        "width": 306,
+        "height": 52,
+        "corner": [
+          272,
+          309,
+          -26
+        ],
+        "body_name": "Bearing support spider arm"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bearing support spider arm"
+        ],
+        "axis": "X",
+        "count": 10
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 20,
+        "height": 49,
+        "base": [
+          352,
+          341,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bearing race retention bolt"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bearing race retention bolt"
+        ],
+        "axis": "X",
+        "count": 16
+      }
+    }
+  ]
+}

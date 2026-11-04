@@ -1,0 +1,315 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | stationary compressor inlet guide vanes"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 856,
+        "height": 105,
+        "base": [
+          28,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator outer case ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 809,
+        "height": 117,
+        "base": [
+          22,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator outer case ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Stator outer case ring",
+        "tools": [
+          "Stator outer case ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 347,
+        "height": 132,
+        "base": [
+          15,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator inner support ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 297,
+        "height": 144,
+        "base": [
+          9,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator inner support ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Stator inner support ring",
+        "tools": [
+          "Stator inner support ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fixed guide vane root section",
+        "plane": {
+          "origin": [
+            0,
+            323,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -71.56,
+            -16.5
+          ],
+          [
+            -34.44,
+            -30
+          ],
+          [
+            34.68,
+            -24.96
+          ],
+          [
+            61.56,
+            -8.04
+          ],
+          [
+            6.52,
+            6
+          ],
+          [
+            -51.08,
+            2.4000000000000004
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fixed guide vane midspan section",
+        "plane": {
+          "origin": [
+            0,
+            560,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -26.519999999999996,
+            5.25
+          ],
+          [
+            10.02,
+            -6
+          ],
+          [
+            78.06,
+            -1.799999999999999
+          ],
+          [
+            104.52,
+            12.3
+          ],
+          [
+            50.34,
+            24
+          ],
+          [
+            -6.359999999999999,
+            21.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fixed guide vane tip section",
+        "plane": {
+          "origin": [
+            0,
+            810,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            14.280000000000001,
+            23.25
+          ],
+          [
+            46.47,
+            15
+          ],
+          [
+            106.41,
+            18.08
+          ],
+          [
+            129.72,
+            28.42
+          ],
+          [
+            81.99,
+            37
+          ],
+          [
+            32.04,
+            34.8
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Fixed guide vane root section"
+          },
+          {
+            "sketch": "Fixed guide vane midspan section"
+          },
+          {
+            "sketch": "Fixed guide vane tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Fixed guide vane blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fixed guide vane blade"
+        ],
+        "axis": "X",
+        "count": 28
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 15,
+        "height": 42,
+        "base": [
+          121,
+          825,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator pitch boss"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Stator pitch boss"
+        ],
+        "axis": "X",
+        "count": 28
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | stationary thermal shroud around turbine"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 847,
+        "height": 108,
+        "base": [
+          20,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine outer shroud"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 816,
+        "height": 120,
+        "base": [
+          14,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine outer shroud bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine outer shroud",
+        "tools": [
+          "Turbine outer shroud bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 872,
+        "height": 35,
+        "base": [
+          -30,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine forward mount flange"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 810,
+        "height": 47,
+        "base": [
+          -36,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine forward mount flange bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine forward mount flange",
+        "tools": [
+          "Turbine forward mount flange bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

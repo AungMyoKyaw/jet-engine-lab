@@ -1,0 +1,158 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | nozzle external actuator linkage and sync rings"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 962,
+        "height": 92,
+        "base": [
+          -350,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle actuator anchor ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 874,
+        "height": 104,
+        "base": [
+          -356,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle actuator anchor ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nozzle actuator anchor ring",
+        "tools": [
+          "Nozzle actuator anchor ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 872,
+        "height": 52,
+        "base": [
+          338,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle synchronization ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 826,
+        "height": 64,
+        "base": [
+          332,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle synchronization ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nozzle synchronization ring",
+        "tools": [
+          "Nozzle synchronization ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 31,
+        "height": 590,
+        "base": [
+          -295,
+          892,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle actuator rod"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle actuator rod"
+        ],
+        "axis": "X",
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 53,
+        "height": 110,
+        "base": [
+          -316,
+          895,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle actuator piston collar"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle actuator piston collar"
+        ],
+        "axis": "X",
+        "count": 16
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 23,
+        "height": 86,
+        "base": [
+          270,
+          856,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle actuator end pin"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle actuator end pin"
+        ],
+        "axis": "X",
+        "count": 16
+      }
+    }
+  ]
+}

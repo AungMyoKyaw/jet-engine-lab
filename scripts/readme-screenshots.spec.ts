@@ -3,7 +3,13 @@ import { mkdir } from 'node:fs/promises';
 
 const ROOT = 'https://aungmyokyaw.github.io/jet-engine-lab/';
 const OUTPUT = 'docs/readme';
-const engineUrl = (id: string) => ROOT + '?capture=readme-20261101-' + id + '#/engines/' + id;
+const engineUrl = (id: string) => ROOT + '?capture=readme-20261105-' + id + '#/engines/' + id;
+const distinctiveCAD: Record<string, string> = {
+  turbofan: 'fan-blisk',
+  'afterburning-turbofan': 'afterburner-assembly',
+  'centrifugal-turbojet': 'radial-impeller',
+  'geared-turbofan': 'planetary-reducer',
+};
 
 test.setTimeout(100_000);
 test.use({ colorScheme: 'dark', serviceWorkers: 'block' });
@@ -16,13 +22,20 @@ async function openEngine(page: import('@playwright/test').Page, id: string) {
   await page.goto(engineUrl(id), { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.visual-engine-scene canvas')).toBeVisible({ timeout: 20_000 });
   await expect(page.getByRole('heading', { name: 'An engine to explore.' })).toBeVisible();
-  await page.waitForTimeout(950);
+  const cad = distinctiveCAD[id];
+  if (cad) {
+    await page.waitForFunction(file => performance.getEntriesByType('resource').some(
+      entry => entry.name.endsWith('/assets/solidcraft/' + file + '.glb')
+    ), cad, { timeout: 30_000 });
+  }
+  await page.waitForTimeout(1200);
 }
 
 test('README desktop screenshots — live production', async ({ page }) => {
   await mkdir(OUTPUT, { recursive: true });
   await page.setViewportSize({ width: 1600, height: 900 });
   await openEngine(page, 'turbofan');
+  await page.screenshot({ path: OUTPUT + '/turbofan-workspace.png', animations: 'disabled' });
 
   await page.getByRole('button', { name: /EXPLORE THE COLLECTION/ }).click();
   await expect(page.getByRole('dialog', { name: 'Explore five jet engines' })).toBeVisible();

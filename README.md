@@ -24,7 +24,7 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 | [Centrifugal turbojet](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/centrifugal-turbojet) | A rotating impeller throws air radially outward | **3D visual study only** |
 | [Geared turbofan](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/geared-turbofan) | A reduction gearbox allows a slower fan | **3D visual study only** |
 
-Every engine is an **interactive 3D CAD assembly**, not a static image. Original SolidCraft B-rep component models form the assembled machine; targeted real-time procedural animations preserve airflow, variable-nozzle actuation and explanatory visual effects. All five gallery cards are recaptured from the same assembled CAD scenes.
+Every engine is an **interactive 3D CAD assembly**, not a static image. **22 original SolidCraft B-rep design families** supply the fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Each architecture combines 13–18 applicable CAD families; targeted real-time effects preserve airflow, variable-nozzle actuation and explanatory motion. All five gallery cards use renders of the same assembled CAD scenes.
 
 ## Inspect the machinery, not just the shell
 
@@ -35,6 +35,12 @@ The **complete engine** now uses original SolidCraft CAD assets throughout: inta
 | ![SolidCraft CAD rotor with tapered blades](docs/solidcraft-cad/compressor.png) | ![SolidCraft CAD annular fuel manifold](docs/solidcraft-cad/combustor.png) | ![SolidCraft CAD epicyclic gearbox and carrier](docs/solidcraft-cad/gearbox.png) |
 
 The CAD design files, reproducible `solidcraft-cli` commands and browser verification are documented in [SolidCraft component detail](docs/solidcraft-cad/README.md). None of these shapes adds a new engine-performance claim.
+
+| Complete axial turbojet | Complete geared turbofan |
+|:---:|:---:|
+| ![Interactive turbojet cutaway with SolidCraft compressor, combustor and turbine detail](docs/solidcraft-cad/full-turbojet.png) | ![Interactive geared turbofan cutaway with visible fan, gearbox, compressor and nozzle internals](docs/solidcraft-cad/full-geared-turbofan.png) |
+
+Each model can be orbited and exploded, with individual assemblies isolated for close inspection. CAD source timelines (`.json`), editable SolidCraft models (`.sc`) and optimized browser geometry (`.glb`) are all retained in the repository.
 
 ## See more; read less
 
@@ -61,7 +67,7 @@ Install [Bun](https://bun.sh/) and use a current browser:
 ```bash
 bun install --frozen-lockfile
 bun run dev
-# Open http://127.0.0.1:4173/#/engines/turbofan
+# Open http://127.0.0.1:5173/#/engines/turbofan
 ```
 
 ### Validate
@@ -79,15 +85,9 @@ For maintainers: `bun run previews:engines` regenerates the five gallery card im
 
 ### Recreate the README screenshots with Playwright CLI
 
-All seven screenshots in `docs/readme/` were captured from the **live deployed site**, not mockups or stock imagery. The desktop hero uses Playwright's screenshot CLI; the gallery, demonstration and mobile views use its test CLI to interact with the actual app.
+All seven screenshots in `docs/readme/` are captured from the **live deployed site**, not mockups or stock imagery. The Playwright capture verifies that CAD assets loaded before saving the engine hero, gallery, interactive demonstrations and mobile views.
 
 ```bash
-bunx playwright screenshot -b chromium --viewport-size '1600,900' \
-  --block-service-workers \
-  --wait-for-selector '.visual-engine-scene canvas' --wait-for-timeout 1100 \
-  'https://aungmyokyaw.github.io/jet-engine-lab/?capture=readme-20261101#/engines/turbofan' \
-  docs/readme/turbofan-workspace.png
-
 bunx playwright test scripts/readme-screenshots.spec.ts --workers=1 --reporter=line
 ```
 

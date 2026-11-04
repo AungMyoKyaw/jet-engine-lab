@@ -1,0 +1,538 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | multistage axial compressor cassette"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 295,
+        "height": 600,
+        "base": [
+          -300,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor spool drum"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 390,
+        "height": 55,
+        "base": [
+          -225,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor rotor disk -225"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 390,
+        "height": 55,
+        "base": [
+          225,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor rotor disk 225"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 344,
+        "height": 58,
+        "base": [
+          -320,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward compressor labyrinth seal"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 302,
+        "height": 70,
+        "base": [
+          -326,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward compressor labyrinth seal bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Forward compressor labyrinth seal",
+        "tools": [
+          "Forward compressor labyrinth seal bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 344,
+        "height": 58,
+        "base": [
+          270,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft compressor labyrinth seal"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 302,
+        "height": 70,
+        "base": [
+          264,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft compressor labyrinth seal bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft compressor labyrinth seal",
+        "tools": [
+          "Aft compressor labyrinth seal bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Forward compressor root section",
+        "plane": {
+          "origin": [
+            0,
+            345,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -321.4,
+            -18.25
+          ],
+          [
+            -250.35,
+            -37
+          ],
+          [
+            -118.05,
+            -30.0
+          ],
+          [
+            -66.6,
+            -6.5
+          ],
+          [
+            -171.95,
+            13
+          ],
+          [
+            -282.2,
+            8.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Forward compressor midspan section",
+        "plane": {
+          "origin": [
+            0,
+            570,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -262.72,
+            -1.5
+          ],
+          [
+            -208.78,
+            -15
+          ],
+          [
+            -108.34,
+            -9.959999999999999
+          ],
+          [
+            -69.28,
+            6.96
+          ],
+          [
+            -149.26,
+            21
+          ],
+          [
+            -232.95999999999998,
+            17.4
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Forward compressor tip section",
+        "plane": {
+          "origin": [
+            0,
+            805,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -172.16,
+            17.25
+          ],
+          [
+            -133.59,
+            9
+          ],
+          [
+            -61.77,
+            12.08
+          ],
+          [
+            -33.84,
+            22.42
+          ],
+          [
+            -91.03,
+            31
+          ],
+          [
+            -150.88,
+            28.8
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Forward compressor root section"
+          },
+          {
+            "sketch": "Forward compressor midspan section"
+          },
+          {
+            "sketch": "Forward compressor tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Forward compressor blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Forward compressor blade"
+        ],
+        "axis": "X",
+        "count": 26
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Aft compressor root section",
+        "plane": {
+          "origin": [
+            0,
+            345,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            41.64,
+            -19.5
+          ],
+          [
+            97.61,
+            -36
+          ],
+          [
+            201.82999999999998,
+            -29.84
+          ],
+          [
+            242.36,
+            -9.16
+          ],
+          [
+            159.37,
+            8
+          ],
+          [
+            72.52,
+            3.6000000000000014
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Aft compressor midspan section",
+        "plane": {
+          "origin": [
+            0,
+            560,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            81.96,
+            -3.0
+          ],
+          [
+            126.03999999999999,
+            -15
+          ],
+          [
+            208.12,
+            -10.52
+          ],
+          [
+            240.04000000000002,
+            4.52
+          ],
+          [
+            174.68,
+            17
+          ],
+          [
+            106.28,
+            13.8
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Aft compressor tip section",
+        "plane": {
+          "origin": [
+            0,
+            775,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            150.4,
+            15.5
+          ],
+          [
+            180.85,
+            8
+          ],
+          [
+            237.55,
+            10.8
+          ],
+          [
+            259.6,
+            20.2
+          ],
+          [
+            214.45,
+            28
+          ],
+          [
+            167.2,
+            26.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Aft compressor root section"
+          },
+          {
+            "sketch": "Aft compressor midspan section"
+          },
+          {
+            "sketch": "Aft compressor tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Aft compressor blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Aft compressor blade"
+        ],
+        "axis": "X",
+        "count": 30
+      }
+    }
+  ]
+}

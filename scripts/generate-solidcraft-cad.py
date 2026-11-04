@@ -184,8 +184,281 @@ def afterburner():
     add("solid.pattern.circular",bodies=["Spray nozzle"],axis="X",count=12)
     return commands
 
+
+def annulus(add, name, outer, inner, length, x):
+    """A true B-rep annulus: the cutter extends beyond both planar end faces."""
+    add("solid.cylinder", radius=outer, height=length,
+        base=[x, 0, 0], axis="X", body_name=name)
+    cutter = f"{name} bore"
+    add("solid.cylinder", radius=inner, height=length + 12,
+        base=[x - 6, 0, 0], axis="X", body_name=cutter)
+    add("solid.combine", target=name, tools=[cutter], operation="cut")
+
+
+def lofted_row(add, prefix, stations, count):
+    """Spanwise tapered, twisted, cambered blade built from SolidCraft sketches."""
+    sections = []
+    for label, span, xshift, chord, lean, thick in stations:
+        name = f"{prefix} {label} section"
+        # The asymmetric six-point section gives a curved leading edge and
+        # visible twist. These are illustrative shapes, not tested airfoils.
+        outline = [
+            [xshift - .52 * chord, lean - .25 * thick],
+            [xshift - .23 * chord, lean - thick],
+            [xshift + .31 * chord, lean - .72 * thick],
+            [xshift + .52 * chord, lean + .22 * thick],
+            [xshift + .09 * chord, lean + thick],
+            [xshift - .36 * chord, lean + .80 * thick],
+        ]
+        add("sketch.create", name=name,
+            plane={"origin": [0, span, 0], "x_dir": [1, 0, 0], "y_dir": [0, 0, 1]})
+        add("sketch.line", points=outline, closed=True)
+        add("sketch.finish")
+        sections.append({"sketch": name})
+    name = f"{prefix} blade"
+    add("solid.loft", sections=sections, operation="new", body_name=name)
+    add("solid.pattern.circular", bodies=[name], axis="X", count=count)
+
+
+def fan_blisk():
+    commands, add = build("Jet Engine Lab | wide-chord swept fan and spinner")
+    add("solid.cylinder", radius=275, height=340, base=[-170, 0, 0], axis="X", body_name="Fan hub")
+    annulus(add, "Fan root band", 325, 272, 75, 95)
+    annulus(add, "Aft fan labyrinth seal", 298, 280, 55, 190)
+    add("solid.cone", radius=60, top_radius=263, height=465,
+        base=[-635, 0, 0], axis="X", body_name="Fan spinner")
+    lofted_row(add, "Swept fan", [
+        ("root", 280, -100, 360, -14, 42),
+        ("midspan", 685, -45, 322, 8, 34),
+        ("tip", 1050, 128, 208, 24, 19),
+    ], 24)
+    add("solid.cylinder", radius=24, height=45, base=[152, 300, 0],
+        axis="X", body_name="Fan lock bolt")
+    add("solid.pattern.circular", bodies=["Fan lock bolt"], axis="X", count=18)
+    return commands
+
+
+def compressor_cassette():
+    commands, add = build("Jet Engine Lab | multistage axial compressor cassette")
+    add("solid.cylinder", radius=295, height=600, base=[-300, 0, 0],
+        axis="X", body_name="Compressor spool drum")
+    for x in (-225, 225):
+        add("solid.cylinder", radius=390, height=55, base=[x, 0, 0],
+            axis="X", body_name=f"Compressor rotor disk {x}")
+    annulus(add, "Forward compressor labyrinth seal", 344, 302, 58, -320)
+    annulus(add, "Aft compressor labyrinth seal", 344, 302, 58, 270)
+    lofted_row(add, "Forward compressor", [
+        ("root", 345, -194, 245, -12, 25),
+        ("midspan", 570, -166, 186, 3, 18),
+        ("tip", 805, -103, 133, 20, 11),
+    ], 26)
+    lofted_row(add, "Aft compressor", [
+        ("root", 345, 142, 193, -14, 22),
+        ("midspan", 560, 161, 152, 1, 16),
+        ("tip", 775, 205, 105, 18, 10),
+    ], 30)
+    return commands
+
+
+def turbine_wheel():
+    commands, add = build("Jet Engine Lab | high-temperature turbine bucket wheel")
+    add("solid.cylinder", radius=418, height=165, base=[-83, 0, 0],
+        axis="X", body_name="Turbine rotor disk")
+    add("solid.cylinder", radius=275, height=305, base=[-153, 0, 0],
+        axis="X", body_name="Turbine hub shaft")
+    lofted_row(add, "Turbine bucket", [
+        ("platform", 403, -55, 284, -18, 38),
+        ("midspan", 600, -2, 228, 20, 29),
+        ("tip", 803, 75, 189, 42, 17),
+    ], 22)
+    add("solid.cylinder", radius=19, height=42, base=[-100, 372, 0],
+        axis="X", body_name="Turbine retention pin")
+    add("solid.pattern.circular", bodies=["Turbine retention pin"], axis="X", count=22)
+    return commands
+
+
+def turbine_shroud():
+    commands, add = build("Jet Engine Lab | stationary thermal shroud around turbine")
+    annulus(add, "Turbine outer shroud", 847, 816, 108, 20)
+    annulus(add, "Turbine forward mount flange", 872, 810, 35, -30)
+    return commands
+
+
+def stator_vane_ring():
+    commands, add = build("Jet Engine Lab | stationary compressor inlet guide vanes")
+    annulus(add, "Stator outer case ring", 856, 809, 105, 28)
+    annulus(add, "Stator inner support ring", 347, 297, 132, 15)
+    lofted_row(add, "Fixed guide vane", [
+        ("root", 323, -5, 128, -12, 18),
+        ("midspan", 560, 39, 126, 9, 15),
+        ("tip", 810, 72, 111, 26, 11),
+    ], 28)
+    add("solid.cylinder", radius=15, height=42, base=[121, 825, 0],
+        axis="X", body_name="Stator pitch boss")
+    add("solid.pattern.circular", bodies=["Stator pitch boss"], axis="X", count=28)
+    return commands
+
+
+def combustor_liner():
+    commands, add = build("Jet Engine Lab | cutaway double-wall annular combustor liner")
+    annulus(add, "Combustor outer liner", 790, 752, 1230, -615)
+    add("solid.box", length=1290, width=1050, height=1050,
+        corner=[-645, 0, 0], body_name="Combustor liner cutaway tool")
+    add("solid.combine", target="Combustor outer liner",
+        tools=["Combustor liner cutaway tool"], operation="cut")
+    annulus(add, "Combustor inner liner", 378, 342, 1120, -555)
+    for x, r0, r1 in ((-595, 800, 740), (560, 800, 740)):
+        annulus(add, f"Combustor mounting flange {x}", r0, r1, 34, x)
+    # Annular cooling-band bosses and dilution port collars highlight liner
+    # placement without pretending to resolve real cooling mass flow.
+    add("solid.cylinder", radius=34, height=65,
+        base=[-200, 765, 0], axis="X", body_name="Combustor dilution port collar")
+    add("solid.pattern.circular", bodies=["Combustor dilution port collar"], axis="X", count=20)
+    add("solid.cylinder", radius=20, height=38,
+        base=[240, 773, 0], axis="X", body_name="Combustor cooling port collar")
+    add("solid.pattern.circular", bodies=["Combustor cooling port collar"], axis="X", count=32)
+    return commands
+
+
+def nozzle_actuators():
+    commands, add = build("Jet Engine Lab | nozzle external actuator linkage and sync rings")
+    annulus(add, "Nozzle actuator anchor ring", 962, 874, 92, -350)
+    annulus(add, "Nozzle synchronization ring", 872, 826, 52, 338)
+    add("solid.cylinder", radius=31, height=590,
+        base=[-295, 892, 0], axis="X", body_name="Nozzle actuator rod")
+    add("solid.pattern.circular", bodies=["Nozzle actuator rod"], axis="X", count=16)
+    add("solid.cylinder", radius=53, height=110,
+        base=[-316, 895, 0], axis="X", body_name="Nozzle actuator piston collar")
+    add("solid.pattern.circular", bodies=["Nozzle actuator piston collar"], axis="X", count=16)
+    add("solid.cylinder", radius=23, height=86,
+        base=[270, 856, 0], axis="X", body_name="Nozzle actuator end pin")
+    add("solid.pattern.circular", bodies=["Nozzle actuator end pin"], axis="X", count=16)
+    return commands
+
+
+def fan_outlet_guides():
+    """A fixed fan-exit guide row outside the fan's rotating assembly."""
+    commands, add = build("Jet Engine Lab | fan outlet guide vanes and structural supports")
+    annulus(add, "Fan outlet casing", 1050, 1008, 102, 336)
+    annulus(add, "Outlet guide hub", 384, 331, 115, 317)
+    lofted_row(add, "Fan exit guide vane", [
+        ("inner", 374, 248, 152, -9, 24),
+        ("mid", 697, 301, 143, 16, 21),
+        ("outer", 1015, 363, 109, 28, 14),
+    ], 24)
+    add("solid.cylinder", radius=19, height=52, base=[425, 1020, 0],
+        axis="X", body_name="Fan exit vane mount bolt")
+    add("solid.pattern.circular", bodies=["Fan exit vane mount bolt"], axis="X", count=24)
+    return commands
+
+
+def compressor_case_detail():
+    """Open service casing: hoops, ties and bleed bosses reveal the rotors."""
+    commands, add = build("Jet Engine Lab | split compressor case hoops and bleed hardware")
+    for x in (-350, -88, 275):
+        annulus(add, f"Compressor casing rib {x}", 894, 838, 34, x)
+        add("solid.cylinder", radius=18, height=35,
+            base=[x + 35, 870, 0], axis="X",
+            body_name=f"Compressor casing stud {x}")
+        add("solid.pattern.circular", bodies=[f"Compressor casing stud {x}"], axis="X", count=24)
+    add("solid.cylinder", radius=16, height=670,
+        base=[-349, 876, 0], axis="X", body_name="Compressor case tie rod")
+    add("solid.pattern.circular", bodies=["Compressor case tie rod"], axis="X", count=10)
+    annulus(add, "Compressor bleed manifold", 923, 859, 45, 128)
+    add("solid.cylinder", radius=29, height=80, base=[133, 904, 0],
+        axis="X", body_name="Compressor bleed port boss")
+    add("solid.pattern.circular", bodies=["Compressor bleed port boss"], axis="X", count=12)
+    return commands
+
+
+def turbine_nozzle_guide():
+    """Nozzle-guide vanes are stationary upstream of the spinning turbine."""
+    commands, add = build("Jet Engine Lab | turbine inlet nozzle guide vanes and heat shield")
+    annulus(add, "Turbine NGV outer seal", 846, 800, 90, -372)
+    annulus(add, "Turbine NGV inner support", 421, 382, 92, -372)
+    lofted_row(add, "Turbine nozzle guide vane", [
+        ("inner", 393, -338, 159, -25, 31),
+        ("middle", 602, -308, 163, 8, 25),
+        ("outer", 802, -291, 147, 32, 17),
+    ], 26)
+    add("solid.cylinder", radius=15, height=48, base=[-377, 820, 0],
+        axis="X", body_name="NGV segment lock")
+    add("solid.pattern.circular", bodies=["NGV segment lock"], axis="X", count=26)
+    return commands
+
+
+def bearing_cartridge():
+    """Representative aft shaft bearing and load-carrying support spider."""
+    commands, add = build("Jet Engine Lab | shaft bearing cartridge and support spider")
+    annulus(add, "Aft bearing outer race", 354, 303, 186, 180)
+    annulus(add, "Aft bearing inner race", 283, 243, 186, 180)
+    annulus(add, "Bearing seal retainer", 387, 284, 36, 356)
+    annulus(add, "Bearing support case", 635, 595, 64, 272)
+    add("solid.box", length=64, width=306, height=52,
+        corner=[272, 309, -26], body_name="Bearing support spider arm")
+    add("solid.pattern.circular", bodies=["Bearing support spider arm"], axis="X", count=10)
+    add("solid.cylinder", radius=20, height=49,
+        base=[352, 341, 0], axis="X", body_name="Bearing race retention bolt")
+    add("solid.pattern.circular", bodies=["Bearing race retention bolt"], axis="X", count=16)
+    return commands
+
+
+def combustor_dome():
+    """Annular dome face and twelve swirler cups around the fuel delivery ring."""
+    commands, add = build("Jet Engine Lab | annular combustor dome and fuel air swirlers")
+    annulus(add, "Combustor dome backing", 758, 391, 42, -575)
+    annulus(add, "Combustor dome stiffener", 784, 743, 66, -601)
+    add("solid.cylinder", radius=74, height=128, base=[-605, 574, 0],
+        axis="X", body_name="Combustor swirler cup")
+    add("solid.cylinder", radius=42, height=140, base=[-611, 574, 0],
+        axis="X", body_name="Combustor swirler bore")
+    add("solid.combine", target="Combustor swirler cup",
+        tools=["Combustor swirler bore"], operation="cut")
+    add("solid.pattern.circular", bodies=["Combustor swirler cup"], axis="X", count=12)
+    add("solid.cone", radius=35, top_radius=17, height=91,
+        base=[-645, 574, 0], axis="X", body_name="Combustor fuel swirler cone")
+    add("solid.pattern.circular", bodies=["Combustor fuel swirler cone"], axis="X", count=12)
+    add("solid.cylinder", radius=12, height=49, base=[-603, 730, 0],
+        axis="X", body_name="Combustor dome fastener")
+    add("solid.pattern.circular", bodies=["Combustor dome fastener"], axis="X", count=36)
+    return commands
+
+
+def nozzle_petals():
+    """Individually separated tapered petals lofted between radial stations."""
+    commands, add = build("Jet Engine Lab | twenty convergent nozzle petal panels")
+    sections = []
+    for label, x, radius, width, thickness in (
+        ("root", -460, 848, 122, 29),
+        ("hinge", -180, 770, 113, 23),
+        ("throat", 190, 654, 95, 20),
+        ("lip", 475, 555, 78, 15),
+    ):
+        name = f"Nozzle petal {label} cross section"
+        add("sketch.create", name=name,
+            plane={"origin": [x, 0, 0], "x_dir": [0, 1, 0], "y_dir": [0, 0, 1]})
+        add("sketch.line", points=[
+            [radius - thickness / 2, -width / 2],
+            [radius + thickness / 2, -width / 2],
+            [radius + thickness / 2, width / 2],
+            [radius - thickness / 2, width / 2],
+        ], closed=True)
+        add("sketch.finish")
+        sections.append({"sketch": name})
+    add("solid.loft", sections=sections, operation="new",
+        body_name="Convergent nozzle petal")
+    add("solid.pattern.circular", bodies=["Convergent nozzle petal"],
+        axis="X", count=20)
+    add("solid.cylinder", radius=23, height=34, base=[-465, 840, 0],
+        axis="X", body_name="Nozzle petal root hinge")
+    add("solid.pattern.circular", bodies=["Nozzle petal root hinge"],
+        axis="X", count=20)
+    return commands
+
 def main():
-    models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner()}
+    models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
+              "fan-blisk": fan_blisk(), "compressor-cassette": compressor_cassette(), "turbine-wheel": turbine_wheel(), "turbine-shroud": turbine_shroud(), "stator-vane-ring": stator_vane_ring(), "combustor-liner": combustor_liner(), "nozzle-actuators": nozzle_actuators(),
+              "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals()}
     for name, commands in models.items():
         source = SOURCE / f"{name}.json"
         source.write_text(json.dumps({"commands": commands}, indent=2) + "\n")

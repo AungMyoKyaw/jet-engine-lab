@@ -1,0 +1,344 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | wide-chord swept fan and spinner"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 275,
+        "height": 340,
+        "base": [
+          -170,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan hub"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 325,
+        "height": 75,
+        "base": [
+          95,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan root band"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 272,
+        "height": 87,
+        "base": [
+          89,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan root band bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Fan root band",
+        "tools": [
+          "Fan root band bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 298,
+        "height": 55,
+        "base": [
+          190,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft fan labyrinth seal"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 280,
+        "height": 67,
+        "base": [
+          184,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft fan labyrinth seal bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft fan labyrinth seal",
+        "tools": [
+          "Aft fan labyrinth seal bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 60,
+        "top_radius": 263,
+        "height": 465,
+        "base": [
+          -635,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan spinner"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Swept fan root section",
+        "plane": {
+          "origin": [
+            0,
+            280,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -287.20000000000005,
+            -24.5
+          ],
+          [
+            -182.8,
+            -56
+          ],
+          [
+            11.599999999999994,
+            -44.239999999999995
+          ],
+          [
+            87.20000000000002,
+            -4.76
+          ],
+          [
+            -67.6,
+            28
+          ],
+          [
+            -229.6,
+            19.6
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Swept fan midspan section",
+        "plane": {
+          "origin": [
+            0,
+            685,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -212.44,
+            -0.5
+          ],
+          [
+            -119.06,
+            -26
+          ],
+          [
+            54.81999999999999,
+            -16.48
+          ],
+          [
+            122.44,
+            15.48
+          ],
+          [
+            -16.02,
+            42
+          ],
+          [
+            -160.92000000000002,
+            35.2
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Swept fan tip section",
+        "plane": {
+          "origin": [
+            0,
+            1050,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            19.840000000000003,
+            19.25
+          ],
+          [
+            80.16,
+            5
+          ],
+          [
+            192.48000000000002,
+            10.32
+          ],
+          [
+            236.16,
+            28.18
+          ],
+          [
+            146.72,
+            43
+          ],
+          [
+            53.120000000000005,
+            39.2
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Swept fan root section"
+          },
+          {
+            "sketch": "Swept fan midspan section"
+          },
+          {
+            "sketch": "Swept fan tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Swept fan blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Swept fan blade"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 24,
+        "height": 45,
+        "base": [
+          152,
+          300,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan lock bolt"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fan lock bolt"
+        ],
+        "axis": "X",
+        "count": 18
+      }
+    }
+  ]
+}

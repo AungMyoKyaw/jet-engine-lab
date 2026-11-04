@@ -1,0 +1,315 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | fan outlet guide vanes and structural supports"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1050,
+        "height": 102,
+        "base": [
+          336,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan outlet casing"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1008,
+        "height": 114,
+        "base": [
+          330,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan outlet casing bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Fan outlet casing",
+        "tools": [
+          "Fan outlet casing bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 384,
+        "height": 115,
+        "base": [
+          317,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Outlet guide hub"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 331,
+        "height": 127,
+        "base": [
+          311,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Outlet guide hub bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Outlet guide hub",
+        "tools": [
+          "Outlet guide hub bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fan exit guide vane inner section",
+        "plane": {
+          "origin": [
+            0,
+            374,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            168.95999999999998,
+            -15.0
+          ],
+          [
+            213.04,
+            -33
+          ],
+          [
+            295.12,
+            -26.28
+          ],
+          [
+            327.04,
+            -3.7199999999999998
+          ],
+          [
+            261.68,
+            15
+          ],
+          [
+            193.28,
+            10.200000000000003
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fan exit guide vane mid section",
+        "plane": {
+          "origin": [
+            0,
+            697,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            226.64,
+            10.75
+          ],
+          [
+            268.11,
+            -5
+          ],
+          [
+            345.33,
+            0.8800000000000008
+          ],
+          [
+            375.36,
+            20.62
+          ],
+          [
+            313.87,
+            37
+          ],
+          [
+            249.52,
+            32.8
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Fan exit guide vane outer section",
+        "plane": {
+          "origin": [
+            0,
+            1015,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            306.32,
+            24.5
+          ],
+          [
+            337.93,
+            14
+          ],
+          [
+            396.79,
+            17.92
+          ],
+          [
+            419.68,
+            31.08
+          ],
+          [
+            372.81,
+            42
+          ],
+          [
+            323.76,
+            39.2
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Fan exit guide vane inner section"
+          },
+          {
+            "sketch": "Fan exit guide vane mid section"
+          },
+          {
+            "sketch": "Fan exit guide vane outer section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Fan exit guide vane blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fan exit guide vane blade"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 19,
+        "height": 52,
+        "base": [
+          425,
+          1020,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan exit vane mount bolt"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fan exit vane mount bolt"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | twenty convergent nozzle petal panels"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Nozzle petal root cross section",
+        "plane": {
+          "origin": [
+            -460,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            833.5,
+            -61.0
+          ],
+          [
+            862.5,
+            -61.0
+          ],
+          [
+            862.5,
+            61.0
+          ],
+          [
+            833.5,
+            61.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Nozzle petal hinge cross section",
+        "plane": {
+          "origin": [
+            -180,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            758.5,
+            -56.5
+          ],
+          [
+            781.5,
+            -56.5
+          ],
+          [
+            781.5,
+            56.5
+          ],
+          [
+            758.5,
+            56.5
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Nozzle petal throat cross section",
+        "plane": {
+          "origin": [
+            190,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            644.0,
+            -47.5
+          ],
+          [
+            664.0,
+            -47.5
+          ],
+          [
+            664.0,
+            47.5
+          ],
+          [
+            644.0,
+            47.5
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Nozzle petal lip cross section",
+        "plane": {
+          "origin": [
+            475,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            547.5,
+            -39.0
+          ],
+          [
+            562.5,
+            -39.0
+          ],
+          [
+            562.5,
+            39.0
+          ],
+          [
+            547.5,
+            39.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Nozzle petal root cross section"
+          },
+          {
+            "sketch": "Nozzle petal hinge cross section"
+          },
+          {
+            "sketch": "Nozzle petal throat cross section"
+          },
+          {
+            "sketch": "Nozzle petal lip cross section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Convergent nozzle petal"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Convergent nozzle petal"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 23,
+        "height": 34,
+        "base": [
+          -465,
+          840,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle petal root hinge"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle petal root hinge"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    }
+  ]
+}

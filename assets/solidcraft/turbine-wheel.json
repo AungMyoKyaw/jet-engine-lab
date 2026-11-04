@@ -1,0 +1,267 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | high-temperature turbine bucket wheel"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 418,
+        "height": 165,
+        "base": [
+          -83,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine rotor disk"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 275,
+        "height": 305,
+        "base": [
+          -153,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine hub shaft"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine bucket platform section",
+        "plane": {
+          "origin": [
+            0,
+            403,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -202.68,
+            -27.5
+          ],
+          [
+            -120.32000000000001,
+            -56
+          ],
+          [
+            33.040000000000006,
+            -45.36
+          ],
+          [
+            92.68,
+            -9.64
+          ],
+          [
+            -29.44,
+            20
+          ],
+          [
+            -157.24,
+            12.400000000000002
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine bucket midspan section",
+        "plane": {
+          "origin": [
+            0,
+            600,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -120.56,
+            12.75
+          ],
+          [
+            -54.440000000000005,
+            -9
+          ],
+          [
+            68.67999999999999,
+            -0.879999999999999
+          ],
+          [
+            116.56,
+            26.38
+          ],
+          [
+            18.52,
+            49
+          ],
+          [
+            -84.08,
+            43.2
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Turbine bucket tip section",
+        "plane": {
+          "origin": [
+            0,
+            803,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -23.28,
+            37.75
+          ],
+          [
+            31.53,
+            25
+          ],
+          [
+            133.59,
+            29.759999999999998
+          ],
+          [
+            173.28,
+            45.74
+          ],
+          [
+            92.00999999999999,
+            59
+          ],
+          [
+            6.960000000000008,
+            55.6
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Turbine bucket platform section"
+          },
+          {
+            "sketch": "Turbine bucket midspan section"
+          },
+          {
+            "sketch": "Turbine bucket tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Turbine bucket blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Turbine bucket blade"
+        ],
+        "axis": "X",
+        "count": 22
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 19,
+        "height": 42,
+        "base": [
+          -100,
+          372,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine retention pin"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Turbine retention pin"
+        ],
+        "axis": "X",
+        "count": 22
+      }
+    }
+  ]
+}

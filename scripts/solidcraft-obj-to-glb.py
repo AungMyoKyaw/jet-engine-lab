@@ -13,19 +13,34 @@ TARGET = ROOT / "public" / "assets" / "solidcraft"
 TARGET.mkdir(parents=True, exist_ok=True)
 
 PALETTES = {
-    "blade": ((.57,.70,.81,1),.86,.32),
-    "shell": ((.18,.29,.38,1),.77,.39),
-    "bronze": ((.78,.52,.27,1),.78,.35),
-    "steel": ((.40,.51,.60,1),.84,.35),
+    "blade": ((.60,.69,.73,1),.87,.28),
+    "shell": ((.18,.25,.30,1),.79,.43),
+    "bronze": ((.77,.52,.30,1),.84,.32),
+    "steel": ((.39,.47,.52,1),.83,.34),
+    "heat": ((.61,.50,.44,1),.87,.31),
+    "heat_shell": ((.34,.31,.30,1),.83,.44),
+    "fastener": ((.72,.74,.73,1),.86,.24),
+    "seal": ((.105,.13,.16,1),.69,.45),
+    "fuel": ((.66,.40,.23,1),.81,.30),
 }
 
 def role(name):
     name=name.lower()
-    if any(w in name for w in ("vane","blade","tooth","impeller disk")):
+    if any(w in name for w in ("turbine nozzle guide", "turbine bucket", "turbine rotor", "nozzle petal", "flameholder", "atomizer tip")):
+        return "heat"
+    if any(w in name for w in ("turbine outer", "turbine forward", "combustor outer liner", "combustor inner liner", "combustor dome backing")):
+        return "heat_shell"
+    if any(w in name for w in ("fuel delivery", "fuel manifold", "fuel swirler", "spray bar")):
+        return "fuel"
+    if any(w in name for w in ("bolt","stud","fastener","retention pin","segment lock","end pin","pitch boss")):
+        return "fastener"
+    if any(w in name for w in ("labyrinth", "bearing seal", "inner race", "outer race")):
+        return "seal"
+    if any(w in name for w in ("vane","blade","bucket","tooth","impeller disk","guide")):
         return "blade"
-    if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","flameholder hoop")):
+    if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","outer liner","case ring","casing rib", "support case", "nozzle synchronization")):
         return "shell"
-    if any(w in name for w in ("collar","injector","atomizer","carrier","spray nozzle","flange","seal rim")):
+    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener")):
         return "bronze"
     return "steel"
 
@@ -47,6 +62,10 @@ models=(
     "rotor-stage","planetary-reducer","combustor-manifold",
     "intake-duct","bypass-lattice","nozzle-housing",
     "radial-impeller","radial-diffuser","afterburner-assembly",
+    "fan-blisk","compressor-cassette","turbine-wheel","turbine-shroud",
+    "stator-vane-ring","combustor-liner","nozzle-actuators",
+    "fan-outlet-guides","compressor-case-detail","turbine-nozzle-guide",
+    "bearing-cartridge","combustor-dome","nozzle-petals",
 )
 for name in models:
     bpy.ops.object.select_all(action="SELECT")

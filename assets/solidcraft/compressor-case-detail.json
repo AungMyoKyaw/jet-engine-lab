@@ -1,0 +1,282 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | split compressor case hoops and bleed hardware"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 894,
+        "height": 34,
+        "base": [
+          -350,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib -350"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 838,
+        "height": 46,
+        "base": [
+          -356,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib -350 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Compressor casing rib -350",
+        "tools": [
+          "Compressor casing rib -350 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 18,
+        "height": 35,
+        "base": [
+          -315,
+          870,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing stud -350"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor casing stud -350"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 894,
+        "height": 34,
+        "base": [
+          -88,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib -88"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 838,
+        "height": 46,
+        "base": [
+          -94,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib -88 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Compressor casing rib -88",
+        "tools": [
+          "Compressor casing rib -88 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 18,
+        "height": 35,
+        "base": [
+          -53,
+          870,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing stud -88"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor casing stud -88"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 894,
+        "height": 34,
+        "base": [
+          275,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib 275"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 838,
+        "height": 46,
+        "base": [
+          269,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing rib 275 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Compressor casing rib 275",
+        "tools": [
+          "Compressor casing rib 275 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 18,
+        "height": 35,
+        "base": [
+          310,
+          870,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor casing stud 275"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor casing stud 275"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 16,
+        "height": 670,
+        "base": [
+          -349,
+          876,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor case tie rod"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor case tie rod"
+        ],
+        "axis": "X",
+        "count": 10
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 923,
+        "height": 45,
+        "base": [
+          128,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor bleed manifold"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 859,
+        "height": 57,
+        "base": [
+          122,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor bleed manifold bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Compressor bleed manifold",
+        "tools": [
+          "Compressor bleed manifold bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 29,
+        "height": 80,
+        "base": [
+          133,
+          904,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Compressor bleed port boss"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Compressor bleed port boss"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

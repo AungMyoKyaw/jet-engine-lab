@@ -1,0 +1,183 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | annular combustor dome and fuel air swirlers"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 758,
+        "height": 42,
+        "base": [
+          -575,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dome backing"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 391,
+        "height": 54,
+        "base": [
+          -581,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dome backing bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor dome backing",
+        "tools": [
+          "Combustor dome backing bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 784,
+        "height": 66,
+        "base": [
+          -601,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dome stiffener"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 743,
+        "height": 78,
+        "base": [
+          -607,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dome stiffener bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor dome stiffener",
+        "tools": [
+          "Combustor dome stiffener bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 74,
+        "height": 128,
+        "base": [
+          -605,
+          574,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor swirler cup"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 42,
+        "height": 140,
+        "base": [
+          -611,
+          574,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor swirler bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor swirler cup",
+        "tools": [
+          "Combustor swirler bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor swirler cup"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cone",
+      "params": {
+        "radius": 35,
+        "top_radius": 17,
+        "height": 91,
+        "base": [
+          -645,
+          574,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor fuel swirler cone"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor fuel swirler cone"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 49,
+        "base": [
+          -603,
+          730,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dome fastener"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor dome fastener"
+        ],
+        "axis": "X",
+        "count": 36
+      }
+    }
+  ]
+}

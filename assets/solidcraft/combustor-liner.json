@@ -1,0 +1,234 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | cutaway double-wall annular combustor liner"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 790,
+        "height": 1230,
+        "base": [
+          -615,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor outer liner"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 752,
+        "height": 1242,
+        "base": [
+          -621,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor outer liner bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor outer liner",
+        "tools": [
+          "Combustor outer liner bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 1290,
+        "width": 1050,
+        "height": 1050,
+        "corner": [
+          -645,
+          0,
+          0
+        ],
+        "body_name": "Combustor liner cutaway tool"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor outer liner",
+        "tools": [
+          "Combustor liner cutaway tool"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 378,
+        "height": 1120,
+        "base": [
+          -555,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor inner liner"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 342,
+        "height": 1132,
+        "base": [
+          -561,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor inner liner bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor inner liner",
+        "tools": [
+          "Combustor inner liner bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 800,
+        "height": 34,
+        "base": [
+          -595,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor mounting flange -595"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 740,
+        "height": 46,
+        "base": [
+          -601,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor mounting flange -595 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor mounting flange -595",
+        "tools": [
+          "Combustor mounting flange -595 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 800,
+        "height": 34,
+        "base": [
+          560,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor mounting flange 560"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 740,
+        "height": 46,
+        "base": [
+          554,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor mounting flange 560 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Combustor mounting flange 560",
+        "tools": [
+          "Combustor mounting flange 560 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 34,
+        "height": 65,
+        "base": [
+          -200,
+          765,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor dilution port collar"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor dilution port collar"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 20,
+        "height": 38,
+        "base": [
+          240,
+          773,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Combustor cooling port collar"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Combustor cooling port collar"
+        ],
+        "axis": "X",
+        "count": 32
+      }
+    }
+  ]
+}
