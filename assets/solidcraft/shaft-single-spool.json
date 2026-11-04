@@ -1,0 +1,428 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | single-spool shaft and bearing races"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 103,
+        "height": 4900,
+        "base": [
+          -2550,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Hollow compressor turbine drive tube"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 58,
+        "height": 4912,
+        "base": [
+          -2556,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Hollow compressor turbine drive tube bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Hollow compressor turbine drive tube",
+        "tools": [
+          "Hollow compressor turbine drive tube bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          -2380,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          -2386,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 1",
+        "tools": [
+          "Single spool splined coupling 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          -1720,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          -1726,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 2",
+        "tools": [
+          "Single spool splined coupling 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          -900,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 3"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          -906,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 3 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 3",
+        "tools": [
+          "Single spool splined coupling 3 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          120,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 4"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          114,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 4 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 4",
+        "tools": [
+          "Single spool splined coupling 4 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          1120,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 5"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          1114,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 5 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 5",
+        "tools": [
+          "Single spool splined coupling 5 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 147,
+        "height": 74,
+        "base": [
+          2020,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 6"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 98,
+        "height": 86,
+        "base": [
+          2014,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool splined coupling 6 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool splined coupling 6",
+        "tools": [
+          "Single spool splined coupling 6 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 133,
+        "height": 155,
+        "base": [
+          -2300,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool bearing inner race 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 101,
+        "height": 167,
+        "base": [
+          -2306,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool bearing inner race 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool bearing inner race 1",
+        "tools": [
+          "Single spool bearing inner race 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 151,
+        "height": 22,
+        "base": [
+          -2232,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool oil seal 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 34,
+        "base": [
+          -2238,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool oil seal 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool oil seal 1",
+        "tools": [
+          "Single spool oil seal 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 133,
+        "height": 155,
+        "base": [
+          2050,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool bearing inner race 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 101,
+        "height": 167,
+        "base": [
+          2044,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool bearing inner race 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool bearing inner race 2",
+        "tools": [
+          "Single spool bearing inner race 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 151,
+        "height": 22,
+        "base": [
+          2118,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool oil seal 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 34,
+        "base": [
+          2112,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Single spool oil seal 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Single spool oil seal 2",
+        "tools": [
+          "Single spool oil seal 2 bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

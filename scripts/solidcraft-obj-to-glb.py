@@ -6,6 +6,7 @@ sharing a material for economical Three.js draw calls; no CAD geometry is author
 """
 from pathlib import Path
 import bpy
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets" / "solidcraft"
@@ -66,8 +67,14 @@ models=(
     "stator-vane-ring","combustor-liner","nozzle-actuators",
     "fan-outlet-guides","compressor-case-detail","turbine-nozzle-guide",
     "bearing-cartridge","combustor-dome","nozzle-petals",
+    "shaft-single-spool","shaft-dual-spool",
 )
+requested = set(sys.argv[sys.argv.index('--')+1:]) if '--' in sys.argv else set()
+if requested - set(models):
+    raise ValueError(f"Unknown SolidCraft families: {sorted(requested-set(models))}")
 for name in models:
+    if requested and name not in requested:
+        continue
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False)
     bpy.ops.wm.obj_import(filepath=str(SOURCE / (name+".obj")), forward_axis="Y", up_axis="Z")

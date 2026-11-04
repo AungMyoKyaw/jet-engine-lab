@@ -18,20 +18,24 @@ try{
   const browser=await driver.launch({headless:true,...(name==='chromium'?{args:['--enable-unsafe-swiftshader']}: {})});
   try{
    const context=await browser.newContext({viewport:{width:1280,height:820},serviceWorkers:'allow'});
-   const page=await context.newPage(),errors=[];
+   const page=await context.newPage(),errors=[],cadResponses=[];
    page.on('pageerror',error=>errors.push(error.message));
+   page.on('response',response=>{if(response.url().includes('/assets/solidcraft/'))cadResponses.push([response.status(),response.url()]);});
    await page.goto(base+'#/engines/turbojet',{waitUntil:'domcontentloaded'});
    await page.getByRole('heading',{name:'An engine to explore.'}).waitFor({timeout:10000});
    await page.locator('.visual-engine-scene canvas').waitFor({state:'visible',timeout:12000});
-   await page.waitForTimeout(600);
-   const threeD=await page.locator('canvas').count(),fallback=await page.locator('.webgl-fallback').count();
-   if(!threeD&&!fallback)throw Error('Neither 3D nor accessible fallback rendered');
+   await page.waitForFunction(()=>['intake-duct','compressor-cassette','combustor-liner','turbine-wheel','nozzle-housing','shaft-single-spool'].every(name=>performance.getEntriesByType('resource').some(entry=>entry.name.endsWith('/assets/solidcraft/'+name+'.glb'))),{timeout:20000});
+   const threeD=await page.locator('.visual-engine-scene canvas').count();
+   if(!threeD||await page.locator('.cad-asset-error,.webgl-fallback').count())throw Error('SolidCraft-only 3D renderer failed');
+   for(const file of ['intake-duct','compressor-cassette','combustor-liner','turbine-wheel','nozzle-housing','shaft-single-spool']){
+    if(!cadResponses.some(([status,url])=>status===200&&url.endsWith('/'+file+'.glb')))throw Error('Real CAD response missing: '+file);
+   }
    await page.goto(base+'#/reference',{waitUntil:'domcontentloaded'});
    await page.getByText('Component map explorer').waitFor({timeout:12000});
    await page.getByRole('button',{name:'HPC',exact:true}).click();
    await page.screenshot({path:'docs/visual-first-release/production-'+name+'.png',fullPage:true});
    if(errors.length)throw Error('Page errors: '+errors.join(' | '));
-   console.log(name.toUpperCase(),'PASS','engine=',threeD?'3D':'2D fallback','reference map=loaded');
+   console.log(name.toUpperCase(),'PASS','engine=SolidCraft CAD','reference map=loaded');
    if(name==='chromium'){
     await page.goto(base+'#/engines/turbojet',{waitUntil:'domcontentloaded'});
     await page.waitForTimeout(1000);
@@ -43,6 +47,16 @@ try{
     await page.goto(base+'#/reference',{waitUntil:'domcontentloaded'});
     await page.getByText('Component map explorer').waitFor({timeout:7000});
     console.log('CHROMIUM OFFLINE PASS: cached shell and reference module');
+   }
+   if(name==='chromium'){
+    const negative=await browser.newContext({viewport:{width:1280,height:820},serviceWorkers:'block'});
+    const broken=await negative.newPage();
+    await broken.route('**/assets/solidcraft/intake-duct.glb',route=>route.abort('failed'));
+    await broken.goto(base+'#/engines/turbojet',{waitUntil:'domcontentloaded'});
+    await broken.getByText('CAD ASSET UNAVAILABLE').first().waitFor({timeout:20000});
+    if(await broken.locator('.webgl-fallback').count())throw Error('3D model substituted by fallback after CAD failure');
+    await negative.close();
+    console.log('CHROMIUM CAD ERROR PASS: unavailable asset raises explicit status');
    }
    await context.close();
   }finally{await browser.close();}

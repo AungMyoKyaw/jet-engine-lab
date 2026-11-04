@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import pathlib
 import subprocess
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets" / "solidcraft"
@@ -193,6 +194,32 @@ def annulus(add, name, outer, inner, length, x):
     add("solid.cylinder", radius=inner, height=length + 12,
         base=[x - 6, 0, 0], axis="X", body_name=cutter)
     add("solid.combine", target=name, tools=[cutter], operation="cut")
+
+
+def shaft_single_spool():
+    commands, add = build("Jet Engine Lab | single-spool shaft and bearing races")
+    annulus(add, "Hollow compressor turbine drive tube", 103, 58, 4900, -2550)
+    for i, x in enumerate((-2380, -1720, -900, 120, 1120, 2020)):
+        annulus(add, f"Single spool splined coupling {i+1}", 147, 98, 74, x)
+    for i, x in enumerate((-2300, 2050)):
+        annulus(add, f"Single spool bearing inner race {i+1}", 133, 101, 155, x)
+        annulus(add, f"Single spool oil seal {i+1}", 151, 137, 22, x+68)
+    return commands
+
+
+def shaft_dual_spool():
+    commands, add = build("Jet Engine Lab | two concentric independent engine spools")
+    annulus(add, "LP fan to turbine hollow drive tube", 89, 48, 8280, -4200)
+    annulus(add, "HP concentric compressor turbine tube", 157, 105, 4130, -1210)
+    for i, x in enumerate((-4050, -3000, 3150, 3950)):
+        annulus(add, f"LP splined hub {i+1}", 137, 87, 78, x)
+    for i, x in enumerate((-1160, -800, 2330, 2810)):
+        annulus(add, f"HP splined hub {i+1}", 196, 154, 70, x)
+    for i, x in enumerate((-2910, 3710)):
+        annulus(add, f"LP bearing race {i+1}", 133, 90, 112, x)
+    for i, x in enumerate((-1010, 2500)):
+        annulus(add, f"HP bearing race {i+1}", 191, 159, 106, x)
+    return commands
 
 
 def lofted_row(add, prefix, stations, count):
@@ -458,8 +485,14 @@ def nozzle_petals():
 def main():
     models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
               "fan-blisk": fan_blisk(), "compressor-cassette": compressor_cassette(), "turbine-wheel": turbine_wheel(), "turbine-shroud": turbine_shroud(), "stator-vane-ring": stator_vane_ring(), "combustor-liner": combustor_liner(), "nozzle-actuators": nozzle_actuators(),
-              "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals()}
+              "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals(),
+              "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool()}
+    requested = set(sys.argv[1:])
+    if requested - models.keys():
+        raise ValueError(f"Unknown SolidCraft families: {sorted(requested - models.keys())}")
     for name, commands in models.items():
+        if requested and name not in requested:
+            continue
         source = SOURCE / f"{name}.json"
         source.write_text(json.dumps({"commands": commands}, indent=2) + "\n")
         cmd = ["solidcraft-cli", "run", str(source), "--save", str(SOURCE / f"{name}.sc"),

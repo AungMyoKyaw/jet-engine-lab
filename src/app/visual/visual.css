@@ -123,9 +123,10 @@
  .visual-narrative>p{font-size:11px;line-height:1.45;max-width:210px}
  .visual-part-note{margin-top:9px;padding:7px 9px;max-width:225px}
  .visual-part-note strong{font-size:11px}.visual-part-note p{font-size:10px}
- .visual-readout{top:267px;right:13px;gap:4px}
+ /* Keep the CAD component description clear; place provisional metrics below the model. */
+ .visual-readout{top:auto;bottom:186px;left:13px;right:auto;align-items:flex-start;text-align:left;gap:3px;max-width:205px;padding:8px 10px;background:#0b2434e8;border:1px solid #52768a80;border-radius:10px;backdrop-filter:blur(10px)}
  .visual-readout>span{font-size:8px}.visual-readout>strong{font-size:28px}.visual-readout>strong em{font-size:9px}
- .visual-readout>div{font-size:8px;display:flex;flex-direction:column;gap:1px;align-items:end}
+ .visual-readout>div{font-size:8px;display:flex;flex-direction:column;gap:1px;align-items:flex-start}
  .visual-readout>div b{font-size:9px}
  .visual-readout>small{font-size:7px}
  .visual-side-controls{top:auto;right:13px;bottom:208px;gap:5px}

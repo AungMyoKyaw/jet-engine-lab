@@ -24,7 +24,7 @@ Jet Engine Lab is a free, browser-based aerospace learning experience. The engin
 | [Centrifugal turbojet](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/centrifugal-turbojet) | A rotating impeller throws air radially outward | **3D visual study only** |
 | [Geared turbofan](https://aungmyokyaw.github.io/jet-engine-lab/#/engines/geared-turbofan) | A reduction gearbox allows a slower fan | **3D visual study only** |
 
-Every engine is an **interactive 3D CAD assembly**, not a static image. **22 original SolidCraft B-rep design families** supply the fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Each architecture combines 13–18 applicable CAD families; targeted real-time effects preserve airflow, variable-nozzle actuation and explanatory motion. All five gallery cards use renders of the same assembled CAD scenes.
+Every engine is an **interactive 3D CAD assembly**, not a static image. **24 original SolidCraft B-rep design families** supply the drive shafts, fan, compressor, combustor, turbine, bearings, guide vanes, gearbox and nozzle hardware. Every visible mechanical part in the WebGL engine scenes is a model authored with SolidCraft CLI; animated airflow, explanatory power cues and lighting are visual effects. All five gallery cards use renders of the same assembled CAD scenes. If an original CAD asset fails to load, the viewer reports the failure instead of substituting another engine model.
 
 ## Inspect the machinery, not just the shell
 
@@ -78,7 +78,8 @@ bun run typecheck
 bun run test
 bun run build
 bun run smoke             # Existing 3D experience plus all five engine-gallery workflows
-bun run smoke:production  # Static production build, reference and offline shell
+bun run smoke:cad:full     # All five assemblies, 3D asset responses, screenshots (preview server on :4173)
+bun run smoke:production  # Static production build, missing-asset error and offline shell
 ```
 
 For maintainers: `bun run previews:engines` regenerates the five gallery card images from the locally running 3D scenes using Playwright. `bun run smoke:engines` checks engine selection, 3D assets, visual-only numeric integrity, focus, afterburner, nozzle and gear interactions, project state and responsive gallery layout.
@@ -106,7 +107,8 @@ The numerical cycle does not yet include independently calibrated compressor/tur
 | `src/app/data/catalog.ts` | Five-engine catalogue and solver eligibility |
 | `src/app/data/parts.ts` | Individually selectable component hierarchies |
 | `src/app/engine/EngineViewport.tsx` | Shared 3D renderer, orbit camera and focus/isolation |
-| `src/app/engine/SpecialGeometry.tsx` | Afterburner, nozzle petals, radial impeller/diffuser and planetary gearbox |
+| `src/app/engine/SolidCraftDetail.tsx` | Original SolidCraft mechanical geometry, shaft models and rotor motion |
+| `src/app/engine/SpecialGeometry.tsx` | Explanatory lighting and shaft-power overlay only |
 | `src/app/engine/EngineFlowParticles.tsx` | Lightweight illustrative 3D core/bypass airflow |
 | `src/app/visual/` | Engine gallery, visual learning and minimal interface |
 | `src/app/physics/` | Preliminary numeric solver and source-pinned maps |
@@ -118,6 +120,6 @@ The app remains static-hosted on GitHub Pages. Source is maintained on `master`;
 
 ## License and credits
 
-Jet Engine Lab's original source and procedural engine geometry are covered by the repository's [MIT License](LICENSE). External assets retain their own terms, including [Innerscene's](https://www.innerscene.com/tools/library/3d-parts/turbofan-quarter-cutaway-e0184203) optional CC0 cutaway, [Poly Haven Studio Small 08](https://polyhaven.com/a/studio_small_08) lighting (CC0), [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) map data (Apache-2.0), and IBM Plex fonts (SIL OFL). See [Asset Provenance](docs/ASSET_PROVENANCE.md) and [Credits](https://aungmyokyaw.github.io/jet-engine-lab/#/credits).
+Jet Engine Lab's original source and SolidCraft CAD models are covered by the repository's [MIT License](LICENSE). External assets retain their own terms, including [Poly Haven Studio Small 08](https://polyhaven.com/a/studio_small_08) lighting (CC0), [OpenMDAO pyCycle](https://github.com/OpenMDAO/pyCycle) map data (Apache-2.0), and IBM Plex fonts (SIL OFL). See [Asset Provenance](docs/ASSET_PROVENANCE.md) and [Credits](https://aungmyokyaw.github.io/jet-engine-lab/#/credits).
 
 No engine-manufacturer endorsement, precise OEM geometry or certified numerical performance is implied.

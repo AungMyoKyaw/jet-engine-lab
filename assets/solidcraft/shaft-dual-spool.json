@@ -1,0 +1,542 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | two concentric independent engine spools"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 89,
+        "height": 8280,
+        "base": [
+          -4200,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP fan to turbine hollow drive tube"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 48,
+        "height": 8292,
+        "base": [
+          -4206,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP fan to turbine hollow drive tube bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP fan to turbine hollow drive tube",
+        "tools": [
+          "LP fan to turbine hollow drive tube bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 157,
+        "height": 4130,
+        "base": [
+          -1210,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP concentric compressor turbine tube"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 105,
+        "height": 4142,
+        "base": [
+          -1216,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP concentric compressor turbine tube bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP concentric compressor turbine tube",
+        "tools": [
+          "HP concentric compressor turbine tube bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 78,
+        "base": [
+          -4050,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 87,
+        "height": 90,
+        "base": [
+          -4056,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP splined hub 1",
+        "tools": [
+          "LP splined hub 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 78,
+        "base": [
+          -3000,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 87,
+        "height": 90,
+        "base": [
+          -3006,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP splined hub 2",
+        "tools": [
+          "LP splined hub 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 78,
+        "base": [
+          3150,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 3"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 87,
+        "height": 90,
+        "base": [
+          3144,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 3 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP splined hub 3",
+        "tools": [
+          "LP splined hub 3 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 137,
+        "height": 78,
+        "base": [
+          3950,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 4"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 87,
+        "height": 90,
+        "base": [
+          3944,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP splined hub 4 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP splined hub 4",
+        "tools": [
+          "LP splined hub 4 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 196,
+        "height": 70,
+        "base": [
+          -1160,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 154,
+        "height": 82,
+        "base": [
+          -1166,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP splined hub 1",
+        "tools": [
+          "HP splined hub 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 196,
+        "height": 70,
+        "base": [
+          -800,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 154,
+        "height": 82,
+        "base": [
+          -806,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP splined hub 2",
+        "tools": [
+          "HP splined hub 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 196,
+        "height": 70,
+        "base": [
+          2330,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 3"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 154,
+        "height": 82,
+        "base": [
+          2324,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 3 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP splined hub 3",
+        "tools": [
+          "HP splined hub 3 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 196,
+        "height": 70,
+        "base": [
+          2810,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 4"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 154,
+        "height": 82,
+        "base": [
+          2804,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP splined hub 4 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP splined hub 4",
+        "tools": [
+          "HP splined hub 4 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 133,
+        "height": 112,
+        "base": [
+          -2910,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP bearing race 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 90,
+        "height": 124,
+        "base": [
+          -2916,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP bearing race 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP bearing race 1",
+        "tools": [
+          "LP bearing race 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 133,
+        "height": 112,
+        "base": [
+          3710,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP bearing race 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 90,
+        "height": 124,
+        "base": [
+          3704,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "LP bearing race 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "LP bearing race 2",
+        "tools": [
+          "LP bearing race 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 191,
+        "height": 106,
+        "base": [
+          -1010,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP bearing race 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 159,
+        "height": 118,
+        "base": [
+          -1016,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP bearing race 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP bearing race 1",
+        "tools": [
+          "HP bearing race 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 191,
+        "height": 106,
+        "base": [
+          2500,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP bearing race 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 159,
+        "height": 118,
+        "base": [
+          2494,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "HP bearing race 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "HP bearing race 2",
+        "tools": [
+          "HP bearing race 2 bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

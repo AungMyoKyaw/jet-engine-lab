@@ -24,11 +24,14 @@ try{
     page.on('pageerror',error=>failures.push(engine+': JS '+error.message));
     await page.goto('http://127.0.0.1:4173/#/engines/'+engine,{waitUntil:'domcontentloaded'});
     await page.locator('.visual-engine-scene canvas').waitFor({state:'visible',timeout:25000});
-    const files=[...new Set(PARTS[engine].flatMap(part=>assets[part.kind]))];
+    const shaft=engine==='turbojet'||engine==='centrifugal-turbojet'?'shaft-single-spool':'shaft-dual-spool';
+    const files=[...new Set([...PARTS[engine].flatMap(part=>assets[part.kind]),shaft])];
     await page.waitForFunction(expected=>expected.every(file=>
       performance.getEntriesByType('resource').some(resource=>resource.name.endsWith('/assets/solidcraft/'+file+'.glb'))
     ),files,{timeout:25000});
     await page.waitForTimeout(1100);
+    if(await page.locator('.cad-asset-error,.webgl-fallback').count())
+      failures.push(engine+' showed CAD load error or WebGL failure');
     for(const file of files){
       if(!requests.some(([status,url])=>status===200&&url.endsWith('/'+file+'.glb')))
         failures.push(engine+' missing CAD '+file);
