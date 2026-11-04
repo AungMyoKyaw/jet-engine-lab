@@ -28,7 +28,22 @@ async function openEngine(page: import('@playwright/test').Page, id: string) {
       entry => entry.name.endsWith('/assets/solidcraft/' + file + '.glb')
     ), cad, { timeout: 30_000 });
   }
+  // A network response can finish before React reveals the complete CAD assembly.
+  await expect(page.locator('.cad-assembly-loading')).toBeHidden({ timeout: 45_000 });
+  await expect(page.locator('.cad-asset-error')).toHaveCount(0);
   await page.waitForTimeout(1200);
+}
+
+async function waitForGalleryImages(page: import('@playwright/test').Page) {
+  // The production gallery lazy-loads cards below the fold. Screenshot capture
+  // must fetch all five before rendering the entire collection for documentation.
+  await page.locator('.visual-gallery-card img').evaluateAll(nodes => nodes.forEach(node => {
+    (node as HTMLImageElement).loading = 'eager';
+  }));
+  await expect.poll(() => page.locator('.visual-gallery-card img').evaluateAll(
+    nodes => nodes.every(node => (node as HTMLImageElement).complete &&
+      (node as HTMLImageElement).naturalWidth > 0)
+  ), { timeout: 30_000 }).toBe(true);
 }
 
 test('README desktop engine and gallery screenshots', async ({ page }) => {
@@ -40,10 +55,7 @@ test('README desktop engine and gallery screenshots', async ({ page }) => {
   await page.getByRole('button', { name: /EXPLORE THE COLLECTION/ }).click();
   await expect(page.getByRole('dialog', { name: 'Explore five jet engines' })).toBeVisible();
   await expect(page.locator('.visual-gallery-card')).toHaveCount(5);
-  await expect.poll(() => page.locator('.visual-gallery-card img').evaluateAll(
-    nodes => nodes.every(node => (node as HTMLImageElement).complete &&
-      (node as HTMLImageElement).naturalWidth > 0)
-  )).toBe(true);
+  await waitForGalleryImages(page);
   // Give the five cards enough vertical space so none is clipped.
   await page.setViewportSize({ width: 1600, height: 1050 });
   await page.screenshot({ path: OUTPUT + '/gallery-desktop.png', animations: 'disabled' });
@@ -99,10 +111,7 @@ test('README mobile screenshots — live production', async ({ page }) => {
   await page.getByRole('button', { name: /EXPLORE THE COLLECTION/ }).click();
   await expect(page.getByRole('dialog', { name: 'Explore five jet engines' })).toBeVisible();
   await expect(page.locator('.visual-gallery-card')).toHaveCount(5);
-  await expect.poll(() => page.locator('.visual-gallery-card img').evaluateAll(
-    nodes => nodes.every(node => (node as HTMLImageElement).complete &&
-      (node as HTMLImageElement).naturalWidth > 0)
-  )).toBe(true);
+  await waitForGalleryImages(page);
   await page.screenshot({ path: OUTPUT + '/gallery-mobile.png', animations: 'disabled' });
   console.log('READ_ME_SCREENSHOT', OUTPUT + '/engine-mobile.png');
   console.log('READ_ME_SCREENSHOT', OUTPUT + '/gallery-mobile.png');
