@@ -155,7 +155,12 @@ function World({engine,selected,onSelect,explode,showShell,result,referenceMode,
   const fitContext=[engine,preset,viewReset,referenceMode,focusPart,size.width,size.height].join(':');
   // Adjusting explosion must preserve any custom orbit angle, not jump back to a preset.
   const currentDirection=controls.object.position.clone().sub(controls.target).normalize();
-  const direction=lastFitContext.current===fitContext?currentDirection:normal[preset].normalize();
+  // A centrifugal impeller's radial vanes are on the inlet-facing side.
+  // Focus from that side so its solid backplate cannot hide the blade passages.
+  const focusDirection=focusPart==='impeller'
+   ?new THREE.Vector3(-1.05,.33,.88)
+   :normal[preset];
+  const direction=lastFitContext.current===fitContext?currentDirection:focusDirection.normalize();
   lastFitContext.current=fitContext;
   // Fit actual assembly envelopes instead of an oversized whole-engine cuboid.
   // The radial envelope varies strongly along the axis, especially at the inlet.

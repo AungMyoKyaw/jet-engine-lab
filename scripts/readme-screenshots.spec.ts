@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
-const ROOT = 'https://aungmyokyaw.github.io/jet-engine-lab/';
+const ROOT = process.env.JETLAB_SCREENSHOT_BASE ?? 'https://aungmyokyaw.github.io/jet-engine-lab/';
 const OUTPUT = 'docs/readme';
 const engineUrl = (id: string) => ROOT + '?capture=readme-20261105-' + id + '#/engines/' + id;
 const distinctiveCAD: Record<string, string> = {
@@ -11,7 +11,7 @@ const distinctiveCAD: Record<string, string> = {
   'geared-turbofan': 'planetary-reducer',
 };
 
-test.setTimeout(100_000);
+test.setTimeout(90_000);
 test.use({ colorScheme: 'dark', serviceWorkers: 'block' });
 test.beforeEach(async ({ page }) => {
   // Screenshot sessions must not inherit project recovery from another engine.
@@ -31,7 +31,7 @@ async function openEngine(page: import('@playwright/test').Page, id: string) {
   await page.waitForTimeout(1200);
 }
 
-test('README desktop screenshots — live production', async ({ page }) => {
+test('README desktop engine and gallery screenshots', async ({ page }) => {
   await mkdir(OUTPUT, { recursive: true });
   await page.setViewportSize({ width: 1600, height: 900 });
   await openEngine(page, 'turbofan');
@@ -47,11 +47,15 @@ test('README desktop screenshots — live production', async ({ page }) => {
   // Give the five cards enough vertical space so none is clipped.
   await page.setViewportSize({ width: 1600, height: 1050 });
   await page.screenshot({ path: OUTPUT + '/gallery-desktop.png', animations: 'disabled' });
-  await page.setViewportSize({ width: 1600, height: 900 });
+});
 
-  await page.getByRole('button', { name: 'Explore Afterburning turbofan' }).click();
-  await expect(page.getByText('03 / FIGHTER')).toBeVisible();
+test('README afterburner experiment screenshot', async ({ page }) => {
+  await mkdir(OUTPUT, { recursive: true });
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await openEngine(page, 'afterburning-turbofan');
   await page.getByRole('button', { name: 'Experiment', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Experiment', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByText('03 / FIGHTER')).toBeVisible();
   await expect(page.getByRole('slider', { name: 'Nozzle opening illustration' })).toBeVisible();
   await page.getByRole('slider', { name: 'Nozzle opening illustration' }).fill('80');
   if (await page.getByRole('button', { name: 'LIGHT AFTERBURNER' }).count()) {
@@ -60,23 +64,31 @@ test('README desktop screenshots — live production', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'AFTERBURNER ON' })).toBeVisible();
   await page.waitForTimeout(800);
   await page.screenshot({ path: OUTPUT + '/afterburner-experiment.png', animations: 'disabled' });
+});
 
+test('README centrifugal impeller detail screenshot', async ({ page }) => {
+  await mkdir(OUTPUT, { recursive: true });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await openEngine(page, 'centrifugal-turbojet');
   await page.getByRole('button', { name: 'Understand', exact: true }).click();
   await page.locator('.visual-stages button').nth(1).click();
   await expect(page.getByRole('heading', { name: 'Impeller.' })).toBeVisible();
   await page.waitForTimeout(1500);
   await page.screenshot({ path: OUTPUT + '/centrifugal-impeller.png', animations: 'disabled' });
+});
 
+test('README geared power path screenshot', async ({ page }) => {
+  await mkdir(OUTPUT, { recursive: true });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await openEngine(page, 'geared-turbofan');
   await page.getByRole('button', { name: 'Experiment', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Experiment', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'REVEAL GEAR POWER PATH' })).toBeVisible();
   await page.getByRole('button', { name: 'REVEAL GEAR POWER PATH' }).click();
   await page.waitForTimeout(1300);
   await page.screenshot({ path: OUTPUT + '/geared-power.png', animations: 'disabled' });
 
-  for (const id of ['gallery-desktop', 'afterburner-experiment', 'centrifugal-impeller', 'geared-power']) {
-    console.log('READ_ME_SCREENSHOT', OUTPUT + '/' + id + '.png');
-  }
+  console.log('READ_ME_SCREENSHOT', OUTPUT + '/geared-power.png');
 });
 
 test('README mobile screenshots — live production', async ({ page }) => {
