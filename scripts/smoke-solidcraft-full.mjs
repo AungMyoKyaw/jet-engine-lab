@@ -2,11 +2,11 @@ import {chromium} from '@playwright/test';
 import {PARTS} from '../src/app/data/parts';
 
 const assets={
-  inlet:['intake-duct'],fan:['fan-blisk','fan-outlet-guides','fan-retention-hardware'],compressor:['compressor-cassette','stator-vane-ring','compressor-case-detail','compressor-service-hardware','compressor-vsv-linkage'],
+  inlet:['intake-duct','intake-lip-hardware'],fan:['fan-blisk','fan-outlet-guides','fan-retention-hardware'],compressor:['compressor-cassette','stator-vane-ring','compressor-case-detail','compressor-service-hardware','compressor-vsv-linkage'],
   impeller:['radial-impeller'],diffuser:['radial-diffuser','diffuser-service-hardware'],
   burner:['combustor-liner','combustor-dome','combustor-manifold','combustor-thermal-hardware'],turbine:['turbine-wheel','turbine-nozzle-guide','turbine-shroud','bearing-cartridge','bearing-roller-train','turbine-thermal-service'],
   gearbox:['planetary-reducer','gearbox-support-hardware'],afterburner:['afterburner-assembly','afterburner-gutter-details'],
-  nozzle:['nozzle-housing','nozzle-petals','nozzle-actuators','nozzle-hinge-service'],bypass:['bypass-lattice']
+  nozzle:['nozzle-housing','nozzle-petals','nozzle-actuators','nozzle-hinge-service'],bypass:['bypass-lattice','bypass-structural-fittings']
 };
 const supportedEngines=['turbojet','turbofan','afterburning-turbofan','centrifugal-turbojet','geared-turbofan'];
 const requested=process.argv.slice(2);
@@ -39,6 +39,9 @@ try{
     await page.screenshot({path:'docs/solidcraft-cad/full-'+engine+'.png',fullPage:true});
     // Gallery previews should show only the machine. Preserve the complete
     // interface capture above as smoke-test evidence.
+    await page.getByRole('button',{name:'Options'}).click();
+    await page.getByRole('menuitem',{name:'Hide flow illustration'}).click();
+    await page.waitForTimeout(180);
     await page.addStyleTag({content:`
       .visual-header,.visual-coordinate,.visual-side-controls,.visual-flow,
       .visual-narrative,.visual-readout,.visual-bottom,.visual-options,

@@ -41,9 +41,9 @@ def role(name):
         return "seal"
     if any(w in name for w in ("vane","blade","bucket","tooth","impeller disk","guide")):
         return "blade"
-    if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","outer liner","case ring","casing rib", "support case", "nozzle synchronization")):
+    if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","outer liner","case ring","casing rib", "support case", "nozzle synchronization", "nacelle shell")):
         return "shell"
-    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener","igniter", "lubrication", "oil feed", "unison ring", "synchronizer", "pressure port", "thermocouple", "pivot support", "fuel-bar", "retention band", "case seam")):
+    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener","igniter", "lubrication", "oil feed", "unison ring", "synchronizer", "pressure port", "thermocouple", "pivot support", "fuel-bar", "retention band", "case seam", "nacelle seam", "anti-icing", "ice protection", "leading lip")):
         return "bronze"
     return "steel"
 
@@ -75,6 +75,7 @@ models=(
     "fan-retention-hardware","compressor-vsv-linkage","turbine-thermal-service",
     "nozzle-hinge-service","afterburner-gutter-details","diffuser-service-hardware",
     "core-throat-lip","bypass-throat-lip", "bypass-inner-fairing","bypass-nozzle-petals",
+    "bypass-nacelle-panels", "bypass-structural-fittings", "intake-lip-hardware",
 )
 requested = set(sys.argv[sys.argv.index('--')+1:]) if '--' in sys.argv else set()
 if requested - set(models):

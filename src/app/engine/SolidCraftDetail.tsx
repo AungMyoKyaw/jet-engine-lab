@@ -7,7 +7,7 @@ import type {VisualEngineId} from '../data/catalog';
 import type {Result} from '../physics/cycle';
 import {meteredThroats,THROAT_CAD} from './nozzle-geometry';
 
-type Supplement={file:string;rotating?:boolean;position?:[number,number,number]};
+type Supplement={file:string;rotating?:boolean;shellOnly?:boolean;position?:[number,number,number]};
 type CadAssembly={file:string;radius:number;axial?:number;targetAxial?:number;rotation?:[number,number,number];supplements?:readonly Supplement[]};
 
 /** SolidCraft B-rep families; stationary stators never rotate with the shaft. */
@@ -17,8 +17,8 @@ const MODELS:Record<CadDetailKind,CadAssembly>={
   turbine:{file:'turbine-wheel',radius:.872,supplements:[{file:'turbine-nozzle-guide'},{file:'turbine-shroud'},{file:'bearing-cartridge'},{file:'bearing-roller-train'},{file:'turbine-thermal-service'}]},
   gearbox:{file:'planetary-reducer',radius:.70,supplements:[{file:'gearbox-support-hardware'}]},
   burner:{file:'combustor-liner',radius:.79,rotation:[Math.PI,0,0],supplements:[{file:'combustor-dome'},{file:'combustor-manifold',position:[-.42,0,0]},{file:'combustor-thermal-hardware'}]},
-  inlet:{file:'intake-duct',radius:1.03,axial:1.5,targetAxial:1.45},
-  bypass:{file:'bypass-lattice',radius:1.0,axial:7.6,targetAxial:8.4},
+  inlet:{file:'intake-duct',radius:1.03,axial:1.5,targetAxial:1.45,supplements:[{file:'intake-lip-hardware'}]},
+  bypass:{file:'bypass-lattice',radius:1.0,axial:7.6,targetAxial:8.4,supplements:[{file:'bypass-structural-fittings'},{file:'bypass-nacelle-panels',shellOnly:true}]},
   nozzle:{file:'nozzle-housing',radius:.962,axial:1.02,targetAxial:.98,rotation:[Math.PI,0,0],supplements:[{file:'nozzle-petals'},{file:'nozzle-actuators'},{file:'nozzle-hinge-service'}]},
   impeller:{file:'radial-impeller',radius:1.01},
   diffuser:{file:'radial-diffuser',radius:1.04,supplements:[{file:'diffuser-service-hardware'}]},
@@ -105,10 +105,10 @@ export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=fals
   return <group name={'solidcraft-'+kind}>
     <group ref={rotor}>
       {spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} {...appearance}/>}
-      {config.supplements?.filter(part=>part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={scale} position={part.position} {...appearance}/>)}
+    {config.supplements?.filter(part=>part.rotating&&(!part.shellOnly||showShell)).map(part=><CadAsset key={part.file} file={part.file} scale={scale} position={part.position} {...appearance}/>)}
     </group>
     {!spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} {...appearance}/>}
-    {config.supplements?.filter(part=>!part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={part.file==='nozzle-petals'&&!throat?[scale[0],scale[1]*(.97+nozzleOpen*.09),scale[2]*(.97+nozzleOpen*.09)]:scale} deform={part.file==='nozzle-petals'?coreActuation:undefined} position={part.position} {...appearance}/>)}
+    {config.supplements?.filter(part=>!part.rotating&&(!part.shellOnly||showShell)).map(part=><CadAsset key={part.file} file={part.file} scale={part.file==='nozzle-petals'&&!throat?[scale[0],scale[1]*(.97+nozzleOpen*.09),scale[2]*(.97+nozzleOpen*.09)]:scale} deform={part.file==='nozzle-petals'?coreActuation:undefined} position={part.position} {...appearance}/>)}
     {kind==='nozzle'&&throat&&<group name="solver-coupled-core-throat" userData={{geometricAreaM2:throat.core.area,effectiveAreaM2:throat.core.effective}}>
       <CadAsset file="core-throat-lip" scale={[1,throat.core.lipRadialScale,throat.core.lipRadialScale]} position={[THROAT_CAD.corePetalExit*axial,0,0]} {...appearance}/>
     </group>}

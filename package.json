@@ -25,7 +25,8 @@
     "smoke:cad": "bun scripts/smoke-solidcraft-cad.mjs",
     "smoke:cad:reveal": "bun scripts/smoke-cad-assembly-reveal.mjs",
     "smoke:cad:full": "bun scripts/smoke-solidcraft-full.mjs",
-    "smoke:cad:sync": "bun scripts/smoke-cad-stage-sync.mjs"
+    "smoke:cad:sync": "bun scripts/smoke-cad-stage-sync.mjs",
+    "smoke:cad:casing": "bun scripts/smoke-cad-casing.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

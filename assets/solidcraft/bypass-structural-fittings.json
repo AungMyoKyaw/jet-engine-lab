@@ -1,0 +1,568 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | bypass duct frames and support fittings"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1015,
+        "height": 38,
+        "base": [
+          -3200,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame forward-facing lip -3200"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 981,
+        "height": 50,
+        "base": [
+          -3206,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame forward-facing lip -3200 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass frame forward-facing lip -3200",
+        "tools": [
+          "Bypass frame forward-facing lip -3200 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1015,
+        "height": 38,
+        "base": [
+          2300,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame forward-facing lip 2300"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 981,
+        "height": 50,
+        "base": [
+          2294,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame forward-facing lip 2300 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass frame forward-facing lip 2300",
+        "tools": [
+          "Bypass frame forward-facing lip 2300 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 1 inner section",
+        "plane": {
+          "origin": [
+            0,
+            825,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -3288.44,
+            -17.25
+          ],
+          [
+            -3253.06,
+            -33
+          ],
+          [
+            -3187.18,
+            -27.119999999999997
+          ],
+          [
+            -3161.56,
+            -7.38
+          ],
+          [
+            -3214.02,
+            9
+          ],
+          [
+            -3268.92,
+            4.800000000000001
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 1 mid section",
+        "plane": {
+          "origin": [
+            0,
+            910,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -3268.64,
+            1.25
+          ],
+          [
+            -3230.36,
+            -16
+          ],
+          [
+            -3159.08,
+            -9.559999999999999
+          ],
+          [
+            -3131.36,
+            12.059999999999999
+          ],
+          [
+            -3188.12,
+            30
+          ],
+          [
+            -3247.52,
+            25.400000000000002
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 1 outer section",
+        "plane": {
+          "origin": [
+            0,
+            988,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -3221.56,
+            14.25
+          ],
+          [
+            -3191.69,
+            3
+          ],
+          [
+            -3136.07,
+            7.200000000000001
+          ],
+          [
+            -3114.44,
+            21.3
+          ],
+          [
+            -3158.73,
+            33
+          ],
+          [
+            -3205.08,
+            30.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Bypass frame support 1 inner section"
+          },
+          {
+            "sketch": "Bypass frame support 1 mid section"
+          },
+          {
+            "sketch": "Bypass frame support 1 outer section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Bypass frame support 1 blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass frame support 1 blade"
+        ],
+        "axis": "X",
+        "count": 14
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 22,
+        "height": 48,
+        "base": [
+          -3183,
+          990,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame captive fastener 1"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass frame captive fastener 1"
+        ],
+        "axis": "X",
+        "count": 14
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 2 inner section",
+        "plane": {
+          "origin": [
+            0,
+            825,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            2211.56,
+            -17.25
+          ],
+          [
+            2246.94,
+            -33
+          ],
+          [
+            2312.82,
+            -27.119999999999997
+          ],
+          [
+            2338.44,
+            -7.38
+          ],
+          [
+            2285.98,
+            9
+          ],
+          [
+            2231.08,
+            4.800000000000001
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 2 mid section",
+        "plane": {
+          "origin": [
+            0,
+            910,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            2231.36,
+            1.25
+          ],
+          [
+            2269.64,
+            -16
+          ],
+          [
+            2340.92,
+            -9.559999999999999
+          ],
+          [
+            2368.64,
+            12.059999999999999
+          ],
+          [
+            2311.88,
+            30
+          ],
+          [
+            2252.48,
+            25.400000000000002
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass frame support 2 outer section",
+        "plane": {
+          "origin": [
+            0,
+            988,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            2278.44,
+            14.25
+          ],
+          [
+            2308.31,
+            3
+          ],
+          [
+            2363.93,
+            7.200000000000001
+          ],
+          [
+            2385.56,
+            21.3
+          ],
+          [
+            2341.27,
+            33
+          ],
+          [
+            2294.92,
+            30.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Bypass frame support 2 inner section"
+          },
+          {
+            "sketch": "Bypass frame support 2 mid section"
+          },
+          {
+            "sketch": "Bypass frame support 2 outer section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Bypass frame support 2 blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass frame support 2 blade"
+        ],
+        "axis": "X",
+        "count": 14
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 22,
+        "height": 48,
+        "base": [
+          2317,
+          990,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass frame captive fastener 2"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass frame captive fastener 2"
+        ],
+        "axis": "X",
+        "count": 14
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 19,
+        "height": 130,
+        "base": [
+          -2410,
+          1013,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass pressure sampling port"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass pressure sampling port"
+        ],
+        "axis": "X",
+        "count": 6
+      }
+    }
+  ]
+}

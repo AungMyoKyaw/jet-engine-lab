@@ -16,6 +16,9 @@
 | `planetary-reducer` | gearbox | Four planetary wheels, teeth, carrier, sun gear and annular housing |
 | `intake-duct` | inlet | Cutaway converging annular intake housing and flanges |
 | `bypass-lattice` | bypass | Longitudinal supports and annular structural frames |
+| `bypass-nacelle-panels` | bypass (casing-visible only) | Three removable half-shell segments with panel seams, access hatch and fasteners |
+| `bypass-structural-fittings` | bypass (stationary supplement) | Guide supports, frame lips, pressure sampling port and captive fasteners |
+| `intake-lip-hardware` | inlet (stationary supplement) | Polished inlet lip, fasteners, anti-icing gallery and feed fittings |
 | `nozzle-housing` | nozzle | Cutaway converging support housing |
 | `nozzle-actuators` | nozzle (supplement) | Anchor ring, synchronization ring, 16 actuator rods, pistons and end pins |
 | `fan-outlet-guides` | fan (stationary supplement) | Annular outlet casing, 24 lofted guide vanes, inner hub, mounting bolts |
@@ -44,14 +47,14 @@
 | `afterburner-gutter-details` | afterburner (stationary supplement) | Lofted flameholder radial struts and fuel-bar fittings |
 | `diffuser-service-hardware` | centrifugal diffuser (stationary supplement) | Casing retention bands, circumferential seam and static-pressure instrumentation ports |
 
-All **37 active B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable. The superseded general-purpose `rotor-stage` was removed from the source and website because no assembled engine used it.
+All **40 active B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable. The superseded general-purpose `rotor-stage` was removed from the source and website because no assembled engine used it.
 
 All **11 component categories** across the five engine configurations have a SolidCraft CAD source. Rotating fan, compressor and turbine geometry is now distinct, while guide vanes and turbine shrouds stay stationary as the shaft rotates. A given design family is scaled across configurations according to the illustration's part hierarchy. Individual HP/LP spools can still share a family geometry. Realistic detail here means a more complete **visual and interactive engineering study**; dimensions, airfoils, materials, cooling passage topology and performance predictions have **not** been validated against any measured aircraft engine.
 
 ## Viewer integration
 
 - The *assembled* view loads the CAD mesh for each part by default. The selected component is independently pickable through its enclosing part group.
-- The five-stage journey highlights **the same mounted CAD geometry in the same assembly coordinates**; every original part and drive shaft remains present. Relevant part families stay opaque, while surrounding parts become translucent context. **Show full engine** restores the assembled model without remounting its parts.
+- The five-stage journey highlights **the same mounted CAD geometry in the same assembly coordinates**; every original part and drive shaft remains present. Relevant part families stay opaque, while surrounding parts become translucent context. **Show full engine** restores the assembled model without remounting its parts. The optional SolidCraft nacelle panels are lazy-loaded only when the user enables the casing.
 - The 25 learning stages across all five architectures cover the assembled parts, including LP/HP compressors and turbines, ducts, gearbox and afterburner.
 - Exploded separation is adjustable in the interactive scene from 0% to 160% of representative assembly displacement.
 - Three.js caches each distinct GLB per session. Each scene placement clones the loaded scene while sharing geometry/material resources.
@@ -68,13 +71,14 @@ All **11 component categories** across the five engine configurations have a Sol
 From the Jet Engine Lab project root:
 
 ```bash
-bun run cad:generate       # solidcraft-cli -> 37 .sc designs + OBJ intermediates -> 37 .glb files
+bun run cad:generate       # solidcraft-cli -> 40 .sc designs + OBJ intermediates -> 40 .glb files
 bun run cad:validate       # verify bounded GLB aperture geometry against modeled throat areas
 bun run build
 bun run smoke:cad:sync     # verify all 25 lessons highlight parts in the original assembly
 bun run dev                # or preview on port 4173
 bun run smoke:cad          # focus mode + mobile
 bun run smoke:cad:full     # all five complete CAD scenes, real asset requests, screenshots
+bun run smoke:cad:casing   # inspect original SolidCraft casing on/off on desktop and mobile
 bun run previews:engines   # recapture and crop all five gallery images from assembled CAD scenes
 ```
 
@@ -103,3 +107,11 @@ bun run previews:engines   # recapture and crop all five gallery images from ass
 ![Mobile CAD focus](mobile.png)
 
 The Playwright `smoke:cad:full` verifies real HTTP 200 requests for the required source GLBs on each of the five engines and saves full-scene screenshots. The focused `smoke:cad` covers six CAD focus views and return navigation on desktop and a 390px mobile viewport. Project unit tests, TypeScript and production build must also pass before a release.
+
+### SolidCraft nacelle cutaway inspection
+
+| Exposed bypass structure | CAD nacelle casing enabled |
+|:---:|:---:|
+| ![Exposed bypass components](casing-off-desktop.png) | ![Original SolidCraft split-shell casing](casing-on-desktop.png) |
+
+The on-demand nacelle test also verifies the geared turbofan and 390-pixel mobile layout and confirms that focusing a learning stage retains the original canvas and GLB cache. Panel seams and doors are educational design geometry; they are not copied from any certificated engine nacelle.

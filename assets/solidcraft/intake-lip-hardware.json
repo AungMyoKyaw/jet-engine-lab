@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | bolted air-intake lip and anti-ice gallery"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1040,
+        "height": 69,
+        "base": [
+          -772,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet polished leading lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 953,
+        "height": 81,
+        "base": [
+          -778,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet polished leading lip bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Inlet polished leading lip",
+        "tools": [
+          "Inlet polished leading lip bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 990,
+        "height": 36,
+        "base": [
+          -662,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet anti-icing distribution gallery"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 971,
+        "height": 48,
+        "base": [
+          -668,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet anti-icing distribution gallery bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Inlet anti-icing distribution gallery",
+        "tools": [
+          "Inlet anti-icing distribution gallery bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 17,
+        "height": 53,
+        "base": [
+          -777,
+          1029,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet lip captive fastener"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Inlet lip captive fastener"
+        ],
+        "axis": "X",
+        "count": 32
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 24,
+        "height": 70,
+        "base": [
+          -673,
+          973,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Inlet ice protection feed fitting"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Inlet ice protection feed fitting"
+        ],
+        "axis": "X",
+        "count": 8
+      }
+    }
+  ]
+}

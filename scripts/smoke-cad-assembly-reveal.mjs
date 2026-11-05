@@ -36,11 +36,9 @@ try{
     await page.waitForTimeout(900);
     if(!delayed||!await loading.isVisible())throw Error(`${name}: incomplete CAD assembly was revealed before all assets loaded`);
     if(await page.locator('.cad-asset-error').count())throw Error(`${name}: unexpected CAD load error`);
-    await page.screenshot({path:`/tmp/jet-engine-cad-loading-${name}.png`});
     await loading.waitFor({state:'hidden',timeout:45000});
     if(await page.locator('.cad-asset-error,.webgl-fallback').count())throw Error(`${name}: unexpected CAD error after loading`);
     if(errors.length)throw Error(`${name}: ${errors.join(' | ')}`);
-    await page.screenshot({path:`/tmp/jet-engine-cad-complete-${name}.png`});
     console.log(`${name.toUpperCase()} PASS: loading status persisted while an original CAD part was delayed; complete engine revealed after loading`);
    }finally{await context.close();}
   }

@@ -1,0 +1,474 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | removable split nacelle and service doors"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1030,
+        "height": 2070,
+        "base": [
+          -3410,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell panel 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1005,
+        "height": 2084,
+        "base": [
+          -3417,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle bore 1"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 1",
+        "tools": [
+          "Nacelle bore 1"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 2100,
+        "width": 2600,
+        "height": 1350,
+        "corner": [
+          -3425,
+          -1300,
+          0
+        ],
+        "body_name": "Nacelle open section tool 1"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 1",
+        "tools": [
+          "Nacelle open section tool 1"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1030,
+        "height": 2550,
+        "base": [
+          -1280,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell panel 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1005,
+        "height": 2564,
+        "base": [
+          -1287,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle bore 2"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 2",
+        "tools": [
+          "Nacelle bore 2"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 2580,
+        "width": 2600,
+        "height": 1350,
+        "corner": [
+          -1295,
+          -1300,
+          0
+        ],
+        "body_name": "Nacelle open section tool 2"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 2",
+        "tools": [
+          "Nacelle open section tool 2"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1030,
+        "height": 1700,
+        "base": [
+          1330,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell panel 3"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1005,
+        "height": 1714,
+        "base": [
+          1323,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle bore 3"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 3",
+        "tools": [
+          "Nacelle bore 3"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 1730,
+        "width": 2600,
+        "height": 1350,
+        "corner": [
+          1315,
+          -1300,
+          0
+        ],
+        "body_name": "Nacelle open section tool 3"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell panel 3",
+        "tools": [
+          "Nacelle open section tool 3"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1046,
+        "height": 30,
+        "base": [
+          -1330,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell seam band 1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1032,
+        "height": 42,
+        "base": [
+          -1336,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell seam band 1 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell seam band 1",
+        "tools": [
+          "Nacelle shell seam band 1 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 52,
+        "width": 2600,
+        "height": 1300,
+        "corner": [
+          -1341,
+          -1300,
+          0
+        ],
+        "body_name": "Nacelle seam section tool 1"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell seam band 1",
+        "tools": [
+          "Nacelle seam section tool 1"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1046,
+        "height": 30,
+        "base": [
+          1290,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell seam band 2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1032,
+        "height": 42,
+        "base": [
+          1284,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nacelle shell seam band 2 bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell seam band 2",
+        "tools": [
+          "Nacelle shell seam band 2 bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 52,
+        "width": 2600,
+        "height": 1300,
+        "corner": [
+          1279,
+          -1300,
+          0
+        ],
+        "body_name": "Nacelle seam section tool 2"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nacelle shell seam band 2",
+        "tools": [
+          "Nacelle seam section tool 2"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.box",
+      "params": {
+        "length": 710,
+        "width": 290,
+        "height": 23,
+        "corner": [
+          -2420,
+          -145,
+          -1056
+        ],
+        "body_name": "Nacelle inspection door"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2365,
+          -122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 1-1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2365,
+          122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 1-2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2220,
+          -122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 2-1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2220,
+          122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 2-2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2075,
+          -122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 3-1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -2075,
+          122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 3-2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -1930,
+          -122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 4-1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -1930,
+          122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 4-2"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -1785,
+          -122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 5-1"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 12,
+        "height": 25,
+        "base": [
+          -1785,
+          122,
+          -1075
+        ],
+        "axis": "Z",
+        "body_name": "Nacelle door captive fastener 5-2"
+      }
+    }
+  ]
+}

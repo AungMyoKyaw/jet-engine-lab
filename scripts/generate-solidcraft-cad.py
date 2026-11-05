@@ -99,6 +99,86 @@ def bypass():
     return commands
 
 
+def bypass_nacelle_panels():
+    """Three removable rear-half shells, with open front-half service cutaway.
+
+    Leaving the camera-facing Z hemisphere open exposes every CAD stage even
+    when the user requests the outer casing. Gaps are real panel split lines.
+    """
+    commands, add = build("Jet Engine Lab | removable split nacelle and service doors")
+    for index, (start, length) in enumerate(((-3410, 2070), (-1280, 2550), (1330, 1700)), start=1):
+        panel = f"Nacelle shell panel {index}"
+        add("solid.cylinder", radius=1030, height=length,
+            base=[start, 0, 0], axis="X", body_name=panel)
+        add("solid.cylinder", radius=1005, height=length + 14,
+            base=[start - 7, 0, 0], axis="X", body_name=f"Nacelle bore {index}")
+        add("solid.combine", target=panel, tools=[f"Nacelle bore {index}"], operation="cut")
+        add("solid.box", length=length + 30, width=2600, height=1350,
+            corner=[start - 15, -1300, 0], body_name=f"Nacelle open section tool {index}")
+        add("solid.combine", target=panel,
+            tools=[f"Nacelle open section tool {index}"], operation="cut")
+    # Raised edge seals stop short of the exposed open half, as real split
+    # panels do. These are independent, inspectable original CAD solids.
+    for index, x in enumerate((-1330, 1290), start=1):
+        seam = f"Nacelle shell seam band {index}"
+        annulus(add, seam, 1046, 1032, 30, x)
+        add("solid.box", length=52, width=2600, height=1300,
+            corner=[x - 11, -1300, 0], body_name=f"Nacelle seam section tool {index}")
+        add("solid.combine", target=seam,
+            tools=[f"Nacelle seam section tool {index}"], operation="cut")
+    # The service door and its captive screws are attached to the far-side
+    # outer skin, never floating in the exposed inspection window.
+    add("solid.box", length=710, width=290, height=23,
+        corner=[-2420, -145, -1056], body_name="Nacelle inspection door")
+    for i, x in enumerate((-2365, -2220, -2075, -1930, -1785), start=1):
+        for j, y in enumerate((-122, 122), start=1):
+            add("solid.cylinder", radius=12, height=25,
+                base=[x, y, -1075], axis="Z",
+                body_name=f"Nacelle door captive fastener {i}-{j}")
+    return commands
+
+
+def bypass_structural_fittings():
+    """Visible fan-duct frame attachments, guide supports and access bosses."""
+    commands, add = build("Jet Engine Lab | bypass duct frames and support fittings")
+    for x in (-3200, 2300):
+        annulus(add, f"Bypass frame forward-facing lip {x}", 1015, 981, 38, x)
+    # A pair of widely separated fixed support rows, outside the rotating
+    # fan and turbines, keep the open cutaway mechanically legible.
+    for index, x in enumerate((-3200, 2300), start=1):
+        lofted_row(add, f"Bypass frame support {index}", [
+            ("inner", 825, x - 25, 122, -12, 21),
+            ("mid", 910, x, 132, 7, 23),
+            ("outer", 988, x + 32, 103, 18, 15),
+        ], 14)
+        add("solid.cylinder", radius=22, height=48,
+            base=[x + 17, 990, 0], axis="X",
+            body_name=f"Bypass frame captive fastener {index}")
+        add("solid.pattern.circular", bodies=[f"Bypass frame captive fastener {index}"],
+            axis="X", count=14)
+    add("solid.cylinder", radius=19, height=130,
+        base=[-2410, 1013, 0], axis="X", body_name="Bypass pressure sampling port")
+    add("solid.pattern.circular", bodies=["Bypass pressure sampling port"],
+        axis="X", count=6)
+    return commands
+
+
+def intake_lip_hardware():
+    """Front lip, anti-icing feed ring and fasteners, shared by every intake."""
+    commands, add = build("Jet Engine Lab | bolted air-intake lip and anti-ice gallery")
+    annulus(add, "Inlet polished leading lip", 1040, 953, 69, -772)
+    annulus(add, "Inlet anti-icing distribution gallery", 990, 971, 36, -662)
+    add("solid.cylinder", radius=17, height=53,
+        base=[-777, 1029, 0], axis="X", body_name="Inlet lip captive fastener")
+    add("solid.pattern.circular", bodies=["Inlet lip captive fastener"],
+        axis="X", count=32)
+    add("solid.cylinder", radius=24, height=70,
+        base=[-673, 973, 0], axis="X", body_name="Inlet ice protection feed fitting")
+    add("solid.pattern.circular", bodies=["Inlet ice protection feed fitting"],
+        axis="X", count=8)
+    return commands
+
+
 def nozzle():
     commands, add = build("Jet Engine Lab | rigid upstream nozzle mount and movable aft petals")
     # The fixed shell must end before the moving throat. A rigid, narrowing
@@ -660,7 +740,10 @@ def main():
               "turbine-thermal-service": turbine_thermal_service(), "nozzle-hinge-service": nozzle_hinge_service(),
               "afterburner-gutter-details": afterburner_gutter_details(), "diffuser-service-hardware": diffuser_service_hardware(),
               "core-throat-lip": core_throat_lip(), "bypass-throat-lip": bypass_throat_lip(),
-              "bypass-inner-fairing": bypass_inner_fairing(), "bypass-nozzle-petals": bypass_nozzle_petals()}
+              "bypass-inner-fairing": bypass_inner_fairing(), "bypass-nozzle-petals": bypass_nozzle_petals(),
+              "bypass-nacelle-panels": bypass_nacelle_panels(),
+              "bypass-structural-fittings": bypass_structural_fittings(),
+              "intake-lip-hardware": intake_lip_hardware()}
     requested = set(sys.argv[1:])
     if requested - models.keys():
         raise ValueError(f"Unknown SolidCraft families: {sorted(requested - models.keys())}")
