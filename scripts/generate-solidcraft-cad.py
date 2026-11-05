@@ -127,11 +127,13 @@ def bypass():
 
 
 def nozzle():
-    commands, add = build("Jet Engine Lab | cutaway nozzle support housing")
-    add("solid.cone", radius=930, top_radius=625, height=1020,
+    commands, add = build("Jet Engine Lab | rigid upstream nozzle mount and movable aft petals")
+    # The fixed shell must end before the moving throat. A rigid, narrowing
+    # 510 mm outlet was previously intersecting variable-area nozzle settings.
+    add("solid.cone", radius=930, top_radius=815, height=450,
         base=[-510,0,0], axis="X", body_name="Nozzle variable throat casing")
-    add("solid.cone", radius=830, top_radius=510, height=1040,
-        base=[-520,0,0], axis="X", body_name="Nozzle bore")
+    add("solid.cone", radius=830, top_radius=715, height=462,
+        base=[-516,0,0], axis="X", body_name="Nozzle bore")
     add("solid.combine", target="Nozzle variable throat casing", tools=["Nozzle bore"],operation="cut")
     add("solid.box", length=1300,width=1200,height=1200,
         corner=[-650,0,0],body_name="Nozzle inspection section")
@@ -513,14 +515,14 @@ def combustor_dome():
 
 
 def nozzle_petals():
-    """Individually separated tapered petals lofted between radial stations."""
+    """SolidCraft nozzle wall, authored at a datum radius for runtime actuation."""
     commands, add = build("Jet Engine Lab | twenty convergent nozzle petal panels")
     sections = []
     for label, x, radius, width, thickness in (
-        ("root", -460, 848, 122, 29),
-        ("hinge", -180, 770, 113, 23),
-        ("throat", 190, 654, 95, 20),
-        ("lip", 475, 555, 78, 15),
+        ("root", -460, 848, 252, 29),
+        ("hinge", -180, 770, 234, 23),
+        ("throat", 190, 654, 200, 20),
+        ("lip", 475, 555, 176, 15),
     ):
         name = f"Nozzle petal {label} cross section"
         add("sketch.create", name=name,
@@ -543,13 +545,63 @@ def nozzle_petals():
         axis="X", count=20)
     return commands
 
+
+def core_throat_lip():
+    """Circular exit rim with a 500 mm reference bore; runtime changes bore diameter."""
+    commands, add = build("Jet Engine Lab | parametric core throat metering lip")
+    annulus(add, "Core throat metering lip", 522, 500, 24, -12)
+    return commands
+
+
+def bypass_throat_lip():
+    """Outer bypass metering rim: 1100 mm reference bore, separate core fairing."""
+    commands, add = build("Jet Engine Lab | independent bypass throat metering lip")
+    annulus(add, "Bypass throat metering lip", 1130, 1100, 32, -16)
+    return commands
+
+
+def bypass_inner_fairing():
+    """Fixed 650 mm outer radius defines the inner boundary of bypass A18."""
+    commands, add = build("Jet Engine Lab | fixed aft bypass inner flow boundary")
+    annulus(add, "Bypass inner flow fairing", 650, 618, 510, 3140)
+    annulus(add, "Bypass fairing tip seal", 652, 625, 40, 3610)
+    return commands
+
+
+def bypass_nozzle_petals():
+    """Twenty-four solidcraft lofted nozzle flaps; aft edges actuate toward A18."""
+    commands, add = build("Jet Engine Lab | separate flow bypass nozzle metering flaps")
+    sections = []
+    for label, x, radius, width, thickness in (
+        ("mount", 2990, 1520, 395, 35),
+        ("hinge", 3180, 1490, 378, 28),
+        ("taper", 3440, 1290, 322, 22),
+        ("exit", 3680, 1100, 278, 18),
+    ):
+        name = f"Bypass nozzle {label} section"
+        add("sketch.create", name=name,
+            plane={"origin": [x, 0, 0], "x_dir": [0, 1, 0], "y_dir": [0, 0, 1]})
+        add("sketch.line", points=[
+            [radius - thickness / 2, -width / 2],
+            [radius + thickness / 2, -width / 2],
+            [radius + thickness / 2, width / 2],
+            [radius - thickness / 2, width / 2],
+        ], closed=True)
+        add("sketch.finish")
+        sections.append({"sketch": name})
+    add("solid.loft", sections=sections, operation="new", body_name="Bypass metering flap")
+    add("solid.pattern.circular", bodies=["Bypass metering flap"], axis="X", count=24)
+    return commands
+
 def main():
     models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
               "fan-blisk": fan_blisk(), "compressor-cassette": compressor_cassette(), "turbine-wheel": turbine_wheel(), "turbine-shroud": turbine_shroud(), "stator-vane-ring": stator_vane_ring(), "combustor-liner": combustor_liner(), "nozzle-actuators": nozzle_actuators(),
               "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals(),
               "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool(),
               "bearing-roller-train": bearing_roller_train(), "compressor-service-hardware": compressor_service_hardware(),
-              "combustor-thermal-hardware": combustor_thermal_hardware(), "gearbox-support-hardware": gearbox_support_hardware()}
+              "combustor-thermal-hardware": combustor_thermal_hardware(), "gearbox-support-hardware": gearbox_support_hardware(),
+              "core-throat-lip": core_throat_lip(), "bypass-throat-lip": bypass_throat_lip(),
+              "bypass-inner-fairing": bypass_inner_fairing(), "bypass-nozzle-petals": bypass_nozzle_petals()}
     requested = set(sys.argv[1:])
     if requested - models.keys():
         raise ValueError(f"Unknown SolidCraft families: {sorted(requested - models.keys())}")

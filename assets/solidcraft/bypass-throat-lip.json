@@ -1,0 +1,48 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | independent bypass throat metering lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1130,
+        "height": 32,
+        "base": [
+          -16,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass throat metering lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1100,
+        "height": 44,
+        "base": [
+          -22,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass throat metering lip bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass throat metering lip",
+        "tools": [
+          "Bypass throat metering lip bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

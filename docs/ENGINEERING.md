@@ -34,11 +34,11 @@ Inputs are checked by `validate()` before `compute()`. The published UI has no u
 | Altitude | 0–12,000 m | Approximate dry ISA |
 | Flight Mach | 0–0.85 | Subsonic only |
 | Design compressor PR parameter | 4–24 | Not a solved compressor-map working point |
-| Reference bypass ratio | 2–10 | Turbofan only; simplified LP work balance uses this value |
+| Reference bypass ratio | 2–10 | Turbofan only; selects among mathematical LP balance roots, not a guaranteed solved ratio |
 | Core effective nozzle area | 0.06–0.9 m² | Distinct from geometric throat area |
 | Bypass effective nozzle area | 0.25–5 m² | Turbofan only |
 
-**Initial teaching presets:** turbojet throttle 0.68 / Mach 0.20 / pressure ratio 13 / core area 0.28 m²; turbofan throttle 0.72 / Mach 0.28 / HPC PR parameter 9.2 / reference bypass ratio 5.2 / core area 0.20 m² / bypass area 1.85 m². These are not matched-thrust or independently calibrated real-engine comparison points.
+**Initial teaching presets:** turbojet throttle 0.68 / Mach 0.20 / pressure ratio 13 / core area 0.28 m²; turbofan throttle 0.72 / Mach 0.28 / HPC PR parameter 9.2 / reference bypass ratio 5.2 / core area 0.20 m² / bypass area 0.80 m². These are model-feasible demonstration points, not matched-thrust or independently calibrated real-engine comparison points.
 
 A rejected numerical input or infeasible operating point generates an error; the UI retains the last accepted result rather than reporting a fabricated new solution.
 
@@ -74,13 +74,13 @@ The code integrates these curves analytically for enthalpy and uses bounded bise
 
 The educational turbofan adds separate assemblies for the **fan, LPC, HPC, combustor, HPT and LPT**, with separate core and bypass nozzles. Station identifiers include **13** (fan), **25** (LPC), **3** (HPC), **4** (combustor), **45** (HPT), **5** (LPT), **8** (core exit) and **18** (bypass exit).
 
-The fan and LPC use fixed approximate pressure ratios (**1.58** and **1.7**). The HPC uses the user-selected pressure-ratio parameter. The HPT work balance drives the HPC; the LPT approximation provides the fan and LPC work, including a user-selected reference bypass factor.
+The fan and LPC use fixed approximate pressure ratios (**1.58** and **1.7**). The HPC uses the user-selected pressure-ratio parameter. The HPT work balance drives the HPC. The LPT work and core-nozzle flow are solved simultaneously with the independent bypass nozzle capacity: each candidate LPT expansion produces a core mass flow and turbine power, and a bracketed root solve finds the core flow and LP work that match fan/LPC demand (including bypass fan work). The chosen mathematical root is the one nearest the user-selected *reference* bypass ratio. More than one root may exist; no stability or engine operating-line selection is yet verified.
 
-**Important:** core and bypass nozzle capacities are estimated independently. The resulting mass-flow split is **not** closed against validated coupled fan/compressor/turbine operating maps. Displayed core/bypass flow ratio can therefore differ from the selected *reference* bypass parameter. Actual N1 and N2 remain unavailable.
+**Important:** core/bypass mass flows and shaft work are closed together under the **assumed constant component pressure ratios/efficiencies**. They are **not** closed against validated coupled fan/compressor/turbine operating maps. The displayed actual bypass ratio can therefore differ from the reference bypass parameter. Actual N1 and N2 remain unavailable.
 
 ### Nozzle and thrust
 
-Both engines calculate an approximate convergent-nozzle choking threshold, total-to-static enthalpy drop, exit velocity and pressure thrust. An assumed discharge coefficient `Cd = 0.97` relates effective flow area to represented geometric throat area:
+Both engines solve an approximate convergent-nozzle choking threshold using variable-heat-capacity enthalpy, entropy and local sound speed. Choked throats enforce Mach 1 and a pressure above ambient; unchoked exits expand to ambient pressure and remain subsonic. An assumed discharge coefficient `Cd = 0.97` relates effective flow area to *modeled* geometric throat area:
 
 ```text
 A_effective = Cd × A_geometric
@@ -89,9 +89,9 @@ F_net ≈ Σ(exhaust mass flow × jet velocity + pressure thrust) − inlet mass
 
 For the turbofan the exhaust sum includes **both core and bypass** streams. Fuel is included in the core exhaust mass. TSFC is displayed only for positive net thrust with the applicable unit normalization.
 
-The Experiment view exposes the preliminary net thrust as momentum force plus pressure force and the percentage difference between calculated turbine extraction and compressor/fan demand. These are *diagnostics*, not validated model closure; the turbofan can exhibit a substantial shaft-work mismatch because independently estimated nozzle mass flows are not coupled to a compressor/fan working line.
+The Experiment view exposes net thrust as momentum force plus pressure force, the relative shaft-work residual, modeled nozzle Mach and choke status, solved bypass ratio and any multiple LP work-balance roots. The internal shaft-work residual is small because the model explicitly solves it, **not** because its compressor/turbine assumptions match a physical engine.
 
-The nozzle sliders change the preliminary nozzle-capacity calculation and corresponding illustrative SolidCraft petal spacing. They **do not** yet trigger a fully coupled mapped off-design solution with shaft speeds and flow conservation across all components. The scene's visible rotor animation is illustrative, not RPM telemetry.
+The nozzle sliders change nozzle mass capacity and shaft-work solutions. Accepted solver results drive the original SolidCraft metering lips and petal vertices: the core circular bore and independent turbofan bypass annulus reproduce `A_geometric = A_effective / 0.97` within the tested cases. `bun run cad:validate` reads exported GLB vertex positions and independently checks lip/petal alignment and the nominal bypass fairing's exit clearance at 12 core and five bypass settings. This verifies a **hypothetical internal mesh model**, not an engine survey, full moving-component interference/thermal analysis or independent physical calibration. The solver does **not** yet provide a fully coupled **map-matched** off-design solution with calibrated shaft speeds and flow conservation against component characteristic maps. The scene's visible rotor animation is illustrative, not RPM telemetry.
 
 ## Public reference maps are not yet solver inputs
 
@@ -101,7 +101,7 @@ The current cycle solver does **not** invoke these maps. Map data alone cannot e
 
 ## Visual and accessibility scope
 
-- Interactive React Three Fiber scenes load 28 original SolidCraft CAD design families, independently selected part IDs, cutaway casing and adjustable exploded view. They are **representative**, not dimensioned drawings.
+- Interactive React Three Fiber scenes load 32 original SolidCraft CAD design families, independently selected part IDs, cutaway casing and adjustable exploded view. They are **representative**, not OEM dimensioned drawings.
 - The active engine viewer uses the original SolidCraft geometry throughout. Failed CAD assets surface an explicit error without substituting other geometry.
 - A WebGL or CAD asset failure is surfaced explicitly to the user. The CAD viewer does not substitute alternative engine geometry.
 - User-selected camera presets, reduced-motion handling and a responsive inspector support inspection; final accessibility and multi-browser acceptance is outstanding.
@@ -110,7 +110,7 @@ The current cycle solver does **not** invoke these maps. Map data alone cannot e
 
 Use it to understand **station thermodynamics, qualitative architecture differences, approximate thrust accounting, basic rotor/shaft work and what must be validated for an off-design model**.
 
-Do **not** treat the resulting numerical values as measured or certified engine performance; use them to predict real OEM engine RPM, surge margin, thermal life or flight safety; or claim that independently calibrated nozzle/shaft matching has been implemented.
+Do **not** treat the resulting numerical values as measured or certified engine performance; use them to predict real OEM engine RPM, surge margin, thermal life or flight safety; or claim that independently calibrated **mapped** nozzle/shaft matching has been implemented. See [Digital Twin Evidence and Gates](../validation/DIGITAL_TWIN_EVIDENCE.md), run `bun run physics:validate` for numerical invariants and `bun run cad:validate` for bounded SolidCraft mesh geometry checks.
 
 For the full approved scientific design, see [PHYSICS_SPEC.md](PHYSICS_SPEC.md), [OFF_DESIGN_MAPS_AND_NOZZLES.md](OFF_DESIGN_MAPS_AND_NOZZLES.md) and [VERIFICATION_RELEASE.md](VERIFICATION_RELEASE.md). For the current implementation and known release gaps see [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md).
 

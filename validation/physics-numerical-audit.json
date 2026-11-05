@@ -1,0 +1,442 @@
+{
+  "schema": 1,
+  "model": "Jet Engine Lab educational steady-state cycle",
+  "validationLevel": "numerical-internal-only",
+  "scope": "Self-consistency checks for thrust, nozzle mass continuity, Mach/pressure, discharge areas and shaft work. Not externally validated.",
+  "assumptions": {
+    "gasConstantJkgK": 287.05287,
+    "dischargeCoefficient": 0.97,
+    "geometryIsGeometricAreaNotMeasured": true
+  },
+  "evidenceGates": {
+    "internalConservation": true,
+    "independentReferencePoints": false,
+    "physicalGeometryMeasurements": false,
+    "calibratedOffDesignMaps": false,
+    "validatedPhysicalRPM": false,
+    "areaToRenderedThroat": false,
+    "certifiedDigitalTwin": false
+  },
+  "count": {
+    "attempted": 38,
+    "passed": 37,
+    "unmatchedOrInfeasible": 1,
+    "failed": 0
+  },
+  "accepted": [
+    {
+      "case": "turbojet-reference",
+      "engine": "turbojet",
+      "thrustN": 117375.34800344394,
+      "coreMassKgS": 135.97876376259262,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 3.034538668699164e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbofan-reference",
+      "engine": "turbofan",
+      "thrustN": 89421.93797493864,
+      "coreMassKgS": 58.07945361650489,
+      "bypassMassKgS": 284.69835248985993,
+      "shaftPowerGapPercent": 4.4179092669299916e-8,
+      "coreExitMach": 0.9999999999999996,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbojet-t0.4-a0.2",
+      "engine": "turbojet",
+      "thrustN": 67314.65606178828,
+      "coreMassKgS": 89.54423140704286,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.1520362905450138e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.4-a0.28",
+      "engine": "turbojet",
+      "thrustN": 94240.5184865036,
+      "coreMassKgS": 125.36192396986,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.6457661293500195e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.4-a0.4",
+      "engine": "turbojet",
+      "thrustN": 134629.31212357656,
+      "coreMassKgS": 179.08846281408572,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.1520362905450138e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.6-a0.2",
+      "engine": "turbojet",
+      "thrustN": 79303.4158610467,
+      "coreMassKgS": 95.22388552272402,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 4.3332911117245484e-14,
+      "coreExitMach": 1.0000000000000007,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.6-a0.28",
+      "engine": "turbojet",
+      "thrustN": 111024.78220546541,
+      "coreMassKgS": 133.31343973181365,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.5476039684730528e-14,
+      "coreExitMach": 1.0000000000000007,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.6-a0.4",
+      "engine": "turbojet",
+      "thrustN": 158606.8317220934,
+      "coreMassKgS": 190.44777104544804,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 4.3332911117245484e-14,
+      "coreExitMach": 1.0000000000000007,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.8-a0.2",
+      "engine": "turbojet",
+      "thrustN": 90374.43386728839,
+      "coreMassKgS": 99.64149443931909,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 2.0705872542426898e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.8-a0.28",
+      "engine": "turbojet",
+      "thrustN": 126524.20741420376,
+      "coreMassKgS": 139.4980922150467,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 0,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.8-a0.4",
+      "engine": "turbojet",
+      "thrustN": 180748.86773457678,
+      "coreMassKgS": 199.28298887863818,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 2.0705872542426898e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.95-a0.2",
+      "engine": "turbojet",
+      "thrustN": 98106.1002644178,
+      "coreMassKgS": 102.27399301162043,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.0086455134117339e-13,
+      "coreExitMach": 0.9999999999999993,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.95-a0.28",
+      "engine": "turbojet",
+      "thrustN": 137348.54037018487,
+      "coreMassKgS": 143.1835902162686,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 8.645532972100577e-14,
+      "coreExitMach": 0.9999999999999993,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-t0.95-a0.4",
+      "engine": "turbojet",
+      "thrustN": 196212.2005288356,
+      "coreMassKgS": 204.54798602324087,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.0086455134117339e-13,
+      "coreExitMach": 0.9999999999999993,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h0-m0.1",
+      "engine": "turbojet",
+      "thrustN": 120029.1652793323,
+      "coreMassKgS": 134.0954755511,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 0,
+      "coreExitMach": 1.0000000000000002,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h0-m0.28",
+      "engine": "turbojet",
+      "thrustN": 116059.18581776667,
+      "coreMassKgS": 138.4011168455855,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 4.4389116660046295e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h0-m0.55",
+      "engine": "turbojet",
+      "thrustN": 116083.60304029993,
+      "coreMassKgS": 152.78026720125635,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 6.423842500903652e-14,
+      "coreExitMach": 0.9999999999999997,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h3000-m0.1",
+      "engine": "turbojet",
+      "thrustN": 91771.42365794157,
+      "coreMassKgS": 99.60142198216502,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 0,
+      "coreExitMach": 1.0000000000000002,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h3000-m0.28",
+      "engine": "turbojet",
+      "thrustN": 89220.89901329955,
+      "coreMassKgS": 102.92170261972403,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 2.1314162255161078e-14,
+      "coreExitMach": 1,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h3000-m0.55",
+      "engine": "turbojet",
+      "thrustN": 90233.15149378279,
+      "coreMassKgS": 114.06282375385739,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 5.5295010424179645e-14,
+      "coreExitMach": 1,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h7000-m0.1",
+      "engine": "turbojet",
+      "thrustN": 61081.74783882236,
+      "coreMassKgS": 63.995604877058305,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 0,
+      "coreExitMach": 0.9999999999999997,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h7000-m0.28",
+      "engine": "turbojet",
+      "thrustN": 59791.3161767947,
+      "coreMassKgS": 66.22985220879306,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 9.152205264584581e-14,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbojet-h7000-m0.55",
+      "engine": "turbojet",
+      "thrustN": 61311.60748875904,
+      "coreMassKgS": 73.77029171110256,
+      "bypassMassKgS": 0,
+      "shaftPowerGapPercent": 1.1022336092893152e-13,
+      "coreExitMach": 0.9999999999999994,
+      "bypassExitMach": null,
+      "solutionBranches": 1
+    },
+    {
+      "case": "turbofan-a0.3-t0.6",
+      "engine": "turbofan",
+      "thrustN": 22319.616848359212,
+      "coreMassKgS": 14.114729773727438,
+      "bypassMassKgS": 106.76188218369747,
+      "shaftPowerGapPercent": 4.273150862106185e-8,
+      "coreExitMach": 0.28849579379451734,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.3-t0.72",
+      "engine": "turbofan",
+      "thrustN": 22075.756426121654,
+      "coreMassKgS": 12.369008206123324,
+      "bypassMassKgS": 106.76188218369747,
+      "shaftPowerGapPercent": 2.4081775689002412e-8,
+      "coreExitMach": 0.26049085324102056,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.3-t0.85",
+      "engine": "turbofan",
+      "thrustN": 120519.43996748162,
+      "coreMassKgS": 116.15020439669327,
+      "bypassMassKgS": 106.76188218369747,
+      "shaftPowerGapPercent": 4.96067326973584e-9,
+      "coreExitMach": 1,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.45-t0.6",
+      "engine": "turbofan",
+      "thrustN": 35481.74264717406,
+      "coreMassKgS": 22.118578190222873,
+      "bypassMassKgS": 160.14282327554622,
+      "shaftPowerGapPercent": 2.8174714642411298e-8,
+      "coreExitMach": 0.4514708459025944,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.45-t0.72",
+      "engine": "turbofan",
+      "thrustN": 34655.572408095766,
+      "coreMassKgS": 19.14502215641319,
+      "bypassMassKgS": 160.14282327554622,
+      "shaftPowerGapPercent": 5.0010943865350784e-8,
+      "coreExitMach": 0.4027555290814844,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.45-t0.85",
+      "engine": "turbofan",
+      "thrustN": 121190.00960240568,
+      "coreMassKgS": 107.43548788501539,
+      "bypassMassKgS": 160.14282327554622,
+      "shaftPowerGapPercent": 8.304612363512856e-9,
+      "coreExitMach": 0.9999999999999998,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.6-t0.6",
+      "engine": "turbofan",
+      "thrustN": 51230.87619298666,
+      "coreMassKgS": 32.18398372986232,
+      "bypassMassKgS": 213.52376436739493,
+      "shaftPowerGapPercent": 4.786293068813105e-8,
+      "coreExitMach": 0.6553177983212277,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.6-t0.72",
+      "engine": "turbofan",
+      "thrustN": 48835.72188298669,
+      "coreMassKgS": 26.972741020409185,
+      "bypassMassKgS": 213.52376436739493,
+      "shaftPowerGapPercent": 2.9734936886131883e-8,
+      "coreExitMach": 0.5664276614958279,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.6-t0.85",
+      "engine": "turbofan",
+      "thrustN": 120486.7583059928,
+      "coreMassKgS": 97.42422997895827,
+      "bypassMassKgS": 213.52376436739493,
+      "shaftPowerGapPercent": 2.1643150101294356e-8,
+      "coreExitMach": 1,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.7-t0.6",
+      "engine": "turbofan",
+      "thrustN": 67374.71999063413,
+      "coreMassKgS": 44.4439721322046,
+      "bypassMassKgS": 249.11105842862742,
+      "shaftPowerGapPercent": 1.4635126517751958e-8,
+      "coreExitMach": 0.9014955651243668,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.7-t0.72",
+      "engine": "turbofan",
+      "thrustN": 100959.24320586471,
+      "coreMassKgS": 75.94020409471403,
+      "bypassMassKgS": 249.11105842862742,
+      "shaftPowerGapPercent": 2.090240144160142e-8,
+      "coreExitMach": 0.9999999999999994,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.7-t0.85",
+      "engine": "turbofan",
+      "thrustN": 118754.69744385143,
+      "coreMassKgS": 89.55673772494848,
+      "bypassMassKgS": 249.11105842862742,
+      "shaftPowerGapPercent": 6.182173442522218e-10,
+      "coreExitMach": 1.0000000000000002,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.8-t0.72",
+      "engine": "turbofan",
+      "thrustN": 89421.93797493864,
+      "coreMassKgS": 58.07945361650489,
+      "bypassMassKgS": 284.69835248985993,
+      "shaftPowerGapPercent": 4.4179092669299916e-8,
+      "coreExitMach": 0.9999999999999996,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    },
+    {
+      "case": "turbofan-a0.8-t0.85",
+      "engine": "turbofan",
+      "thrustN": 115079.12051464166,
+      "coreMassKgS": 79.85154762640106,
+      "bypassMassKgS": 284.69835248985993,
+      "shaftPowerGapPercent": 2.2090061690884446e-8,
+      "coreExitMach": 1.0000000000000004,
+      "bypassExitMach": 0.8620788083621777,
+      "solutionBranches": 2
+    }
+  ],
+  "rejected": [
+    {
+      "case": "turbofan-a0.8-t0.6",
+      "reason": "No physically feasible LP shaft/nozzle balance for these settings. Adjust the nozzle areas or flight conditions."
+    }
+  ],
+  "errors": []
+}

@@ -3,15 +3,15 @@
     {
       "command": "file.new",
       "params": {
-        "name": "Jet Engine Lab | cutaway nozzle support housing"
+        "name": "Jet Engine Lab | rigid upstream nozzle mount and movable aft petals"
       }
     },
     {
       "command": "solid.cone",
       "params": {
         "radius": 930,
-        "top_radius": 625,
-        "height": 1020,
+        "top_radius": 815,
+        "height": 450,
         "base": [
           -510,
           0,
@@ -25,10 +25,10 @@
       "command": "solid.cone",
       "params": {
         "radius": 830,
-        "top_radius": 510,
-        "height": 1040,
+        "top_radius": 715,
+        "height": 462,
         "base": [
-          -520,
+          -516,
           0,
           0
         ],

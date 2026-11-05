@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "validationLevel": "original-CAD-mesh-internal-only",
+  "scope": "Independent binary-GLB vertex inspection and renderer-equivalent nozzle deformation; hypothetical design dimensions only.",
+  "physicalValidation": false,
+  "assumptions": {
+    "units": "m",
+    "dischargeCoefficient": 0.97,
+    "fairingDesignRadiusM": 0.65,
+    "fairingOuterSurfaceRadiusM": 0.6520000777463018,
+    "modelDimensionsAreMeasuredFromOEM": false,
+    "corePetalRadialScaleFromPartRadius": true
+  },
+  "sourceModels": {
+    "core-throat-lip": {
+      "vertices": 1392
+    },
+    "nozzle-petals": {
+      "vertices": 29880
+    },
+    "bypass-throat-lip": {
+      "vertices": 1392
+    },
+    "bypass-nozzle-petals": {
+      "vertices": 11408
+    },
+    "bypass-inner-fairing": {
+      "vertices": 4268
+    }
+  },
+  "coreChecks": [
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.06,
+      "geometricAreaM2": 0.061855669464975824,
+      "boreRadiusM": 0.14031846317295038,
+      "petalInnerTipRadiusM": 0.13994481145893495,
+      "tipAlignmentErrorMm": -0.37365171401543273
+    },
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.2,
+      "geometricAreaM2": 0.2061855648832528,
+      "boreRadiusM": 0.2561852917142762,
+      "petalInnerTipRadiusM": 0.2558116405979149,
+      "tipAlignmentErrorMm": -0.37365111636128434
+    },
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.28,
+      "geometricAreaM2": 0.28865979083655385,
+      "boreRadiusM": 0.30312252500766135,
+      "petalInnerTipRadiusM": 0.30274887413340756,
+      "tipAlignmentErrorMm": -0.3736508742537836
+    },
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.4,
+      "geometricAreaM2": 0.4123711297665055,
+      "boreRadiusM": 0.36230071402283703,
+      "petalInnerTipRadiusM": 0.361927063453831,
+      "tipAlignmentErrorMm": -0.3736505690060121
+    },
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.48,
+      "geometricAreaM2": 0.4948453557198066,
+      "boreRadiusM": 0.3968805473410722,
+      "petalInnerTipRadiusM": 0.39650689695043284,
+      "tipAlignmentErrorMm": -0.37365039063935734
+    },
+    {
+      "engine": "turbojet",
+      "effectiveAreaM2": 0.9,
+      "geometricAreaM2": 0.9278350419746372,
+      "boreRadiusM": 0.5434510710342555,
+      "petalInnerTipRadiusM": 0.5430774213996432,
+      "tipAlignmentErrorMm": -0.37364963461228307
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.06,
+      "geometricAreaM2": 0.061855669464975824,
+      "boreRadiusM": 0.14031846317295038,
+      "petalInnerTipRadiusM": 0.13997922681504757,
+      "tipAlignmentErrorMm": -0.33923635790281126
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.2,
+      "geometricAreaM2": 0.2061855648832528,
+      "boreRadiusM": 0.2561852917142762,
+      "petalInnerTipRadiusM": 0.25584605595402743,
+      "tipAlignmentErrorMm": -0.33923576024874613
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.28,
+      "geometricAreaM2": 0.28865979083655385,
+      "boreRadiusM": 0.30312252500766135,
+      "petalInnerTipRadiusM": 0.30278328948952016,
+      "tipAlignmentErrorMm": -0.3392355181411899
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.4,
+      "geometricAreaM2": 0.4123711297665055,
+      "boreRadiusM": 0.36230071402283703,
+      "petalInnerTipRadiusM": 0.36196147880994356,
+      "tipAlignmentErrorMm": -0.3392352128934739
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.48,
+      "geometricAreaM2": 0.4948453557198066,
+      "boreRadiusM": 0.3968805473410722,
+      "petalInnerTipRadiusM": 0.39654131230654543,
+      "tipAlignmentErrorMm": -0.3392350345267636
+    },
+    {
+      "engine": "turbofan",
+      "effectiveAreaM2": 0.9,
+      "geometricAreaM2": 0.9278350419746372,
+      "boreRadiusM": 0.5434510710342555,
+      "petalInnerTipRadiusM": 0.5431118367557559,
+      "tipAlignmentErrorMm": -0.3392342784995783
+    }
+  ],
+  "bypassChecks": [
+    {
+      "effectiveAreaM2": 0.25,
+      "geometricAreaM2": 0.2577318580436595,
+      "innerDesignRadiusM": 0.65,
+      "outerBoreRadiusM": 0.7103088049572623,
+      "petalInnerTipRadiusM": 0.7101279351274008,
+      "minimumPhysicalGapM": 0.058127857381099046,
+      "tipAlignmentErrorMm": -0.18086982986154077
+    },
+    {
+      "effectiveAreaM2": 0.3,
+      "geometricAreaM2": 0.30927824652082164,
+      "innerDesignRadiusM": 0.65,
+      "outerBoreRadiusM": 0.7217661140904061,
+      "petalInnerTipRadiusM": 0.7215852446245608,
+      "minimumPhysicalGapM": 0.069585166878259,
+      "tipAlignmentErrorMm": -0.1808694658453902
+    },
+    {
+      "effectiveAreaM2": 0.45,
+      "geometricAreaM2": 0.46391741195230785,
+      "innerDesignRadiusM": 0.65,
+      "outerBoreRadiusM": 0.7550956883714923,
+      "petalInnerTipRadiusM": 0.7549148199645785,
+      "minimumPhysicalGapM": 0.10291474221827679,
+      "tipAlignmentErrorMm": -0.18086840691378114
+    },
+    {
+      "effectiveAreaM2": 0.6,
+      "geometricAreaM2": 0.6185565773837947,
+      "innerDesignRadiusM": 0.65,
+      "outerBoreRadiusM": 0.7870150403551833,
+      "petalInnerTipRadiusM": 0.7868341729623961,
+      "minimumPhysicalGapM": 0.13483409521609435,
+      "tipAlignmentErrorMm": -0.18086739278722064
+    },
+    {
+      "effectiveAreaM2": 0.8,
+      "geometricAreaM2": 0.8247421312924434,
+      "innerDesignRadiusM": 0.65,
+      "outerBoreRadiusM": 0.8276615092794123,
+      "petalInnerTipRadiusM": 0.8274806431780255,
+      "minimumPhysicalGapM": 0.17548056543172375,
+      "tipAlignmentErrorMm": -0.1808661013867896
+    }
+  ],
+  "pass": true
+}

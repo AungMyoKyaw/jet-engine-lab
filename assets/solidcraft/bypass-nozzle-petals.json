@@ -1,0 +1,245 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | separate flow bypass nozzle metering flaps"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass nozzle mount section",
+        "plane": {
+          "origin": [
+            2990,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            1502.5,
+            -197.5
+          ],
+          [
+            1537.5,
+            -197.5
+          ],
+          [
+            1537.5,
+            197.5
+          ],
+          [
+            1502.5,
+            197.5
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass nozzle hinge section",
+        "plane": {
+          "origin": [
+            3180,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            1476.0,
+            -189.0
+          ],
+          [
+            1504.0,
+            -189.0
+          ],
+          [
+            1504.0,
+            189.0
+          ],
+          [
+            1476.0,
+            189.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass nozzle taper section",
+        "plane": {
+          "origin": [
+            3440,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            1279.0,
+            -161.0
+          ],
+          [
+            1301.0,
+            -161.0
+          ],
+          [
+            1301.0,
+            161.0
+          ],
+          [
+            1279.0,
+            161.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Bypass nozzle exit section",
+        "plane": {
+          "origin": [
+            3680,
+            0,
+            0
+          ],
+          "x_dir": [
+            0,
+            1,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            1091.0,
+            -139.0
+          ],
+          [
+            1109.0,
+            -139.0
+          ],
+          [
+            1109.0,
+            139.0
+          ],
+          [
+            1091.0,
+            139.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Bypass nozzle mount section"
+          },
+          {
+            "sketch": "Bypass nozzle hinge section"
+          },
+          {
+            "sketch": "Bypass nozzle taper section"
+          },
+          {
+            "sketch": "Bypass nozzle exit section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Bypass metering flap"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Bypass metering flap"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    }
+  ]
+}

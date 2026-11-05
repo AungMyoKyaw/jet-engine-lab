@@ -1,0 +1,86 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | fixed aft bypass inner flow boundary"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 650,
+        "height": 510,
+        "base": [
+          3140,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass inner flow fairing"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 618,
+        "height": 522,
+        "base": [
+          3134,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass inner flow fairing bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass inner flow fairing",
+        "tools": [
+          "Bypass inner flow fairing bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 652,
+        "height": 40,
+        "base": [
+          3610,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass fairing tip seal"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 625,
+        "height": 52,
+        "base": [
+          3604,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Bypass fairing tip seal bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Bypass fairing tip seal",
+        "tools": [
+          "Bypass fairing tip seal bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}

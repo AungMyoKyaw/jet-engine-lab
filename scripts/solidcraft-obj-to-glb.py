@@ -27,6 +27,8 @@ PALETTES = {
 
 def role(name):
     name=name.lower()
+    if "throat metering lip" in name:
+        return "bronze"
     if any(w in name for w in ("turbine nozzle guide", "turbine bucket", "turbine rotor", "nozzle petal", "flameholder", "atomizer tip")):
         return "heat"
     if any(w in name for w in ("turbine outer", "turbine forward", "combustor outer liner", "combustor inner liner", "combustor dome backing")):
@@ -70,6 +72,7 @@ models=(
     "shaft-single-spool","shaft-dual-spool",
     "bearing-roller-train","compressor-service-hardware",
     "combustor-thermal-hardware","gearbox-support-hardware",
+    "core-throat-lip","bypass-throat-lip", "bypass-inner-fairing","bypass-nozzle-petals",
 )
 requested = set(sys.argv[sys.argv.index('--')+1:]) if '--' in sys.argv else set()
 if requested - set(models):

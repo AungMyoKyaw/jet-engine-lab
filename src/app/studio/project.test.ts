@@ -6,7 +6,7 @@ describe('local Jet Engine Lab projects',()=>{
  const valid=()=>makeProject('Test Study',structuredClone(DEFAULTS),'turbofan',{mode:'inspection',selected:'fan',explode:.5,showShell:true});
  it('round-trips project inputs and view configuration without modifying them',()=>{
   const p=valid(),parsed=parseProject(JSON.stringify(p));
-  expect(parsed).toEqual(p);expect(parsed.inputs.turbofan.bypassArea).toBe(1.85);
+  expect(parsed).toEqual(p);expect(parsed.inputs.turbofan.bypassArea).toBe(DEFAULTS.turbofan.bypassArea);
  });
  it('rejects invalid schema versions without corrupting input',()=>{
   const project=valid();expect(()=>parseProject(JSON.stringify({...project,schema:2}))).toThrow('Unsupported project');

@@ -24,6 +24,10 @@
 | `bearing-cartridge` | turbine (stationary supplement) | Bearing races, seals, housing, support spider and attachment bolts |
 | `combustor-dome` | burner (stationary supplement) | Annular dome, 12 bored swirler cups, fuel cones and mounting hardware |
 | `nozzle-petals` | nozzle (stationary supplement) | 20 lofted convergent nozzle petals with root hinge elements |
+| `core-throat-lip` | nozzle (metering throat) | Circular core nozzle lip with vertex-verified bore |
+| `bypass-throat-lip` | bypass nozzle (metering throat) | Annular bypass nozzle lip with independently controlled bore |
+| `bypass-nozzle-petals` | bypass nozzle (movable supplement) | Separate convergent bypass petal segments driven by accepted nozzle geometry |
+| `bypass-inner-fairing` | bypass nozzle (stationary centerbody) | Annular inner-fairing geometry defining bypass flow annulus |
 | `radial-impeller` | impeller | Centrifugal disk with patterned radial vanes |
 | `radial-diffuser` | diffuser | Diffuser shroud with stationary guide vanes |
 | `afterburner-assembly` | afterburner | Annular flameholders, spray bars and injector tips |
@@ -35,7 +39,7 @@
 | `combustor-thermal-hardware` | burner (stationary supplement) | Combustor thermal-protection and retention features |
 | `gearbox-support-hardware` | gearbox (stationary supplement) | Gearbox support mounts and service hardware |
 
-All **28 B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable.
+All **32 B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable.
 
 All **11 component categories** across the five engine configurations have a SolidCraft CAD source. Rotating fan, compressor and turbine geometry is now distinct, while guide vanes and turbine shrouds stay stationary as the shaft rotates. A given design family is scaled across configurations according to the illustration's part hierarchy. Individual HP/LP spools can still share a family geometry. Realistic detail here means a more complete **visual and interactive engineering study**; dimensions, airfoils, materials, cooling passage topology and performance predictions have **not** been validated against any measured aircraft engine.
 
@@ -46,7 +50,7 @@ All **11 component categories** across the five engine configurations have a Sol
 - Exploded separation is adjustable in the interactive scene from 0% to 160% of representative assembly displacement.
 - Three.js caches each distinct GLB per session. Each scene placement clones the loaded scene while sharing geometry/material resources.
 - Converter output batches original CAD bodies into about 1–4 web render meshes per source, greatly reducing the draw calls for repeated compressor stages.
-- Fan, compressor, turbine and centrifugal impeller animate as grouped original CAD rotors (respecting reduced-motion), with qualitative throttle response rather than measured RPM. Stator rows, turbine shrouds, combustor liner, bearings and nozzle linkages remain fixed. The nozzle-opening control scales original CAD petal geometry illustratively; its motion is not an engineered linkage or an accurately coupled throat-area model.
+- Fan, compressor, turbine and centrifugal impeller animate as grouped original CAD rotors (respecting reduced-motion), with qualitative throttle response rather than measured RPM. Stator rows, turbine shrouds, combustor liner and bearings remain fixed. For the turbojet and turbofan, original SolidCraft nozzle lips and petal meshes are deformed from the **last accepted** cycle result's geometric throat radius, checked against exported GLB vertex data by `cad:validate`. Visual-only engine nozzle movement remains illustrative; neither case verifies an engineered actuator linkage or measured engine geometry.
 - Heat lighting, flow markers and shaft-power highlighting are procedural explanatory overlays, with no physical substitute meshes. Casing visibility hides the named casing bodies in the CAD files; individual parts remain pickable.
 - CAD assets load through React Suspense. Load errors produce an explicit `CAD ASSET UNAVAILABLE` status; the renderer does not silently use a placeholder or downloaded engine model.
 - The former optional CC0 reference engine viewer and its downloaded GLB have been removed from the runtime.
@@ -58,7 +62,8 @@ All **11 component categories** across the five engine configurations have a Sol
 From the Jet Engine Lab project root:
 
 ```bash
-bun run cad:generate       # solidcraft-cli -> 28 .sc designs + OBJ intermediates -> 28 .glb files
+bun run cad:generate       # solidcraft-cli -> 32 .sc designs + OBJ intermediates -> 32 .glb files
+bun run cad:validate       # verify bounded GLB aperture geometry against modeled throat areas
 bun run build
 bun run dev                # or preview on port 4173
 bun run smoke:cad          # focus mode + mobile

@@ -1,0 +1,48 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | parametric core throat metering lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 522,
+        "height": 24,
+        "base": [
+          -12,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Core throat metering lip"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 500,
+        "height": 36,
+        "base": [
+          -18,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Core throat metering lip bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Core throat metering lip",
+        "tools": [
+          "Core throat metering lip bore"
+        ],
+        "operation": "cut"
+      }
+    }
+  ]
+}
