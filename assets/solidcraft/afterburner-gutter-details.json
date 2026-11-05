@@ -1,0 +1,239 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | afterburner flameholder radial struts"
+      }
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Afterburner flameholder strut root section",
+        "plane": {
+          "origin": [
+            0,
+            405,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -295.8,
+            -14.0
+          ],
+          [
+            -247.95,
+            -38
+          ],
+          [
+            -158.85,
+            -29.04
+          ],
+          [
+            -124.2,
+            1.04
+          ],
+          [
+            -195.15,
+            26
+          ],
+          [
+            -269.4,
+            19.6
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Afterburner flameholder strut span section",
+        "plane": {
+          "origin": [
+            0,
+            625,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -191.4,
+            5.0
+          ],
+          [
+            -134.85,
+            -25
+          ],
+          [
+            -29.549999999999997,
+            -13.799999999999997
+          ],
+          [
+            11.400000000000006,
+            23.8
+          ],
+          [
+            -72.45,
+            55
+          ],
+          [
+            -160.2,
+            47.0
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "sketch.create",
+      "params": {
+        "name": "Afterburner flameholder strut tip section",
+        "plane": {
+          "origin": [
+            0,
+            839,
+            0
+          ],
+          "x_dir": [
+            1,
+            0,
+            0
+          ],
+          "y_dir": [
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "command": "sketch.line",
+      "params": {
+        "points": [
+          [
+            -36.0,
+            18.25
+          ],
+          [
+            14.75,
+            -5
+          ],
+          [
+            109.25,
+            3.6799999999999997
+          ],
+          [
+            146.0,
+            32.82
+          ],
+          [
+            70.75,
+            57
+          ],
+          [
+            -8.0,
+            50.8
+          ]
+        ],
+        "closed": true
+      }
+    },
+    {
+      "command": "sketch.finish",
+      "params": {}
+    },
+    {
+      "command": "solid.loft",
+      "params": {
+        "sections": [
+          {
+            "sketch": "Afterburner flameholder strut root section"
+          },
+          {
+            "sketch": "Afterburner flameholder strut span section"
+          },
+          {
+            "sketch": "Afterburner flameholder strut tip section"
+          }
+        ],
+        "operation": "new",
+        "body_name": "Afterburner flameholder strut blade"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Afterburner flameholder strut blade"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 21,
+        "height": 74,
+        "base": [
+          310,
+          843,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Afterburner fuel-bar retainer"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Afterburner fuel-bar retainer"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    }
+  ]
+}

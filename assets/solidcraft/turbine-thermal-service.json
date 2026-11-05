@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | hot section segmented guard and service ports"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 897,
+        "height": 38,
+        "base": [
+          -328,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine forward thermal protection band"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 862,
+        "height": 50,
+        "base": [
+          -334,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine forward thermal protection band bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine forward thermal protection band",
+        "tools": [
+          "Turbine forward thermal protection band bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 897,
+        "height": 38,
+        "base": [
+          132,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine aft thermal protection band"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 862,
+        "height": 50,
+        "base": [
+          126,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine aft thermal protection band bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Turbine aft thermal protection band",
+        "tools": [
+          "Turbine aft thermal protection band bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 21,
+        "height": 84,
+        "base": [
+          -296,
+          881,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine thermocouple service boss"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Turbine thermocouple service boss"
+        ],
+        "axis": "X",
+        "count": 8
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 16,
+        "height": 49,
+        "base": [
+          134,
+          884,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Turbine heat shield retention stud"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Turbine heat shield retention stud"
+        ],
+        "axis": "X",
+        "count": 28
+      }
+    }
+  ]
+}

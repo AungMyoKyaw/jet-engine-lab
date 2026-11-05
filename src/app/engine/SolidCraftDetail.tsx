@@ -12,17 +12,17 @@ type CadAssembly={file:string;radius:number;axial?:number;targetAxial?:number;ro
 
 /** SolidCraft B-rep families; stationary stators never rotate with the shaft. */
 const MODELS:Record<CadDetailKind,CadAssembly>={
-  fan:{file:'fan-blisk',radius:1.05,supplements:[{file:'fan-outlet-guides'}]},
-  compressor:{file:'compressor-cassette',radius:.923,supplements:[{file:'stator-vane-ring'},{file:'compressor-case-detail'},{file:'compressor-service-hardware'}]},
-  turbine:{file:'turbine-wheel',radius:.872,supplements:[{file:'turbine-nozzle-guide'},{file:'turbine-shroud'},{file:'bearing-cartridge'},{file:'bearing-roller-train'}]},
+  fan:{file:'fan-blisk',radius:1.05,supplements:[{file:'fan-outlet-guides'},{file:'fan-retention-hardware'}]},
+  compressor:{file:'compressor-cassette',radius:.923,supplements:[{file:'stator-vane-ring'},{file:'compressor-case-detail'},{file:'compressor-service-hardware'},{file:'compressor-vsv-linkage'}]},
+  turbine:{file:'turbine-wheel',radius:.872,supplements:[{file:'turbine-nozzle-guide'},{file:'turbine-shroud'},{file:'bearing-cartridge'},{file:'bearing-roller-train'},{file:'turbine-thermal-service'}]},
   gearbox:{file:'planetary-reducer',radius:.70,supplements:[{file:'gearbox-support-hardware'}]},
   burner:{file:'combustor-liner',radius:.79,rotation:[Math.PI,0,0],supplements:[{file:'combustor-dome'},{file:'combustor-manifold',position:[-.42,0,0]},{file:'combustor-thermal-hardware'}]},
   inlet:{file:'intake-duct',radius:1.03,axial:1.5,targetAxial:1.45},
   bypass:{file:'bypass-lattice',radius:1.0,axial:7.6,targetAxial:8.4},
-  nozzle:{file:'nozzle-housing',radius:.962,axial:1.02,targetAxial:.98,rotation:[Math.PI,0,0],supplements:[{file:'nozzle-petals'},{file:'nozzle-actuators'}]},
+  nozzle:{file:'nozzle-housing',radius:.962,axial:1.02,targetAxial:.98,rotation:[Math.PI,0,0],supplements:[{file:'nozzle-petals'},{file:'nozzle-actuators'},{file:'nozzle-hinge-service'}]},
   impeller:{file:'radial-impeller',radius:1.01},
-  diffuser:{file:'radial-diffuser',radius:1.04},
-  afterburner:{file:'afterburner-assembly',radius:.91},
+  diffuser:{file:'radial-diffuser',radius:1.04,supplements:[{file:'diffuser-service-hardware'}]},
+  afterburner:{file:'afterburner-assembly',radius:.91,supplements:[{file:'afterburner-gutter-details'}]},
 };
 
 type RadialDeformation={hinge:number;exit:number;tipDelta:number};

@@ -1,0 +1,96 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | exhaust nozzle fixed hinge and inspection hardware"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 950,
+        "height": 40,
+        "base": [
+          -477,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle pivot support ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 920,
+        "height": 52,
+        "base": [
+          -483,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle pivot support ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Nozzle pivot support ring",
+        "tools": [
+          "Nozzle pivot support ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 29,
+        "height": 77,
+        "base": [
+          -481,
+          925,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle pivot clevis"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle pivot clevis"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 15,
+        "height": 54,
+        "base": [
+          -430,
+          935,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Nozzle hinge captive fastener"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Nozzle hinge captive fastener"
+        ],
+        "axis": "X",
+        "count": 20
+      }
+    }
+  ]
+}

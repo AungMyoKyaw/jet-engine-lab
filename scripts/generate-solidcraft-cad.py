@@ -466,6 +466,89 @@ def gearbox_support_hardware():
     return commands
 
 
+def fan_retention_hardware():
+    """A serviceable fan-root retainer and annular bolted spinner interface."""
+    commands, add = build("Jet Engine Lab | fan blade-root and spinner retention details")
+    annulus(add, "Fan blade root retention band", 358, 331, 36, 151)
+    annulus(add, "Spinner aft fastening flange", 299, 275, 32, -171)
+    add("solid.cylinder", radius=18, height=45,
+        base=[159, 346, 0], axis="X", body_name="Fan root locking fastener")
+    add("solid.pattern.circular", bodies=["Fan root locking fastener"], axis="X", count=24)
+    add("solid.cylinder", radius=13, height=41,
+        base=[-182, 284, 0], axis="X", body_name="Spinner flange bolt")
+    add("solid.pattern.circular", bodies=["Spinner flange bolt"], axis="X", count=18)
+    return commands
+
+
+def compressor_vsv_linkage():
+    """Exposed mechanical unison hardware for a representative variable stator system."""
+    commands, add = build("Jet Engine Lab | compressor variable stator unison ring linkage")
+    annulus(add, "Forward variable stator unison ring", 916, 890, 30, -162)
+    annulus(add, "Aft variable stator unison ring", 916, 890, 30, 158)
+    add("solid.cylinder", radius=14, height=326,
+        base=[-160, 902, 0], axis="X", body_name="Unison synchronizer rod")
+    add("solid.pattern.circular", bodies=["Unison synchronizer rod"], axis="X", count=12)
+    add("solid.cylinder", radius=28, height=45,
+        base=[156, 904, 0], axis="X", body_name="Stator lever arm clevis")
+    add("solid.pattern.circular", bodies=["Stator lever arm clevis"], axis="X", count=24)
+    return commands
+
+
+def turbine_thermal_service():
+    """Accessible external heat shields, thermocouple bosses and retention hardware."""
+    commands, add = build("Jet Engine Lab | hot section segmented guard and service ports")
+    annulus(add, "Turbine forward thermal protection band", 897, 862, 38, -328)
+    annulus(add, "Turbine aft thermal protection band", 897, 862, 38, 132)
+    add("solid.cylinder", radius=21, height=84,
+        base=[-296, 881, 0], axis="X", body_name="Turbine thermocouple service boss")
+    add("solid.pattern.circular", bodies=["Turbine thermocouple service boss"], axis="X", count=8)
+    add("solid.cylinder", radius=16, height=49,
+        base=[134, 884, 0], axis="X", body_name="Turbine heat shield retention stud")
+    add("solid.pattern.circular", bodies=["Turbine heat shield retention stud"], axis="X", count=28)
+    return commands
+
+
+def nozzle_hinge_service():
+    """Fixed aft-nozzle pivot structure; the dynamic petal edges remain separate."""
+    commands, add = build("Jet Engine Lab | exhaust nozzle fixed hinge and inspection hardware")
+    annulus(add, "Nozzle pivot support ring", 950, 920, 40, -477)
+    add("solid.cylinder", radius=29, height=77,
+        base=[-481, 925, 0], axis="X", body_name="Nozzle pivot clevis")
+    add("solid.pattern.circular", bodies=["Nozzle pivot clevis"], axis="X", count=20)
+    add("solid.cylinder", radius=15, height=54,
+        base=[-430, 935, 0], axis="X", body_name="Nozzle hinge captive fastener")
+    add("solid.pattern.circular", bodies=["Nozzle hinge captive fastener"], axis="X", count=20)
+    return commands
+
+
+def afterburner_gutter_details():
+    """Radial flameholder support vanes and visible fuel service fittings."""
+    commands, add = build("Jet Engine Lab | afterburner flameholder radial struts")
+    lofted_row(add, "Afterburner flameholder strut", [
+        ("root", 405, -210, 165, -6, 32),
+        ("span", 625, -90, 195, 15, 40),
+        ("tip", 839, 55, 175, 26, 31),
+    ], 12)
+    add("solid.cylinder", radius=21, height=74,
+        base=[310, 843, 0], axis="X", body_name="Afterburner fuel-bar retainer")
+    add("solid.pattern.circular", bodies=["Afterburner fuel-bar retainer"], axis="X", count=12)
+    return commands
+
+
+def diffuser_service_hardware():
+    """Visible rim fittings and radial passage instrumentation for a centrifugal case."""
+    commands, add = build("Jet Engine Lab | centrifugal diffuser casing service fittings")
+    annulus(add, "Diffuser circumferential case seam", 1085, 1058, 37, -125)
+    annulus(add, "Diffuser aft retention band", 1085, 1058, 37, 93)
+    add("solid.cylinder", radius=20, height=50,
+        base=[-118, 1073, 0], axis="X", body_name="Diffuser case retention stud")
+    add("solid.pattern.circular", bodies=["Diffuser case retention stud"], axis="X", count=24)
+    add("solid.cylinder", radius=28, height=104,
+        base=[104, 1066, 0], axis="X", body_name="Diffuser static pressure port")
+    add("solid.pattern.circular", bodies=["Diffuser static pressure port"], axis="X", count=8)
+    return commands
+
+
 def combustor_dome():
     """Annular dome face and twelve swirler cups around the fuel delivery ring."""
     commands, add = build("Jet Engine Lab | annular combustor dome and fuel air swirlers")
@@ -573,6 +656,9 @@ def main():
               "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool(),
               "bearing-roller-train": bearing_roller_train(), "compressor-service-hardware": compressor_service_hardware(),
               "combustor-thermal-hardware": combustor_thermal_hardware(), "gearbox-support-hardware": gearbox_support_hardware(),
+              "fan-retention-hardware": fan_retention_hardware(), "compressor-vsv-linkage": compressor_vsv_linkage(),
+              "turbine-thermal-service": turbine_thermal_service(), "nozzle-hinge-service": nozzle_hinge_service(),
+              "afterburner-gutter-details": afterburner_gutter_details(), "diffuser-service-hardware": diffuser_service_hardware(),
               "core-throat-lip": core_throat_lip(), "bypass-throat-lip": bypass_throat_lip(),
               "bypass-inner-fairing": bypass_inner_fairing(), "bypass-nozzle-petals": bypass_nozzle_petals()}
     requested = set(sys.argv[1:])

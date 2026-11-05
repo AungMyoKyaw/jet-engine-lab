@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | centrifugal diffuser casing service fittings"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1085,
+        "height": 37,
+        "base": [
+          -125,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser circumferential case seam"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1058,
+        "height": 49,
+        "base": [
+          -131,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser circumferential case seam bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Diffuser circumferential case seam",
+        "tools": [
+          "Diffuser circumferential case seam bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1085,
+        "height": 37,
+        "base": [
+          93,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser aft retention band"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 1058,
+        "height": 49,
+        "base": [
+          87,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser aft retention band bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Diffuser aft retention band",
+        "tools": [
+          "Diffuser aft retention band bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 20,
+        "height": 50,
+        "base": [
+          -118,
+          1073,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser case retention stud"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Diffuser case retention stud"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 28,
+        "height": 104,
+        "base": [
+          104,
+          1066,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Diffuser static pressure port"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Diffuser static pressure port"
+        ],
+        "axis": "X",
+        "count": 8
+      }
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | compressor variable stator unison ring linkage"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 916,
+        "height": 30,
+        "base": [
+          -162,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward variable stator unison ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 890,
+        "height": 42,
+        "base": [
+          -168,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Forward variable stator unison ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Forward variable stator unison ring",
+        "tools": [
+          "Forward variable stator unison ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 916,
+        "height": 30,
+        "base": [
+          158,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft variable stator unison ring"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 890,
+        "height": 42,
+        "base": [
+          152,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Aft variable stator unison ring bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Aft variable stator unison ring",
+        "tools": [
+          "Aft variable stator unison ring bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 14,
+        "height": 326,
+        "base": [
+          -160,
+          902,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Unison synchronizer rod"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Unison synchronizer rod"
+        ],
+        "axis": "X",
+        "count": 12
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 28,
+        "height": 45,
+        "base": [
+          156,
+          904,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Stator lever arm clevis"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Stator lever arm clevis"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    }
+  ]
+}

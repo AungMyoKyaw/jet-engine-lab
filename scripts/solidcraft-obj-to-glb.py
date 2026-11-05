@@ -14,15 +14,15 @@ TARGET = ROOT / "public" / "assets" / "solidcraft"
 TARGET.mkdir(parents=True, exist_ok=True)
 
 PALETTES = {
-    "blade": ((.61,.70,.76,1),.91,.235),
-    "shell": ((.21,.29,.34,1),.84,.34),
-    "bronze": ((.78,.54,.33,1),.87,.255),
-    "steel": ((.45,.54,.61,1),.90,.275),
-    "heat": ((.68,.57,.48,1),.84,.30),
-    "heat_shell": ((.37,.33,.32,1),.80,.39),
-    "fastener": ((.74,.78,.80,1),.91,.21),
-    "seal": ((.105,.13,.16,1),.70,.42),
-    "fuel": ((.69,.43,.26,1),.82,.29),
+    "blade": ((.51,.60,.67,1),.83,.30),
+    "shell": ((.18,.24,.30,1),.78,.40),
+    "bronze": ((.66,.45,.26,1),.77,.34),
+    "steel": ((.38,.46,.53,1),.86,.35),
+    "heat": ((.49,.38,.33,1),.73,.38),
+    "heat_shell": ((.30,.28,.30,1),.72,.46),
+    "fastener": ((.68,.72,.73,1),.85,.27),
+    "seal": ((.085,.10,.12,1),.66,.47),
+    "fuel": ((.58,.35,.20,1),.79,.36),
 }
 
 def role(name):
@@ -31,7 +31,7 @@ def role(name):
         return "bronze"
     if any(w in name for w in ("turbine nozzle guide", "turbine bucket", "turbine rotor", "nozzle petal", "flameholder", "atomizer tip")):
         return "heat"
-    if any(w in name for w in ("turbine outer", "turbine forward", "combustor outer liner", "combustor inner liner", "combustor dome backing")):
+    if any(w in name for w in ("turbine outer", "turbine forward", "thermal protection", "heat shield", "combustor outer liner", "combustor inner liner", "combustor dome backing")):
         return "heat_shell"
     if any(w in name for w in ("fuel delivery", "fuel manifold", "fuel swirler", "spray bar")):
         return "fuel"
@@ -43,7 +43,7 @@ def role(name):
         return "blade"
     if any(w in name for w in ("manifold","housing","casing","duct outer","shroud","structural hoop","outer liner","case ring","casing rib", "support case", "nozzle synchronization")):
         return "shell"
-    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener","igniter", "lubrication", "oil feed")):
+    if any(w in name for w in ("collar","injector","carrier","spray nozzle","flange","seal rim","cooling port", "swirler cup", "dome stiffener","igniter", "lubrication", "oil feed", "unison ring", "synchronizer", "pressure port", "thermocouple", "pivot support", "fuel-bar", "retention band", "case seam")):
         return "bronze"
     return "steel"
 
@@ -72,6 +72,8 @@ models=(
     "shaft-single-spool","shaft-dual-spool",
     "bearing-roller-train","compressor-service-hardware",
     "combustor-thermal-hardware","gearbox-support-hardware",
+    "fan-retention-hardware","compressor-vsv-linkage","turbine-thermal-service",
+    "nozzle-hinge-service","afterburner-gutter-details","diffuser-service-hardware",
     "core-throat-lip","bypass-throat-lip", "bypass-inner-fairing","bypass-nozzle-petals",
 )
 requested = set(sys.argv[sys.argv.index('--')+1:]) if '--' in sys.argv else set()

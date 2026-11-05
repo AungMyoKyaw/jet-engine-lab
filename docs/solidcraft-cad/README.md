@@ -37,8 +37,14 @@
 | `compressor-service-hardware` | axial compressor (stationary supplement) | Additional exterior support, service bosses and fasteners |
 | `combustor-thermal-hardware` | burner (stationary supplement) | Combustor thermal-protection and retention features |
 | `gearbox-support-hardware` | gearbox (stationary supplement) | Gearbox support mounts and service hardware |
+| `fan-retention-hardware` | fan (stationary supplement) | Blade-root locking fasteners, retention band, spinner fastening flange and bolts |
+| `compressor-vsv-linkage` | axial compressor (stationary supplement) | Twin variable-stator unison rings, synchronizer rods and patterned lever clevises |
+| `turbine-thermal-service` | turbine (stationary supplement) | Segmented thermal protection bands, thermocouple bosses and shield retention studs |
+| `nozzle-hinge-service` | nozzle (stationary supplement) | Fixed pivot support ring, hinge clevises and captive fasteners outside the movable petals |
+| `afterburner-gutter-details` | afterburner (stationary supplement) | Lofted flameholder radial struts and fuel-bar fittings |
+| `diffuser-service-hardware` | centrifugal diffuser (stationary supplement) | Casing retention bands, circumferential seam and static-pressure instrumentation ports |
 
-All **31 active B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable. The superseded general-purpose `rotor-stage` was removed from the source and website because no assembled engine used it.
+All **37 active B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable. The superseded general-purpose `rotor-stage` was removed from the source and website because no assembled engine used it.
 
 All **11 component categories** across the five engine configurations have a SolidCraft CAD source. Rotating fan, compressor and turbine geometry is now distinct, while guide vanes and turbine shrouds stay stationary as the shaft rotates. A given design family is scaled across configurations according to the illustration's part hierarchy. Individual HP/LP spools can still share a family geometry. Realistic detail here means a more complete **visual and interactive engineering study**; dimensions, airfoils, materials, cooling passage topology and performance predictions have **not** been validated against any measured aircraft engine.
 
@@ -62,7 +68,7 @@ All **11 component categories** across the five engine configurations have a Sol
 From the Jet Engine Lab project root:
 
 ```bash
-bun run cad:generate       # solidcraft-cli -> 31 .sc designs + OBJ intermediates -> 31 .glb files
+bun run cad:generate       # solidcraft-cli -> 37 .sc designs + OBJ intermediates -> 37 .glb files
 bun run cad:validate       # verify bounded GLB aperture geometry against modeled throat areas
 bun run build
 bun run smoke:cad:sync     # verify all 25 lessons highlight parts in the original assembly

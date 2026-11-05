@@ -1,0 +1,134 @@
+{
+  "commands": [
+    {
+      "command": "file.new",
+      "params": {
+        "name": "Jet Engine Lab | fan blade-root and spinner retention details"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 358,
+        "height": 36,
+        "base": [
+          151,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan blade root retention band"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 331,
+        "height": 48,
+        "base": [
+          145,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan blade root retention band bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Fan blade root retention band",
+        "tools": [
+          "Fan blade root retention band bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 299,
+        "height": 32,
+        "base": [
+          -171,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Spinner aft fastening flange"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 275,
+        "height": 44,
+        "base": [
+          -177,
+          0,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Spinner aft fastening flange bore"
+      }
+    },
+    {
+      "command": "solid.combine",
+      "params": {
+        "target": "Spinner aft fastening flange",
+        "tools": [
+          "Spinner aft fastening flange bore"
+        ],
+        "operation": "cut"
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 18,
+        "height": 45,
+        "base": [
+          159,
+          346,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Fan root locking fastener"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Fan root locking fastener"
+        ],
+        "axis": "X",
+        "count": 24
+      }
+    },
+    {
+      "command": "solid.cylinder",
+      "params": {
+        "radius": 13,
+        "height": 41,
+        "base": [
+          -182,
+          284,
+          0
+        ],
+        "axis": "X",
+        "body_name": "Spinner flange bolt"
+      }
+    },
+    {
+      "command": "solid.pattern.circular",
+      "params": {
+        "bodies": [
+          "Spinner flange bolt"
+        ],
+        "axis": "X",
+        "count": 18
+      }
+    }
+  ]
+}
