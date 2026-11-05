@@ -31,7 +31,6 @@
 | `radial-impeller` | impeller | Centrifugal disk with patterned radial vanes |
 | `radial-diffuser` | diffuser | Diffuser shroud with stationary guide vanes |
 | `afterburner-assembly` | afterburner | Annular flameholders, spray bars and injector tips |
-| `rotor-stage` | legacy source retained for reproducibility | Earlier general-purpose rotor; no longer substituted for the fan, compressor or turbine |
 | `shaft-single-spool` | turbojet and centrifugal turbojet | Hollow central drive tube, coupling rings and concentric bearing collars |
 | `shaft-dual-spool` | turbofan, afterburning turbofan and geared turbofan | Coaxial HP/LP drive tubes, coupling flanges and bearing rings |
 | `bearing-roller-train` | turbine (stationary supplement) | Separate bearing retention hardware with 28 patterned rollers |
@@ -39,14 +38,15 @@
 | `combustor-thermal-hardware` | burner (stationary supplement) | Combustor thermal-protection and retention features |
 | `gearbox-support-hardware` | gearbox (stationary supplement) | Gearbox support mounts and service hardware |
 
-All **32 B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable.
+All **31 active B-rep design families** were generated with **SolidCraft CLI**, each retained as a reproducible `.json` command timeline and editable `.sc` model in `assets/solidcraft/`. Blender converts the exported OBJ files into web `.glb` meshes with physically based materials; originals remain independently editable. The superseded general-purpose `rotor-stage` was removed from the source and website because no assembled engine used it.
 
 All **11 component categories** across the five engine configurations have a SolidCraft CAD source. Rotating fan, compressor and turbine geometry is now distinct, while guide vanes and turbine shrouds stay stationary as the shaft rotates. A given design family is scaled across configurations according to the illustration's part hierarchy. Individual HP/LP spools can still share a family geometry. Realistic detail here means a more complete **visual and interactive engineering study**; dimensions, airfoils, materials, cooling passage topology and performance predictions have **not** been validated against any measured aircraft engine.
 
 ## Viewer integration
 
 - The *assembled* view loads the CAD mesh for each part by default. The selected component is independently pickable through its enclosing part group.
-- The five-stage journey focuses the **same CAD geometry**; **Show full engine** returns to the assembled model.
+- The five-stage journey highlights **the same mounted CAD geometry in the same assembly coordinates**; every original part and drive shaft remains present. Relevant part families stay opaque, while surrounding parts become translucent context. **Show full engine** restores the assembled model without remounting its parts.
+- The 25 learning stages across all five architectures cover the assembled parts, including LP/HP compressors and turbines, ducts, gearbox and afterburner.
 - Exploded separation is adjustable in the interactive scene from 0% to 160% of representative assembly displacement.
 - Three.js caches each distinct GLB per session. Each scene placement clones the loaded scene while sharing geometry/material resources.
 - Converter output batches original CAD bodies into about 1–4 web render meshes per source, greatly reducing the draw calls for repeated compressor stages.
@@ -62,9 +62,10 @@ All **11 component categories** across the five engine configurations have a Sol
 From the Jet Engine Lab project root:
 
 ```bash
-bun run cad:generate       # solidcraft-cli -> 32 .sc designs + OBJ intermediates -> 32 .glb files
+bun run cad:generate       # solidcraft-cli -> 31 .sc designs + OBJ intermediates -> 31 .glb files
 bun run cad:validate       # verify bounded GLB aperture geometry against modeled throat areas
 bun run build
+bun run smoke:cad:sync     # verify all 25 lessons highlight parts in the original assembly
 bun run dev                # or preview on port 4173
 bun run smoke:cad          # focus mode + mobile
 bun run smoke:cad:full     # all five complete CAD scenes, real asset requests, screenshots

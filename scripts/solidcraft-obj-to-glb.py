@@ -62,7 +62,7 @@ def get_material(key):
     return m
 
 models=(
-    "rotor-stage","planetary-reducer","combustor-manifold",
+    "planetary-reducer","combustor-manifold",
     "intake-duct","bypass-lattice","nozzle-housing",
     "radial-impeller","radial-diffuser","afterburner-assembly",
     "fan-blisk","compressor-cassette","turbine-wheel","turbine-shroud",

@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "bun run docs:check && tsc --noEmit && vite build && bun scripts/generate-precache.mjs",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "bun test src/physics.test.js src/app/physics.test.ts src/app/maps.test.ts src/app/engine/nozzle-geometry.test.ts src/app/studio/project.test.ts src/app/data/catalog.test.ts",
+    "test": "bun test src/physics.test.js src/app/physics.test.ts src/app/maps.test.ts src/app/engine/nozzle-geometry.test.ts src/app/studio/project.test.ts src/app/data/catalog.test.ts src/app/data/learning-stages.test.ts",
     "typecheck": "tsc --noEmit",
     "physics:validate": "bun scripts/validate-physics.ts",
     "cad:validate": "python3 scripts/validate-cad-geometry.py",
@@ -24,7 +24,8 @@
     "cad:generate": "python3 scripts/generate-solidcraft-cad.py && blender -b -t 4 -P scripts/solidcraft-obj-to-glb.py",
     "smoke:cad": "bun scripts/smoke-solidcraft-cad.mjs",
     "smoke:cad:reveal": "bun scripts/smoke-cad-assembly-reveal.mjs",
-    "smoke:cad:full": "bun scripts/smoke-solidcraft-full.mjs"
+    "smoke:cad:full": "bun scripts/smoke-solidcraft-full.mjs",
+    "smoke:cad:sync": "bun scripts/smoke-cad-stage-sync.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",

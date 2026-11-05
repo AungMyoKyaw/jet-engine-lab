@@ -12,7 +12,7 @@ const supportedEngines=['turbojet','turbofan','afterburning-turbofan','centrifug
 const requested=process.argv.slice(2);
 if(requested.some(engine=>!supportedEngines.includes(engine))) throw Error('Unknown engine: '+requested.filter(engine=>!supportedEngines.includes(engine)).join(', '));
 const engines=requested.length?requested:supportedEngines;
-const browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader']});
+const browser=await chromium.launch({headless:true,args:process.platform==='darwin'?['--use-gl=angle','--use-angle=metal']:['--enable-unsafe-swiftshader']});
 const failures=[];
 try{
   for(const engine of engines){
@@ -22,7 +22,7 @@ try{
       if(response.url().includes('/assets/solidcraft/'))requests.push([response.status(),response.url()]);
     });
     page.on('pageerror',error=>failures.push(engine+': JS '+error.message));
-    await page.goto('http://127.0.0.1:4173/#/engines/'+engine,{waitUntil:'domcontentloaded'});
+    await page.goto((process.env.CAD_SMOKE_BASE ?? 'http://127.0.0.1:4173/').replace(/\/?$/, '/')+'#/engines/'+engine,{waitUntil:'domcontentloaded'});
     await page.locator('.visual-engine-scene canvas').waitFor({state:'visible',timeout:25000});
     const shaft=engine==='turbojet'||engine==='centrifugal-turbojet'?'shaft-single-spool':'shaft-dual-spool';
     const files=[...new Set([...PARTS[engine].flatMap(part=>assets[part.kind]),shaft])];

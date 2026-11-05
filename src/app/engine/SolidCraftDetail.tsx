@@ -26,7 +26,7 @@ const MODELS:Record<CadDetailKind,CadAssembly>={
 };
 
 type RadialDeformation={hinge:number;exit:number;tipDelta:number};
-function CadAsset({file,scale,position,rotation,showShell=true,selected=false,deform}:{file:string;scale:[number,number,number];position?:[number,number,number];rotation?:[number,number,number];showShell?:boolean;selected?:boolean;deform?:RadialDeformation}){
+function CadAsset({file,scale,position,rotation,showShell=true,selected=false,dimmed=false,deform}:{file:string;scale:[number,number,number];position?:[number,number,number];rotation?:[number,number,number];showShell?:boolean;selected?:boolean;dimmed?:boolean;deform?:RadialDeformation}){
   const {scene}=useGLTF(import.meta.env.BASE_URL+'assets/solidcraft/'+file+'.glb');
   // Shared cached geometry, unique per-instance materials for independent highlight.
   const instance=useMemo(()=>{
@@ -65,9 +65,12 @@ function CadAsset({file,scale,position,rotation,showShell=true,selected=false,de
         if(!(material instanceof THREE.MeshStandardMaterial))continue;
         material.emissive.set(selected?'#286878':'#000000');
         material.emissiveIntensity=selected?.22:0;
+        material.transparent=dimmed;
+        material.opacity=dimmed?.035:1;
+        material.depthWrite=!dimmed;
       }
     });
-  },[instance,showShell,selected]);
+  },[instance,showShell,selected,dimmed]);
   useEffect(()=>()=>instance.traverse(object=>{
     if(!(object instanceof THREE.Mesh))return;
     if(deform)object.geometry.dispose();
@@ -77,7 +80,7 @@ function CadAsset({file,scale,position,rotation,showShell=true,selected=false,de
   return <primitive object={instance} scale={scale} position={position} rotation={rotation}/>;
 }
 
-export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=false,nozzleOpen=.5,motionSpeed=1,result=null}:{kind:CadDetailKind;radius:number;shaft:Part['shaft'];showShell?:boolean;selected?:boolean;nozzleOpen?:number;motionSpeed?:number;result?:Result|null}){
+export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=false,dimmed=false,nozzleOpen=.5,motionSpeed=1,result=null}:{kind:CadDetailKind;radius:number;shaft:Part['shaft'];showShell?:boolean;selected?:boolean;dimmed?:boolean;nozzleOpen?:number;motionSpeed?:number;result?:Result|null}){
   const config=MODELS[kind];
   const rotor=useRef<THREE.Group>(null);
   const reducedMotion=useMemo(()=>typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,[]);
@@ -98,27 +101,28 @@ export function SolidCraftDetail({kind,radius,shaft,showShell=true,selected=fals
     hinge:THROAT_CAD.bypassPetalHinge,exit:THROAT_CAD.bypassPetalExit,
     tipDelta:throat.bypass.outerRadius-THROAT_CAD.bypassPetalTip
   }:undefined;
+  const appearance={showShell,selected,dimmed};
   return <group name={'solidcraft-'+kind}>
     <group ref={rotor}>
-      {spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} showShell={showShell} selected={selected}/>}
-      {config.supplements?.filter(part=>part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={scale} position={part.position} showShell={showShell} selected={selected}/>)}
+      {spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} {...appearance}/>}
+      {config.supplements?.filter(part=>part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={scale} position={part.position} {...appearance}/>)}
     </group>
-    {!spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} showShell={showShell} selected={selected}/>}
-    {config.supplements?.filter(part=>!part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={part.file==='nozzle-petals'&&!throat?[scale[0],scale[1]*(.97+nozzleOpen*.09),scale[2]*(.97+nozzleOpen*.09)]:scale} deform={part.file==='nozzle-petals'?coreActuation:undefined} position={part.position} showShell={showShell} selected={selected}/>)}
+    {!spins&&<CadAsset file={config.file} scale={scale} rotation={config.rotation} {...appearance}/>}
+    {config.supplements?.filter(part=>!part.rotating).map(part=><CadAsset key={part.file} file={part.file} scale={part.file==='nozzle-petals'&&!throat?[scale[0],scale[1]*(.97+nozzleOpen*.09),scale[2]*(.97+nozzleOpen*.09)]:scale} deform={part.file==='nozzle-petals'?coreActuation:undefined} position={part.position} {...appearance}/>)}
     {kind==='nozzle'&&throat&&<group name="solver-coupled-core-throat" userData={{geometricAreaM2:throat.core.area,effectiveAreaM2:throat.core.effective}}>
-      <CadAsset file="core-throat-lip" scale={[1,throat.core.lipRadialScale,throat.core.lipRadialScale]} position={[THROAT_CAD.corePetalExit*axial,0,0]} selected={selected}/>
+      <CadAsset file="core-throat-lip" scale={[1,throat.core.lipRadialScale,throat.core.lipRadialScale]} position={[THROAT_CAD.corePetalExit*axial,0,0]} {...appearance}/>
     </group>}
     {kind==='bypass'&&throat?.bypass&&<group name="solver-coupled-bypass-throat" userData={{geometricAreaM2:throat.bypass.area,effectiveAreaM2:throat.bypass.effective}}>
-      <CadAsset file="bypass-inner-fairing" scale={[axial,1,1]} selected={selected}/>
-      <CadAsset file="bypass-nozzle-petals" scale={[axial,1,1]} deform={bypassActuation} selected={selected}/>
-      <CadAsset file="bypass-throat-lip" scale={[1,throat.bypass.lipRadialScale,throat.bypass.lipRadialScale]} position={[THROAT_CAD.bypassPetalExit*axial,0,0]} selected={selected}/>
+      <CadAsset file="bypass-inner-fairing" scale={[axial,1,1]} {...appearance}/>
+      <CadAsset file="bypass-nozzle-petals" scale={[axial,1,1]} deform={bypassActuation} {...appearance}/>
+      <CadAsset file="bypass-throat-lip" scale={[1,throat.bypass.lipRadialScale,throat.bypass.lipRadialScale]} position={[THROAT_CAD.bypassPetalExit*axial,0,0]} {...appearance}/>
     </group>}
   </group>;
 }
 
 /** Coaxial drive tubes and bearing collars are editable SolidCraft CAD parts. */
-export function SolidCraftShaft({engine,selected=false}:{engine:VisualEngineId;selected?:boolean}){
+export function SolidCraftShaft({engine,selected=false,dimmed=false}:{engine:VisualEngineId;selected?:boolean;dimmed?:boolean}){
   const dual=engine==='turbofan'||engine==='geared-turbofan'||engine==='afterburning-turbofan';
   const position:[number,number,number]=dual?[-.1,0,0]:[0,0,0];
-  return <group name="solidcraft-drive-shafts"><CadAsset file={dual?'shaft-dual-spool':'shaft-single-spool'} scale={[1,1,1]} position={position} selected={selected}/></group>;
+  return <group name="solidcraft-drive-shafts"><CadAsset file={dual?'shaft-dual-spool':'shaft-single-spool'} scale={[1,1,1]} position={position} selected={selected} dimmed={dimmed}/></group>;
 }

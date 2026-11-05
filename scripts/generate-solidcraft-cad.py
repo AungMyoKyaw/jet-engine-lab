@@ -25,33 +25,6 @@ def build(name: str):
     return commands, add
 
 
-def rotor():
-    commands, add = build("Jet Engine Lab | compressor and turbine stage (representative)")
-    add("solid.cylinder", radius=190, height=190, base=[-95, 0, 0], axis="X", body_name="Drive hub")
-    add("solid.cylinder", radius=340, height=118, base=[-59, 0, 0], axis="X", body_name="Rotor disk")
-    add("solid.cylinder", radius=375, height=22, base=[-65, 0, 0], axis="X", body_name="Forward seal rim")
-    add("solid.cylinder", radius=375, height=22, base=[43, 0, 0], axis="X", body_name="Rear seal rim")
-    # Three spanwise sections make an editable, cambered and tapered CAD blade.
-    # These are illustrative airfoil sections, NOT validated compressor profiles.
-    sections = [
-        ("Blade root", 310, [[-115,-26],[-75,-49],[35,-35],[125,3],[30,40],[-85,48]]),
-        ("Blade mid", 515, [[-93,-16],[-43,-33],[48,-23],[108,9],[30,30],[-68,34]]),
-        ("Blade tip", 730, [[-63,-9],[-30,-19],[35,-11],[88,14],[24,17],[-53,17]]),
-    ]
-    for label, span, outline in sections:
-        add("sketch.create", name=label,
-            plane={"origin": [0, span, 0], "x_dir": [1, 0, 0], "y_dir": [0, 0, 1]})
-        add("sketch.line", points=outline, closed=True)
-        add("sketch.finish")
-    add("solid.loft", sections=[{"sketch": entry[0]} for entry in sections],
-        operation="new", body_name="Rotor blade")
-    add("solid.pattern.circular", bodies=["Rotor blade"], axis="X", count=24)
-    add("solid.cylinder", radius=31, height=35, base=[-92, 256, 0], axis="X", body_name="Front fastener")
-    add("solid.pattern.circular", bodies=["Front fastener"], axis="X", count=12)
-    add("solid.cone", radius=122, top_radius=55, height=155, base=[-247, 0, 0], axis="X", body_name="Shaft nose")
-    return commands
-
-
 def gearbox():
     commands, add = build("Jet Engine Lab | geared fan epicyclic reducer (representative)")
     add("solid.cylinder", radius=690, height=125, base=[-62.5, 0, 0], axis="X", body_name="Annular gearbox housing")
@@ -594,7 +567,7 @@ def bypass_nozzle_petals():
     return commands
 
 def main():
-    models = {"rotor-stage": rotor(), "planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
+    models = {"planetary-reducer": gearbox(), "combustor-manifold": combustor(), "intake-duct": inlet(), "bypass-lattice": bypass(), "nozzle-housing": nozzle(), "radial-impeller": impeller(), "radial-diffuser": diffuser(), "afterburner-assembly": afterburner(),
               "fan-blisk": fan_blisk(), "compressor-cassette": compressor_cassette(), "turbine-wheel": turbine_wheel(), "turbine-shroud": turbine_shroud(), "stator-vane-ring": stator_vane_ring(), "combustor-liner": combustor_liner(), "nozzle-actuators": nozzle_actuators(),
               "fan-outlet-guides": fan_outlet_guides(), "compressor-case-detail": compressor_case_detail(), "turbine-nozzle-guide": turbine_nozzle_guide(), "bearing-cartridge": bearing_cartridge(), "combustor-dome": combustor_dome(), "nozzle-petals": nozzle_petals(),
               "shaft-single-spool": shaft_single_spool(), "shaft-dual-spool": shaft_dual_spool(),

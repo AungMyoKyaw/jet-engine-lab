@@ -1,7 +1,7 @@
 import { chromium } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 
-const base = 'http://127.0.0.1:4173/';
+const base = (process.env.CAD_SMOKE_BASE ?? 'http://127.0.0.1:4173/').replace(/\/?$/, '/');
 const cases = [
   { engine: 'turbofan', stage: 1, assets: ['compressor-cassette','stator-vane-ring','compressor-case-detail'], label: 'compressor' },
   { engine: 'turbofan', stage: 2, assets: ['combustor-liner','combustor-dome','combustor-manifold'], label: 'combustor' },
@@ -11,7 +11,7 @@ const cases = [
   { engine: 'turbojet', stage: 4, assets: ['nozzle-housing','nozzle-petals','nozzle-actuators'], label: 'nozzle' },
 ];
 mkdirSync('docs/solidcraft-cad', { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--enable-unsafe-swiftshader'] });
+const browser = await chromium.launch({ headless: true, args: process.platform==='darwin'?['--use-gl=angle','--use-angle=metal']:['--enable-unsafe-swiftshader'] });
 const failures = [];
 try {
   for (const entry of cases) {
